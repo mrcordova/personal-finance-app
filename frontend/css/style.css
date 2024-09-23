@@ -42,3 +42,8 @@
   font-weight: 700;
   font-style: normal;
 }
+
+@media (min-width: 48rem) {
+}
+@media (min-width: 90rem) {
+}
