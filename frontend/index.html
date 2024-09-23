@@ -20,9 +20,9 @@
       <nav>
         <img src="./assets/images/logo-large.svg" alt="finance" />
 
-        <menu>
-          <li>
-            <a href="./index.html">
+        <menu id="sidebar-menu">
+          <li data-menu="index">
+            <button id="index">
               <svg
                 fill="none"
                 height="19"
@@ -34,10 +34,10 @@
                   fill="#b3b3b3" />
               </svg>
               Overview
-            </a>
+            </button>
           </li>
-          <li>
-            <a href="">
+          <li data-menu="transactions">
+            <button id="transaction-btn">
               <svg
                 fill="none"
                 height="18"
@@ -49,11 +49,11 @@
                   fill="#b3b3b3" />
               </svg>
               Transactions
-            </a>
+            </button>
           </li>
 
-          <li>
-            <a href="./budgets.html">
+          <li data-menu="budgets">
+            <button id="budgets">
               <svg
                 fill="none"
                 height="20"
@@ -65,10 +65,10 @@
                   fill="#b3b3b3" />
               </svg>
               Budgets
-            </a>
+            </button>
           </li>
-          <li>
-            <a href="./pots.html">
+          <li data-menu="pots">
+            <button id="pots">
               <svg
                 fill="none"
                 height="22"
@@ -80,10 +80,10 @@
                   fill="#b3b3b3" />
               </svg>
               Pots
-            </a>
+            </button>
           </li>
-          <li>
-            <a href="./recurring.html">
+          <li data-menu="recurring">
+            <button id="recurring">
               <svg
                 fill="none"
                 height="17"
@@ -95,7 +95,7 @@
                   fill="#b3b3b3" />
               </svg>
               Recurring Bills
-            </a>
+            </button>
           </li>
         </menu>
         <button>
@@ -113,6 +113,8 @@
         </button>
       </nav>
     </header>
+
+    <main></main>
 
     Overview Current Balance
     <!-- Add balance -->

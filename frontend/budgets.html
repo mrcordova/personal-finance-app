@@ -1,83 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<template id="budgets-template">
+  <div>
+    <div>
+      <h1>Budgets</h1>
+      <button>+ Add New Budget</button>
+    </div>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Personal finance app - Budgets</title>
-</head>
-<body>
+    <!-- Add budget data -->
 
-  Overview
-  Transactions
-  Budgets
-  Pots
-  Recurring Bills
+    <!-- Add/Edit budget start -->
+    <div>
+      <dialog>
+        <div>
+          <p>Add New Budget</p>
+          <img src="./assets/images/icon-close-modal.svg" alt="close" />
+        </div>
+        <p>
+          Choose a category to set a spending budget. These categories can help
+          you monitor spending.
+        </p>
+        <form>
+          <div>
+            <label for="budget-cate">Budget Category</label>
+            <button id="budget-cate-btn">
+              Entertainment
+              <img
+                src="./assets/images/icon-caret-down.svg"
+                alt="drop down caret" />
+            </button>
+            <menu>
+              <li>All Transactions</li>
+              <li>Entertainment</li>
+              <li>Bills</li>
+              <li>Groceries</li>
+              <li>Dining Out</li>
+              <li>Personal Care</li>
+              <li>Education</li>
+              <li>Lifestyle</li>
+              <li>Shopping</li>
+              <li>General</li>
+            </menu>
+          </div>
+          <div>
+            <label for="max-spend">Maximum Spend</label>
+            <input type="text" id="max-spend" />
+          </div>
+          <div>
+            <label for="theme">Budget Category</label>
+            <button id="theme">
+              <span></span>
+              Green
+              <img
+                src="./assets/images/icon-caret-down.svg"
+                alt="drop down caret" />
+            </button>
+            <menu>
+              <li>
+                <span></span>
+                Green
+              </li>
+              <li>
+                <span></span>
+                Yellow
+              </li>
+              <li>
+                <span></span>
+                Cyan
+              </li>
+            </menu>
+          </div>
+          <button>Add Budget</button>
+        </form>
+      </dialog>
+      <!-- Edit Budget As your budgets change, feel free to update your spending
+      limits. Budget Category Entertainment Bills Groceries Dining Out
+      Transportation Personal Care Education Lifestyle Shopping General Maximum
+      Spend Theme Green Yellow Cyan Navy Red Purple Turquoise Brown Magenta Blue
+      Navy Grey Army Green Pink Gold Orange Add Budget / Save Changes -->
 
-  Minimize Menu
+      <!-- Add/Edit budget end -->
 
-  Budgets
+      <!-- Delete budget start -->
 
-  Add New Budget
-
-  <!-- Add budget data -->
-
-
-  <!-- Add/Edit budget start -->
-
-  Add New Budget
-  Choose a category to set a spending budget. These categories can help you monitor spending.
-
-  Edit Budget
-  As your budgets change, feel free to update your spending limits.
-  
-  Budget Category
-  Entertainment
-  Bills
-  Groceries
-  Dining Out
-  Transportation
-  Personal Care
-  Education
-  Lifestyle
-  Shopping
-  General
-
-  Maximum Spend
-
-  Theme
-  Green
-  Yellow
-  Cyan
-  Navy
-  Red 
-  Purple
-  Turquoise
-  Brown
-  Magenta
-  Blue
-  Navy Grey
-  Army Green
-  Pink
-  Gold
-  Orange
-
-  Add Budget / Save Changes
-  
-  <!-- Add/Edit budget end -->
-
-  <!-- Delete budget start -->
-
-  Delete '<!-- budget name -->'
-
-  Are you sure you want to delete this budget? This action cannot be reversed, and all the data inside it will be removed forever.
-
-  Yes, Confirm Deletion
-  No, Go Back
-
-  <!-- Delete budget end -->
-
-</body>
-</html>
+      <!-- Delete ' -->
+      <!-- budget name -->
+      <!-- ' Are you sure you want to delete this budget? This action cannot be
+      reversed, and all the data inside it will be removed forever. Yes, Confirm
+      Deletion No, Go Back -->
+    </div>
+    <!-- Delete budget end -->
+  </div>
+</template>

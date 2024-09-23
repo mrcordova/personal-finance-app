@@ -1,96 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-  <template id="transactions-template">
-    <h1>Transaction</h1>
+<template id="transactions-template">
+  <h1>Transaction</h1>
+
+  <div>
+    <div>
+      <div>
+        <input
+          type="text"
+          name="search-transaction"
+          id="search-transaction"
+          placeholder="Search transactions" />
+        <img src="./assets/images/icon-search.svg" alt="search" />
+      </div>
+      <div>
+        <label for="sort-by-btn">Sort by</label>
+        <button id="sort-by-btn">
+          Latest
+          <img
+            src="./assets/images/icon-caret-down.svg"
+            alt="drop down caret" />
+        </button>
+        <menu>
+          <li>Latest</li>
+          <li>Oldest</li>
+          <li>A to Z</li>
+          <li>Z to A</li>
+          <li>Highest</li>
+          <li>Lowest</li>
+        </menu>
+      </div>
+      <div>
+        <label for="category-btn">Category</label>
+        <button id="category-btn">
+          Latest
+          <img
+            src="./assets/images/icon-caret-down.svg"
+            alt="drop down caret" />
+        </button>
+        <menu>
+          <li>All Transactions</li>
+          <li>Entertainment</li>
+          <li>Bills</li>
+          <li>Groceries</li>
+          <li>Dining Out</li>
+          <li>Personal Care</li>
+          <li>Education</li>
+          <li>Lifestyle</li>
+          <li>Shopping</li>
+          <li>General</li>
+        </menu>
+      </div>
+    </div>
 
     <div>
       <div>
-        <div>
-          <input
-            type="text"
-            name="search-transaction"
-            id="search-transaction"
-            placeholder="Search transactions" />
-          <img src="./assets/images/icon-search.svg" alt="search" />
-        </div>
-        <div>
-          <label for="sort-by-btn">Sort by</label>
-          <button id="sort-by-btn">
-            Latest
-            <img
-              src="./assets/images/icon-caret-down.svg"
-              alt="drop down caret" />
-          </button>
-          <menu>
-            <li>Latest</li>
-            <li>Oldest</li>
-            <li>A to Z</li>
-            <li>Z to A</li>
-            <li>Highest</li>
-            <li>Lowest</li>
-          </menu>
-        </div>
-        <div>
-          <label for="category-btn">Category</label>
-          <button id="category-btn">
-            Latest
-            <img
-              src="./assets/images/icon-caret-down.svg"
-              alt="drop down caret" />
-          </button>
-          <menu>
-            <li>All Transactions</li>
-            <li>Entertainment</li>
-            <li>Bills</li>
-            <li>Groceries</li>
-            <li>Dining Out</li>
-            <li>Personal Care</li>
-            <li>Education</li>
-            <li>Lifestyle</li>
-            <li>Shopping</li>
-            <li>General</li>
-          </menu>
-        </div>
+        <p>Recipient/Sender</p>
+        <p>Category</p>
+        <p>Transaction</p>
+        <p>Date</p>
+        <p>Amount</p>
       </div>
-
       <div>
-        <div>
-          <p>Recipient/Sender</p>
-          <p>Category</p>
-          <p>Transaction</p>
-          <p>Date</p>
-          <p>Amount</p>
-        </div>
         <div>
           <div>
-            <div>
-              <img
-                src="./assets/images/avatars/emma-richardson.jpg"
-                alt="emma-richardson" />
-              <p>emma-richardson</p>
-            </div>
-            <p>General</p>
-            <p>19 Aug 2024</p>
-            <p>+$75.50</p>
+            <img
+              src="./assets/images/avatars/emma-richardson.jpg"
+              alt="emma-richardson" />
+            <p>emma-richardson</p>
           </div>
+          <p>General</p>
+          <p>19 Aug 2024</p>
+          <p>+$75.50</p>
         </div>
-      </div>
-
-      <!-- Add transaction data -->
-      <div>
-        <button>
-          <img src="./assets/images/icon-caret-left.svg" alt="left caret" />
-          Prev
-        </button>
-        <div>
-          <button>1</button>
-          <button>2</button>
-        </div>
-        <button>
-          <img src="./assets/images/icon-caret-left.svg" alt="right caret" />
-          Next
-        </button>
       </div>
     </div>
-  </template>
-</html>
+
+    <!-- Add transaction data -->
+    <div>
+      <button>
+        <img src="./assets/images/icon-caret-left.svg" alt="left caret" />
+        Prev
+      </button>
+      <div>
+        <button>1</button>
+        <button>2</button>
+      </div>
+      <button>
+        <img src="./assets/images/icon-caret-left.svg" alt="right caret" />
+        Next
+      </button>
+    </div>
+  </div>
+</template>
