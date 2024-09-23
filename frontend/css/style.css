@@ -1,2 +1,44 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --beige-500: hsl(23, 6%, 57%);
+  --beige-100: hsl(30, 36%, 96%);
+
+  --grey-900: hsl(252, 7%, 13%);
+  --grey-500: hsl(0, 0%, 41%);
+  --grey-300: hsl(0, 0%, 70%);
+  --grey-100: hsl(0, 0%, 95%);
+
+  --green: hsl(177, 52%, 32%);
+  --yellow: hsl(28, 73%, 81%);
+  --cyan: hsl(190, 52%, 68%);
+  --navy: hsl(248, 8%, 41%);
+  --red: hsl(7, 58%, 50%);
+  --purple: hsl(259, 30%, 56%);
+
+  --pink: hsl(288, 29%, 62%);
+  --turquoise: hsl(180, 16%, 42%);
+  --brown: hsl(21, 30%, 44%);
+  --magenta: hsl(332, 30%, 44%);
+  --blue: hsl(205, 48%, 47%);
+  --navy-grey: hsl(214, 11%, 63%);
+  --army-green: hsl(83, 20%, 47%);
+  --gold: hsl(47, 50%, 59%);
+  --orange: hsl(18, 47%, 52%);
+
+  --white: hsl(0, 0%, 100%);
+}
+
+.public-sans-regular {
+  font-family: "Public Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.public-sans-bold {
+  font-family: "Public Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
 }
