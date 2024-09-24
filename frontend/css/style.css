@@ -85,9 +85,14 @@ header {
   flex-direction: column;
   padding: 0;
   list-style: none;
-  inline-size: 18.75rem;
+  padding-inline-end: 1.5rem;
+  /* inline-size: 18.75rem; */
   margin-block-end: auto;
 
+  & li {
+    border-left: 0.25rem solid transparent;
+    width: 17.25rem;
+  }
   & button {
     display: flex;
     padding-block: 1rem;
