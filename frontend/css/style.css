@@ -42,8 +42,33 @@
   font-weight: 700;
   font-style: normal;
 }
+html {
+  height: 100%;
+  margin: 0 auto;
+  max-width: 90rem;
+}
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+header {
+  background-color: var(--grey-900);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
 
 @media (min-width: 48rem) {
 }
 @media (min-width: 90rem) {
+  body {
+    flex-direction: row;
+  }
+
+  header {
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
 }
