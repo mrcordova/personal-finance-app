@@ -66,8 +66,23 @@ header {
     /* inline-size: 18.75rem; */
   }
 }
+main {
+  flex: 1;
+  padding-block: 2rem;
+  padding-inline: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--beige-100);
+  gap: 1rem;
+}
+.main-transactions {
+  background-color: var(--white);
+  border-radius: 0.75rem;
+  padding: 2rem;
+}
 #mini-menu {
   padding-inline: 2rem;
+
   padding-block: 1rem;
   display: flex;
   gap: 1rem;
@@ -75,6 +90,30 @@ header {
   line-height: 1.5;
   color: var(--grey-300);
   margin-block-end: 8.0775rem;
+}
+.search-container {
+  display: flex;
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--beige-500);
+  height: max-content;
+  border-radius: 0.5rem;
+  & input {
+    border-radius: 0.5rem;
+    border: 0;
+    padding-inline-start: 1.25rem;
+    padding-block: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    inline-size: 20rem;
+  }
+
+  & img {
+    padding: 0.90625rem;
+  }
 }
 .sidebar-logo {
   padding-inline: 2rem;
