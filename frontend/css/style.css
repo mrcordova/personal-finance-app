@@ -64,10 +64,12 @@ body {
   line-height: 1.5;
 
   & > label {
+    display: none;
     color: var(--grey-500);
   }
 
   & > div {
+    display: none;
     position: relative;
     & > button {
       display: flex;
@@ -78,6 +80,10 @@ body {
       height: max-content;
       border: 1px solid var(--beige-500);
       border-radius: 0.5rem;
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }
@@ -167,6 +173,7 @@ main {
     font-size: 0.875rem;
     line-height: 1.5;
     inline-size: 20rem;
+    outline: none;
   }
 
   & img {
@@ -204,6 +211,18 @@ main {
 }
 
 @media (min-width: 48rem) {
+  .dropdown {
+    & > div {
+      display: block;
+    }
+    & > label {
+      display: block;
+    }
+
+    & > img {
+      display: none;
+    }
+  }
 }
 @media (min-width: 90rem) {
   body {
