@@ -13,43 +13,82 @@
           placeholder="Search transactions" />
         <img src="./assets/images/icon-search.svg" alt="search" />
       </div>
-      <div>
+      <div class="dropdown public-sans-regular">
         <label for="sort-by-btn">Sort by</label>
-        <button id="sort-by-btn">
-          Latest
-          <img
-            src="./assets/images/icon-caret-down.svg"
-            alt="drop down caret" />
-        </button>
-        <menu>
-          <li>Latest</li>
-          <li>Oldest</li>
-          <li>A to Z</li>
-          <li>Z to A</li>
-          <li>Highest</li>
-          <li>Lowest</li>
-        </menu>
+        <div>
+          <button id="sort-by-btn">
+            Latest
+            <img
+              src="./assets/images/icon-caret-down.svg"
+              alt="drop down caret" />
+          </button>
+          <menu class="dropdown-content">
+            <li class="public-sans-bold">
+              <button>Latest</button>
+            </li>
+            <li>
+              <button>Oldest</button>
+            </li>
+            <li>
+              <button>A to Z</button>
+            </li>
+            <li>
+              <button>Z to A</button>
+            </li>
+            <li>
+              <button>Highest</button>
+            </li>
+            <li>
+              <button>Lowest</button>
+            </li>
+          </menu>
+        </div>
       </div>
-      <div>
+      <div class="dropdown public-sans-regular">
         <label for="category-btn">Category</label>
-        <button id="category-btn">
-          Latest
-          <img
-            src="./assets/images/icon-caret-down.svg"
-            alt="drop down caret" />
-        </button>
-        <menu>
-          <li>All Transactions</li>
-          <li>Entertainment</li>
-          <li>Bills</li>
-          <li>Groceries</li>
-          <li>Dining Out</li>
-          <li>Personal Care</li>
-          <li>Education</li>
-          <li>Lifestyle</li>
-          <li>Shopping</li>
-          <li>General</li>
-        </menu>
+        <div>
+          <button id="category-btn">
+            All Transactions
+            <img
+              src="./assets/images/icon-caret-down.svg"
+              alt="drop down caret" />
+          </button>
+          <menu class="dropdown-content">
+            <li class="public-sans-bold">
+              <button>All Transactions</button>
+            </li>
+            <li>
+              <button>Entertainment</button>
+            </li>
+            <li>
+              <button>Bills</button>
+            </li>
+            <li>
+              <button>Groceries</button>
+            </li>
+            <li>
+              <button>Dining Out</button>
+            </li>
+            <li>
+              <button>Transportaion</button>
+            </li>
+            <li>
+              <button>Personal Care</button>
+            </li>
+            <li>
+              <button>Education</button>
+            </li>
+            <li>
+              <button>Lifestyle</button>
+            </li>
+            <li>
+              <button>Shopping</button>
+            </li>
+            <li>
+              <button>General</button>
+            </li>
+          </menu>
+        </div>
       </div>
     </div>
 
