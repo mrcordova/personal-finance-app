@@ -220,9 +220,31 @@ tbody {
   th {
     display: flex;
   }
+
+  & tr:first-child > :is(td, th) {
+    padding-block-start: 2rem;
+  }
+
+  & tr > :is(td, th) {
+    padding-inline: 1rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--grey-100);
+  }
+
+  & tr:last-child > :is(td, th) {
+    border-bottom: 1px solid transparent;
+  }
 }
+
 thead {
   display: none;
+
+  & tr th {
+    padding-inline: 1rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--grey-100);
+    /* border-right: 1px solid var(--grey-100); */
+  }
 }
 .transactions-grid {
   margin-block-end: auto;
