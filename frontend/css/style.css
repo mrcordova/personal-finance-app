@@ -157,12 +157,14 @@ main {
   display: none;
 }
 
-.mobile-name {
-  /* color: var(--grey-900); */
-}
 .title {
   color: var(--grey-900);
 }
+
+.positive {
+  color: var(--green);
+}
+
 .search-container {
   display: flex;
   align-items: center;
