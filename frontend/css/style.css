@@ -159,6 +159,8 @@ main {
 
 .title {
   color: var(--grey-900);
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .positive {
@@ -242,6 +244,8 @@ tbody {
     padding-inline: 1rem;
     padding-block: 0.75rem;
     border-bottom: 1px solid var(--grey-100);
+    font-size: 0.75rem;
+    line-height: 1.5;
   }
 
   & tr:last-child > :is(td, th) {
@@ -262,14 +266,12 @@ thead {
     padding-inline: 1rem;
     padding-block: 0.75rem;
     border-bottom: 1px solid var(--grey-100);
+    font-size: 0.75rem;
+    line-height: 1.5;
     /* border-right: 1px solid var(--grey-100); */
   }
 }
-.transactions-grid {
-  margin-block-end: auto;
 
-  /* Don't display the first item, since it is used to display the header for tabular layouts*/
-}
 [colspan="1"],
 [scope="col"] {
   text-align: left;
@@ -292,74 +294,52 @@ thead {
   line-height: 1.5;
 }
 
-.item-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  /* grid-template-columns: auto auto; */
-  gap: 2rem;
-
-  &:first-child {
-    margin-block-end: 2rem;
-  }
-}
-
-.item-sender-container {
-  display: flex;
-}
-
-.attribute-container {
-  display: grid;
-  column-gap: 2rem;
-  /* width: 100%; */
-  /* grid-template-columns: repeat(
-    auto-fit,
-    minmax(var(--column-width-min), 26.75rem)
-  ); */
-  grid-template-columns: minmax(var(--column-width-min), 23.25rem) minmax(
-      var(--column-width-min2),
-      1fr
-    );
-}
-.sender-cate-id {
-  inline-size: 36.25rem;
-  --column-width-min: 2.5rem;
-  /* --column-width-min2: rem; */
-  --column-width-min2: 9.1875rem;
-
-  /* & div {
-    display: flex;
-  } */
-}
-.sender-info {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-
-  & > img {
-    width: 2.5rem;
-    border-radius: 50%;
-  }
-}
 .sender-desktop {
   display: none;
-  /* color: var(--grey-900); */
+}
+.page-btns {
+  display: flex;
+  line-height: 1.5;
+  align-items: center;
+  border: 1px solid var(--beige-500);
+  gap: 1rem;
+  font-size: 0.875rem;
+  padding-inline: 1rem;
+  padding-block: 0.59375rem;
+  border-radius: 0.5rem;
+}
+.page-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.page-number-btns {
+  display: flex;
+  gap: 0.5rem;
+
+  & button {
+    padding-inline: 1.0625rem;
+    padding-block: 0.59375rem;
+    border: 1px solid var(--beige-500);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+
+    &[data-current="true"] {
+      background-color: var(--grey-900);
+      color: var(--white);
+    }
+  }
 }
 .profile-pic {
   width: 2.5rem;
   border-radius: 50%;
 }
-.transaction-amount-id {
-  --column-width-min: 7rem;
-  --column-width-min2: 7rem;
-  --column-width-min2: 7rem;
 
-  & p {
-    height: max-content;
-  }
-  & > :nth-child(2) {
-    text-align: end;
-  }
+table {
+  margin-block-end: auto;
 }
+
 @media (min-width: 48rem) {
   .dropdown {
     & > div {
@@ -380,6 +360,7 @@ thead {
   .sender-desktop {
     display: table-cell;
   }
+
   thead {
     display: table-header-group;
   }
