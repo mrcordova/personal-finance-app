@@ -258,7 +258,7 @@ tbody {
     line-height: 1.5;
   }
 
-  & tr:last-child > :is(td, th) {
+  & tr:not(.hidden):last-child > :is(td, th) {
     border-bottom: 1px solid transparent;
   }
 }
@@ -339,8 +339,15 @@ thead {
       background-color: var(--grey-900);
       color: var(--white);
     }
+
+    &:not(:first-child, :last-child, .active, .ellipse) {
+      display: none;
+    }
   }
 }
+/* .ellipse::before {
+  content: "...";
+} */
 .profile-pic {
   width: 2.5rem;
   border-radius: 50%;
@@ -369,6 +376,21 @@ table {
   }
   .sender-desktop {
     display: table-cell;
+  }
+
+  .page-number-btns {
+    display: flex;
+    gap: 0.5rem;
+
+    & button {
+      &:not(:first-child, :last-child, .active, .ellipse) {
+        display: block;
+      }
+    }
+
+    /* .ellipse::before {
+      content: attr(data-page);
+    } */
   }
 
   thead {

@@ -102,9 +102,21 @@ function updateActiveButtonState() {
     //   btn.classList.remove("active");
     // }
     btn.classList.toggle("active", idx === currentTransactionsPage);
+    btn.nextElementSibling?.classList.toggle(
+      "ellipse",
+      btn.classList.contains("active")
+    );
   });
 }
 
+function checkRange(number) {
+  let n = Number(number);
+  n = Math.min(
+    Math.ceil(transactionItems.length / itemsPerPage) - 1,
+    Math.max(0, n)
+  );
+  return n;
+}
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
@@ -117,18 +129,16 @@ sidebarMenu.addEventListener("click", async (e) => {
 main.addEventListener("click", (e) => {
   // console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
-  console.log(pageButton);
+  // console.log(pageButton);
   if (pageButton) {
     currentTransactionsPage =
       pageButton.dataset.page != undefined
         ? pageButton.dataset.page
         : (currentTransactionsPage += parseInt(pageButton.dataset.move));
 
-    currentTransactionsPage = Math.max(
-      Math.min(currentTransactionsPage, transactionItems.length),
-      0
-    );
-    console.log(currentTransactionsPage);
+    // console.log(Math.ceil(transactionItems.length / itemsPerPage));
+    currentTransactionsPage = checkRange(currentTransactionsPage);
+    // console.log(currentTransactionsPage);
     showPage(currentTransactionsPage);
     updateActiveButtonState();
   }
