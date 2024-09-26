@@ -94,28 +94,86 @@
       </div>
     </div>
 
-    <div>
-      <div>
-        <p>Recipient/Sender</p>
-        <p>Category</p>
-        <p>Transaction</p>
-        <p>Date</p>
-        <p>Amount</p>
-      </div>
-      <div>
-        <div>
-          <div>
+    <table>
+      <colgroup>
+        <col span="2" />
+        <col span="2" />
+      </colgroup>
+      <thead>
+        <th scope="col">Recipient/Sender</th>
+        <th scope="col">Category</th>
+        <th scope="col">Transaction Date</th>
+        <th scope="col">Amount</th>
+      </thead>
+      <tbody>
+        <tr>
+          <th colspan="1" role="row">
             <img
+              class="profile-pic"
               src="./assets/images/avatars/emma-richardson.jpg"
               alt="emma-richardson" />
-            <p>emma-richardson</p>
+            <p class="sender-desktop public-sans-bold">Emma Richardson</p>
+          </th>
+          <td colspan="1">
+            <p class="mobile-name">Emma Richardson</p>
+            <p>General</p>
+          </td>
+
+          <td colspan="1">19 Aug 2024</td>
+          <td colspan="1">+$75.50</td>
+        </tr>
+        <tr>
+          <th colspan="1" role="row">
+            <img
+              class="profile-pic"
+              src="./assets/images/avatars/savory-bites-bistro.jpg"
+              alt="savory-bites-bistro" />
+            <p class="sender-desktop public-sans-bold">Savory Bites Bistro</p>
+          </th>
+          <td colspan="1">
+            <p class="mobile-name">Savory Bites Bistro</p>
+            <p>Dining Out</p>
+          </td>
+
+          <td colspan="1">19 Aug 2024</td>
+          <td colspan="1">-$55.50</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <section class="transactions-grid public-sans-regular">
+      <ol class="transaction-list">
+        <li class="item-container">
+          <div class="attribute-container sender-cate-id">
+            <div>Recipient/Sender</div>
+            <div>Category</div>
           </div>
-          <p>General</p>
-          <p>19 Aug 2024</p>
-          <p>+$75.50</p>
-        </div>
-      </div>
-    </div>
+          <div class="attribute-container transaction-amount-id">
+            <div>Transaction Date</div>
+            <div>Amount</div>
+          </div>
+        </li>
+
+        <li class="item-container">
+          <div class="sender-cate-id attribute-container">
+            <div class="sender-info">
+              <img
+                src="./assets/images/avatars/emma-richardson.jpg"
+                alt="emma-richardson" />
+              <p class="sender-desktop public-sans-bold">Emma Richardson</p>
+            </div>
+            <div>
+              <p class="mobile-name">emma-richardson</p>
+              <p>General</p>
+            </div>
+          </div>
+          <div class="attribute-container transaction-amount-id">
+            <p>19 Aug 2024</p>
+            <p>+$75.50</p>
+          </div>
+        </li>
+        
+      </ol>
+    </section> -->
 
     <!-- Add transaction data -->
     <div>

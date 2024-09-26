@@ -149,6 +149,9 @@ main {
   background-color: var(--white);
   border-radius: 0.75rem;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 #mini-menu {
   display: none;
@@ -210,6 +213,110 @@ main {
   }
 }
 
+tbody {
+  /* display: block; */
+  overflow: auto;
+  max-height: 43.5rem;
+  th {
+    display: flex;
+  }
+}
+thead {
+  display: none;
+}
+.transactions-grid {
+  margin-block-end: auto;
+
+  /* Don't display the first item, since it is used to display the header for tabular layouts*/
+}
+[colspan="1"],
+[scope="col"] {
+  text-align: left;
+
+  &:last-child {
+    text-align: end;
+  }
+}
+.transaction-list {
+  padding: 0;
+  & > li:first-child {
+    display: none;
+  }
+}
+
+.transactions-headers {
+  display: flex;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.item-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* grid-template-columns: auto auto; */
+  gap: 2rem;
+
+  &:first-child {
+    margin-block-end: 2rem;
+  }
+}
+
+.item-sender-container {
+  display: flex;
+}
+
+.attribute-container {
+  display: grid;
+  column-gap: 2rem;
+  /* width: 100%; */
+  /* grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--column-width-min), 26.75rem)
+  ); */
+  grid-template-columns: minmax(var(--column-width-min), 23.25rem) minmax(
+      var(--column-width-min2),
+      1fr
+    );
+}
+.sender-cate-id {
+  inline-size: 36.25rem;
+  --column-width-min: 2.5rem;
+  /* --column-width-min2: rem; */
+  --column-width-min2: 9.1875rem;
+
+  /* & div {
+    display: flex;
+  } */
+}
+.sender-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  & > img {
+    width: 2.5rem;
+    border-radius: 50%;
+  }
+}
+.sender-desktop {
+  display: none;
+}
+.profile-pic {
+  width: 2.5rem;
+  border-radius: 50%;
+}
+.transaction-amount-id {
+  --column-width-min: 7rem;
+  --column-width-min2: 7rem;
+  --column-width-min2: 7rem;
+
+  & p {
+    height: max-content;
+  }
+  & > :nth-child(2) {
+    text-align: end;
+  }
+}
 @media (min-width: 48rem) {
   .dropdown {
     & > div {
@@ -221,6 +328,21 @@ main {
 
     & > img {
       display: none;
+    }
+  }
+
+  .mobile-name {
+    display: none;
+  }
+  .sender-desktop {
+    display: block;
+  }
+  thead {
+    display: table-header-group;
+  }
+  .transaction-list {
+    & > li:first-child {
+      display: grid;
     }
   }
 }
