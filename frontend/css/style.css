@@ -158,9 +158,11 @@ main {
 }
 
 .mobile-name {
+  /* color: var(--grey-900); */
+}
+.title {
   color: var(--grey-900);
 }
-
 .search-container {
   display: flex;
   align-items: center;
@@ -338,7 +340,7 @@ thead {
 }
 .sender-desktop {
   display: none;
-  color: var(--grey-900);
+  /* color: var(--grey-900); */
 }
 .profile-pic {
   width: 2.5rem;
