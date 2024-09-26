@@ -121,6 +121,16 @@ body {
   }
 }
 
+.hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 header {
   background-color: var(--grey-900);
   border-top-left-radius: 0.5rem;
@@ -325,7 +335,7 @@ thead {
     font-size: 0.875rem;
     line-height: 1.5;
 
-    &[data-current="true"] {
+    &.active {
       background-color: var(--grey-900);
       color: var(--white);
     }
