@@ -65,10 +65,12 @@ function transactionsUpdate() {
   // console.log(mutation);
   createPageButtons();
   updateActiveButtonState();
+  showPage(currentTransactionsPage);
 }
 // console.log(templates);
 function showPage(page) {
   const startIdx = page * itemsPerPage;
+
   const endIdx = startIdx + itemsPerPage;
   transactionItems.forEach((item, index) => {
     item.classList.toggle("hidden", index < startIdx || index >= endIdx);
@@ -86,7 +88,7 @@ function createPageButtons() {
     // console.log(index);
     pageNumberContainer.insertAdjacentHTML(
       "beforeend",
-      `<button  data-nav="" data-page="${index + 1}" >${index + 1}</button>`
+      `<button  data-nav="" data-page="${index}" >${index + 1}</button>`
     );
   }
 }
@@ -117,5 +119,17 @@ main.addEventListener("click", (e) => {
   const pageButton = e.target.closest("button[data-nav]");
   console.log(pageButton);
   if (pageButton) {
+    currentTransactionsPage =
+      pageButton.dataset.page != undefined
+        ? pageButton.dataset.page
+        : (currentTransactionsPage += parseInt(pageButton.dataset.move));
+
+    currentTransactionsPage = Math.max(
+      Math.min(currentTransactionsPage, transactionItems.length),
+      0
+    );
+    console.log(currentTransactionsPage);
+    showPage(currentTransactionsPage);
+    updateActiveButtonState();
   }
 });
