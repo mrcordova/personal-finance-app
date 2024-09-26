@@ -156,8 +156,14 @@ main {
 #mini-menu {
   display: none;
 }
+
+.mobile-name {
+  color: var(--grey-900);
+}
+
 .search-container {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
 }
 
@@ -217,8 +223,11 @@ tbody {
   /* display: block; */
   overflow: auto;
   max-height: 43.5rem;
+  color: var(--grey-500);
   th {
     display: flex;
+    gap: 1rem;
+    align-items: center;
   }
 
   & tr:first-child > :is(td, th) {
@@ -233,6 +242,12 @@ tbody {
 
   & tr:last-child > :is(td, th) {
     border-bottom: 1px solid transparent;
+  }
+}
+
+td:nth-child(3) {
+  & p {
+    text-align: end;
   }
 }
 
@@ -254,6 +269,7 @@ thead {
 [colspan="1"],
 [scope="col"] {
   text-align: left;
+  color: var(--grey-500);
 
   &:last-child {
     text-align: end;
@@ -322,6 +338,7 @@ thead {
 }
 .sender-desktop {
   display: none;
+  color: var(--grey-900);
 }
 .profile-pic {
   width: 2.5rem;
@@ -357,10 +374,15 @@ thead {
     display: none;
   }
   .sender-desktop {
-    display: block;
+    display: table-cell;
   }
   thead {
     display: table-header-group;
+  }
+  td:nth-child(3) {
+    & p {
+      text-align: start;
+    }
   }
   .transaction-list {
     & > li:first-child {
