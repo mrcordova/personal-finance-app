@@ -213,32 +213,56 @@ main {
   /* flex-direction: column; */
   padding: 0;
   list-style: none;
+  /* Desktop */
   padding-inline-end: 1.5rem;
+  padding-block-start: 0rem;
+  /* Tablet */
+  padding-inline-end: 0rem;
+  padding-block-start: 0.5rem;
+  gap: 2.625rem;
   /* inline-size: 18.75rem; */
   margin-block-end: auto;
 
   & li {
-    border-left: 0.25rem solid transparent;
-    width: 17.25rem;
+    border-left: 0rem solid transparent;
+    border-bottom: 0.25rem solid transparent;
+    /* Desktop */
+    /* width: 17.25rem; */
+    /* Tablet */
+    /* width: 6.5rem; */
   }
   & button {
     display: flex;
     flex-direction: column;
     align-items: center;
+    line-height: 1.5;
+    /* Desktop */
     padding-block: 1rem;
     padding-inline: 2rem;
     gap: 1rem;
     font-size: 1rem;
-    line-height: 1.5;
+    /* Tablet */
+    padding-block: 0.5rem;
+    padding-inline: 0.9375rem;
+    gap: 0.25rem;
+    font-size: 0.75rem;
 
     color: var(--grey-300);
+
+    & span {
+      display: none;
+    }
   }
 
   .checked {
-    border-left: 0.25rem solid var(--green);
-    background-color: var(--beige-100);
+    border-top-left-radius: 0.75rem;
     border-top-right-radius: 0.75rem;
-    border-bottom-right-radius: 0.75rem;
+    border-bottom-right-radius: 0rem;
+    border-left: 0rem solid transparent;
+    border-bottom-left-radius: 0rem;
+    border-bottom: 0.25rem solid var(--green);
+    background-color: var(--beige-100);
+
     & svg {
       color: var(--green);
     }
@@ -386,6 +410,14 @@ table {
   .mobile-name {
     display: none;
   }
+
+  #sidebar-menu {
+    & button {
+      & span {
+        display: block;
+      }
+    }
+  }
   .sender-desktop {
     display: table-cell;
   }
@@ -444,8 +476,23 @@ table {
   #sidebar-menu {
     flex-direction: column;
 
+    & li {
+      border-left: 0.25rem solid transparent;
+      border-bottom: 0;
+    }
+
     & button {
       flex-direction: row;
+    }
+
+    .checked {
+      border-left: 0.25rem solid var(--green);
+      border-bottom: 0;
+
+      border-top-right-radius: 0.75rem;
+      border-bottom-right-radius: 0.75rem;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
   #mini-menu {
