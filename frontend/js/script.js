@@ -1,4 +1,7 @@
 // const dataResponse = await fetch("/api/data");
+const dataResponse = await fetch("/backend/data.json");
+const data = await dataResponse.json();
+console.log(data);
 // const URL = "http://localhost:3000";
 // const dataResponse = await fetch(`${URL}/api/data`);
 // const data = await dataResponse.json();
@@ -13,10 +16,21 @@ const config = { attributes: true, childList: true, subtree: true };
 const itemsPerPage = 10;
 let currentTransactionsPage = 0;
 let transactionItems;
+const transactions = data["transactions"];
+
 // console.log(main);
 // Initialize the DOM parser
 const parser = new DOMParser();
 
+const options = {
+  year: "numeric",
+  month: "long",
+  day: "2-digit",
+};
+
+function createDate(date) {
+  return new Date(date).toLocaleDateString("en-AU", options);
+}
 // Parse the text
 // const doc = parser.parseFromString(html, "text/html");
 
@@ -33,10 +47,9 @@ const callback = (mutationList, observer) => {
   for (const mutation of mutationList) {
     if (mutation.type === "childList") {
       const ele = document.querySelector(".main-transactions");
-      if (
-        ele?.classList.contains("main-transactions") &&
-        !mutation.target.classList.contains("page-number-btns")
-      ) {
+      if (ele?.classList.contains("main-transactions")) {
+        // console.log("here");
+        observer.disconnect();
         transactionsUpdate();
       }
 
@@ -58,9 +71,51 @@ async function extractTemplate(id) {
 }
 
 function transactionsUpdate() {
+  const transactionsTable = main.querySelector("table > tbody");
+
+  for (const transaction of transactions) {
+    const date = createDate(transaction.date);
+    let amount = String(transaction.amount);
+    let amountTemp = transaction.amount.toFixed(2);
+    const pos = amountTemp.indexOf("-") == -1 ? 0 : 1;
+    let temp =
+      (pos == 0 ? "+" : "") +
+      amountTemp.substring(0, pos) +
+      "$" +
+      amountTemp.substring(pos);
+    // console.log(temp);
+    transactionsTable.insertAdjacentHTML(
+      "beforeend",
+      `  <tr>
+          <th colspan="1" role="row">
+            <img
+              class="profile-pic"
+              src="${transaction.avatar}"
+              alt="${transaction.name}" />
+            <p class="sender-desktop public-sans-bold title">${
+              transaction.name
+            }</p>
+          </th>
+          <td colspan="1">
+            <p class="mobile-name public-sans-bold title">${
+              transaction.name
+            }</p>
+            <p>${transaction.category}</p>
+          </td>
+
+          <td colspan="1" class="sender-desktop">${date}</td>
+          <td colspan="1">
+            <p class="public-sans-bold title ${
+              amount.includes("-") ? "" : "positive"
+            }">${temp}</p>
+            <p class="mobile-name">${date}</p>
+          </td>
+        </tr>`
+    );
+  }
   // recieve transaction rows
   transactionItems = Array.from(
-    main.querySelector("table").getElementsByTagName("tr")
+    transactionsTable.getElementsByTagName("tr")
   ).slice(1);
   // console.log(mutation);
   createPageButtons();
@@ -121,6 +176,7 @@ function checkRange(number) {
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
   if (liEle) {
+    observer.observe(main, config);
     const clone = templates[`${liEle.dataset.menu}`].content.cloneNode(true);
     main.replaceChildren(clone);
   }
