@@ -114,9 +114,7 @@ function transactionsUpdate() {
     );
   }
   // recieve transaction rows
-  transactionItems = Array.from(
-    transactionsTable.getElementsByTagName("tr")
-  ).slice(1);
+  transactionItems = Array.from(transactionsTable.getElementsByTagName("tr"));
   // console.log(mutation);
   createPageButtons();
   updateActiveButtonState();

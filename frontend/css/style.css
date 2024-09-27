@@ -246,10 +246,6 @@ tbody {
     align-items: center;
   }
 
-  & tr:first-child > :is(td, th) {
-    padding-block-start: 2rem;
-  }
-
   & tr > :is(td, th) {
     padding-inline: 1rem;
     padding-block: 0.75rem;
@@ -279,6 +275,9 @@ thead {
     font-size: 0.75rem;
     line-height: 1.5;
     /* border-right: 1px solid var(--grey-100); */
+  }
+  & tr:first-child > :is(td, th) {
+    /* border-bottom: 1.5rem solid transparent; */
   }
 }
 
