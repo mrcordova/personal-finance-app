@@ -9,6 +9,7 @@ console.log(data);
 // const transactionsBtn = document.querySelector("#transaction-btn");
 // const budgetsBtn = document.querySelector("#budgets-btn");
 const sidebarMenu = document.getElementById("sidebar-menu");
+const minimizeMenu = document.getElementById("mini-menu");
 const main = document.querySelector("main");
 
 const config = { attributes: true, childList: true, subtree: true };
@@ -173,6 +174,7 @@ function checkRange(number) {
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
+  console.log(e.target);
   if (liEle) {
     // console.log(liEle);
     const currentActiveLiEle = document.querySelector("li.checked");
@@ -182,6 +184,27 @@ sidebarMenu.addEventListener("click", async (e) => {
     observer.observe(main, config);
     const clone = templates[`${liEle.dataset.menu}`].content.cloneNode(true);
     main.replaceChildren(clone);
+  }
+});
+
+minimizeMenu.addEventListener("click", (e) => {
+  const nav = e.target.closest("nav");
+  const spans = nav.querySelectorAll("span");
+  const logo = nav.children[0];
+
+  logo.setAttribute(
+    "src",
+    logo.getAttribute("src").includes("large")
+      ? "./assets/images/logo-small.svg"
+      : "./assets/images/logo-large.svg"
+  );
+
+  for (const span of spans) {
+    if (span.style.display == "") {
+      span.style.display = "none";
+    } else {
+      span.style.display = "";
+    }
   }
 });
 
