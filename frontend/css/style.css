@@ -233,6 +233,19 @@ main {
 
     color: var(--grey-300);
   }
+
+  .checked {
+    border-left: 0.25rem solid var(--green);
+    background-color: var(--beige-100);
+    border-top-right-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+    & svg {
+      color: var(--green);
+    }
+    & button {
+      color: var(--grey-900);
+    }
+  }
 }
 
 tbody {

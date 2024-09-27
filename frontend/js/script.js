@@ -42,7 +42,7 @@ const templates = {
   pots: await extractTemplate("pots"),
   recurring: await extractTemplate("recurring"),
 };
-
+// console.log(templates);
 const callback = (mutationList, observer) => {
   for (const mutation of mutationList) {
     if (mutation.type === "childList") {
@@ -174,6 +174,11 @@ function checkRange(number) {
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
   if (liEle) {
+    // console.log(liEle);
+    const currentActiveLiEle = document.querySelector("li.checked");
+    currentActiveLiEle.classList.remove("checked");
+    liEle.classList.add("checked");
+    // console.log(templates[`${liEle.dataset.menu}`]);
     observer.observe(main, config);
     const clone = templates[`${liEle.dataset.menu}`].content.cloneNode(true);
     main.replaceChildren(clone);
@@ -183,7 +188,7 @@ sidebarMenu.addEventListener("click", async (e) => {
 main.addEventListener("click", (e) => {
   // console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
-  // console.log(pageButton);
+
   if (pageButton) {
     currentTransactionsPage =
       pageButton.dataset.page != undefined
