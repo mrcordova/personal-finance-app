@@ -18,8 +18,9 @@ const itemsPerPage = 10;
 let currentTransactionsPage = 0;
 let transactionItems;
 const searchOption = {
-  category: "",
+  category: "all transactions",
   sortBy: "",
+  previousCategory: "all transactions",
 };
 const transactions = data["transactions"];
 
@@ -172,13 +173,21 @@ function paginateData(data, currentPage) {
 
 function updateDisplay() {
   const filteredData = filterData(transactionItems);
+  // console.log(
+  //   searchOption.category.toLowerCase() ===
+  //     searchOption.previousCategory.toLowerCase()
+  // );
   currentTransactionsPage = checkRange(
-    currentTransactionsPage,
+    searchOption.category.toLowerCase() ===
+      searchOption.previousCategory.toLowerCase()
+      ? currentTransactionsPage
+      : 0,
     filteredData.length
   );
+  searchOption["previousCategory"] = searchOption["category"];
   const paginatedData = paginateData(filteredData, currentTransactionsPage);
 
-  console.log(paginatedData);
+  // console.log(paginatedData);
 
   const dataSet = new Set(paginatedData);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -196,9 +205,9 @@ function updateDisplay() {
     );
   }
 
-  const startIdx = currentTransactionsPage * itemsPerPage;
+  // const startIdx = currentTransactionsPage * itemsPerPage;
 
-  const endIdx = startIdx + itemsPerPage;
+  // const endIdx = startIdx + itemsPerPage;
 
   // console.log(arr);
   transactionItems.forEach((item, index) => {
@@ -208,7 +217,7 @@ function updateDisplay() {
   // currentTransactionsPage = 0;
   // console.log(Math.ceil(currentTransactionsPage / itemsPerPage) - 1);
 
-  console.log(currentTransactionsPage);
+  // console.log(currentTransactionsPage);
   // console.log(filteredData);
   // console.log(paginatedData);
   updateActiveButtonState();
@@ -301,6 +310,7 @@ main.addEventListener("click", (e) => {
       currentTransactionsPage,
       transactionItems.length
     );
+    // console.log(searchOption);
     // console.log(currentTransactionsPage);
     // showPage(currentTransactionsPage);
     // updateActiveButtonState();
@@ -312,6 +322,14 @@ main.addEventListener("click", (e) => {
     previousChoice.classList.remove("public-sans-bold");
     btn.parentElement.classList.add("public-sans-bold");
 
+    if (filterParameter.dataset.parameter === "category") {
+      searchOption["previousCategory"] =
+        filterParameter.previousElementSibling.childNodes[0].textContent
+          .trim()
+          .toLowerCase();
+    }
+
+    console.log(searchOption);
     searchOption[filterParameter.dataset.parameter] = btn.textContent;
     filterParameter.previousElementSibling.childNodes[0].textContent =
       btn.textContent;
