@@ -28,8 +28,8 @@ const sortByFuncs = {
   oldest: "oldest",
   "a to z": sortByAtoZ,
   "z to a": sortByZtoA,
-  highest: "highest",
-  lowest: "lowest",
+  highest: sortByHighestAmount,
+  lowest: sortByLowestAmount,
 };
 const transactions = data["transactions"];
 
@@ -103,7 +103,7 @@ function transactionsUpdate() {
       "beforeend",
       `  <tr data-category="${transaction.category}" data-name="${
         transaction.name
-      }">
+      }" data-amount="${transaction.amount}">
           <th colspan="1" role="row">
             <img
               class="profile-pic"
@@ -265,6 +265,12 @@ function sortByAtoZ(a, b) {
 function sortByZtoA(a, b) {
   return b.dataset.name.localeCompare(a.dataset.name);
 }
+function sortByLowestAmount(a, b) {
+  return a.dataset.amount - b.dataset.amount;
+}
+function sortByHighestAmount(a, b) {
+  return b.dataset.amount - a.dataset.amount;
+}
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
@@ -347,10 +353,10 @@ main.addEventListener("click", (e) => {
       transactionsTable.replaceChildren(...transactionItems);
 
       // console.log(transactionItems);
-      updateDisplay();
       searchOption[filterParameter.dataset.parameter] = btn.textContent;
       filterParameter.previousElementSibling.childNodes[0].textContent =
         btn.textContent;
+      updateDisplay();
     }
   }
 });
