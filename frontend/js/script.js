@@ -24,8 +24,8 @@ const searchOption = {
 };
 
 const sortByFuncs = {
-  latest: "latest",
-  oldest: "oldest",
+  latest: sortByLatest,
+  oldest: sortByOldest,
   "a to z": sortByAtoZ,
   "z to a": sortByZtoA,
   highest: sortByHighestAmount,
@@ -103,7 +103,7 @@ function transactionsUpdate() {
       "beforeend",
       `  <tr data-category="${transaction.category}" data-name="${
         transaction.name
-      }" data-amount="${transaction.amount}">
+      }" data-amount="${transaction.amount}" data-date="${transaction.date}">
           <th colspan="1" role="row">
             <img
               class="profile-pic"
@@ -271,6 +271,21 @@ function sortByLowestAmount(a, b) {
 function sortByHighestAmount(a, b) {
   return b.dataset.amount - a.dataset.amount;
 }
+function sortByLatest(a, b) {
+  return b.dataset.date > a.dataset.date
+    ? 1
+    : b.dataset.date < a.dataset.date
+    ? -1
+    : 0;
+}
+function sortByOldest(a, b) {
+  return a.dataset.date > b.dataset.date
+    ? 1
+    : a.dataset.date < b.dataset.date
+    ? -1
+    : 0;
+}
+
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
