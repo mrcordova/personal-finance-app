@@ -91,7 +91,7 @@ function transactionsUpdate() {
     // console.log(temp);
     transactionsTable.insertAdjacentHTML(
       "beforeend",
-      `  <tr>
+      `  <tr data-category="${transaction.category}">
           <th colspan="1" role="row">
             <img
               class="profile-pic"
@@ -105,7 +105,7 @@ function transactionsUpdate() {
             <p class="mobile-name public-sans-bold title">${
               transaction.name
             }</p>
-            <p>${transaction.category}</p>
+            <p  >${transaction.category}</p>
           </td>
 
           <td colspan="1" class="sender-desktop">${date}</td>
@@ -130,6 +130,8 @@ function showPage(page) {
   const startIdx = page * itemsPerPage;
 
   const endIdx = startIdx + itemsPerPage;
+
+  // console.log(arr);
   transactionItems.forEach((item, index) => {
     item.classList.toggle("hidden", index < startIdx || index >= endIdx);
   });
@@ -151,6 +153,70 @@ function createPageButtons() {
   }
 }
 
+function filterData(data) {
+  return data.filter((item) => {
+    return (
+      item.dataset.category.toLowerCase() ===
+        searchOption.category.toLowerCase() ||
+      searchOption.category.toLowerCase() === "all transactions" ||
+      searchOption.category === ""
+    );
+  });
+}
+
+function paginateData(data, currentPage) {
+  const startIdx = currentPage * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  return data.slice(startIdx, endIdx);
+}
+
+function updateDisplay() {
+  const filteredData = filterData(transactionItems);
+  currentTransactionsPage = checkRange(
+    currentTransactionsPage,
+    filteredData.length
+  );
+  const paginatedData = paginateData(filteredData, currentTransactionsPage);
+
+  console.log(paginatedData);
+
+  const dataSet = new Set(paginatedData);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  // console.log(paginatedData);
+
+  const pageNumberContainer = document.querySelector(".page-number-btns");
+  pageNumberContainer.replaceChildren();
+
+  for (let index = 0; index < totalPages; index++) {
+    // console.log(index);
+    pageNumberContainer.insertAdjacentHTML(
+      "beforeend",
+      `<button  data-nav="" data-page="${index}" >${index + 1}</button>`
+    );
+  }
+
+  const startIdx = currentTransactionsPage * itemsPerPage;
+
+  const endIdx = startIdx + itemsPerPage;
+
+  // console.log(arr);
+  transactionItems.forEach((item, index) => {
+    item.classList.toggle("hidden", !dataSet.has(item));
+  });
+
+  // currentTransactionsPage = 0;
+  // console.log(Math.ceil(currentTransactionsPage / itemsPerPage) - 1);
+
+  console.log(currentTransactionsPage);
+  // console.log(filteredData);
+  // console.log(paginatedData);
+  updateActiveButtonState();
+  // console.log(dataSet);/
+
+  // update the display with paginateData
+}
+
 function updateActiveButtonState() {
   const pageButtons = document.querySelectorAll("button[data-page]");
   pageButtons.forEach((btn, idx) => {
@@ -167,14 +233,21 @@ function updateActiveButtonState() {
   });
 }
 
-function checkRange(number) {
+function checkRange(number, max) {
   let n = Number(number);
-  n = Math.min(
-    Math.ceil(transactionItems.length / itemsPerPage) - 1,
-    Math.max(0, n)
-  );
+  n = Math.min(Math.ceil(max / itemsPerPage) - 1, Math.max(0, n));
   return n;
 }
+
+// function filterTransaction() {
+//   transactionItems.forEach((item, index) => {
+//     item.classList.toggle(
+//       "hidden",
+//       item.dataset.category.toLowerCase() !==
+//         searchOption.category.toLowerCase()
+//     );
+//   });
+// }
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
@@ -224,18 +297,25 @@ main.addEventListener("click", (e) => {
         ? pageButton.dataset.page
         : (currentTransactionsPage += parseInt(pageButton.dataset.move));
 
-    currentTransactionsPage = checkRange(currentTransactionsPage);
-    showPage(currentTransactionsPage);
-    updateActiveButtonState();
+    currentTransactionsPage = checkRange(
+      currentTransactionsPage,
+      transactionItems.length
+    );
+    // console.log(currentTransactionsPage);
+    // showPage(currentTransactionsPage);
+    // updateActiveButtonState();
+    updateDisplay();
   } else if (filterParameter) {
     const btn = e.target.closest("li").children[0];
     const previousChoice = filterParameter.querySelector(".public-sans-bold");
     // console.log(previousChoice);
     previousChoice.classList.remove("public-sans-bold");
-
     btn.parentElement.classList.add("public-sans-bold");
+
     searchOption[filterParameter.dataset.parameter] = btn.textContent;
     filterParameter.previousElementSibling.childNodes[0].textContent =
       btn.textContent;
+    // filterTransaction();
+    updateDisplay();
   }
 });
