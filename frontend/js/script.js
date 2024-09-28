@@ -22,6 +22,15 @@ const searchOption = {
   sortBy: "",
   previousCategory: "all transactions",
 };
+
+const sortByFuncs = {
+  latest: "latest",
+  oldest: "oldest",
+  "a to z": sortByAtoZ,
+  "z to a": sortByZtoA,
+  highest: "highest",
+  lowest: "lowest",
+};
 const transactions = data["transactions"];
 
 // console.log(main);
@@ -92,7 +101,9 @@ function transactionsUpdate() {
     // console.log(temp);
     transactionsTable.insertAdjacentHTML(
       "beforeend",
-      `  <tr data-category="${transaction.category}">
+      `  <tr data-category="${transaction.category}" data-name="${
+        transaction.name
+      }">
           <th colspan="1" role="row">
             <img
               class="profile-pic"
@@ -248,15 +259,12 @@ function checkRange(number, max) {
   return n;
 }
 
-// function filterTransaction() {
-//   transactionItems.forEach((item, index) => {
-//     item.classList.toggle(
-//       "hidden",
-//       item.dataset.category.toLowerCase() !==
-//         searchOption.category.toLowerCase()
-//     );
-//   });
-// }
+function sortByAtoZ(a, b) {
+  return a.dataset.name.localeCompare(b.dataset.name);
+}
+function sortByZtoA(a, b) {
+  return b.dataset.name.localeCompare(a.dataset.name);
+}
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
@@ -327,13 +335,22 @@ main.addEventListener("click", (e) => {
         filterParameter.previousElementSibling.childNodes[0].textContent
           .trim()
           .toLowerCase();
-    }
+      searchOption[filterParameter.dataset.parameter] = btn.textContent;
+      filterParameter.previousElementSibling.childNodes[0].textContent =
+        btn.textContent;
+      updateDisplay();
+    } else if (filterParameter.dataset.parameter === "sortBy") {
+      // console.log(sortByFuncs[btn.textContent.toLowerCase()]);
+      const transactionsTable = main.querySelector("table > tbody");
+      transactionItems.sort(sortByFuncs[btn.textContent.toLowerCase()]);
 
-    console.log(searchOption);
-    searchOption[filterParameter.dataset.parameter] = btn.textContent;
-    filterParameter.previousElementSibling.childNodes[0].textContent =
-      btn.textContent;
-    // filterTransaction();
-    updateDisplay();
+      transactionsTable.replaceChildren(...transactionItems);
+
+      // console.log(transactionItems);
+      updateDisplay();
+      searchOption[filterParameter.dataset.parameter] = btn.textContent;
+      filterParameter.previousElementSibling.childNodes[0].textContent =
+        btn.textContent;
+    }
   }
 });
