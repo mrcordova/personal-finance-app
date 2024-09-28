@@ -74,12 +74,21 @@ body {
     & > button {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      /* gap: 1rem; */
       padding-inline: 1.25rem;
+      justify-content: space-between;
       padding-block: 0.75rem;
       height: max-content;
       border: 1px solid var(--beige-500);
       border-radius: 0.5rem;
+
+      &#sort-by-btn {
+        min-width: 4.9511rem;
+      }
+
+      &#category-btn {
+        min-width: 8.28rem;
+      }
     }
 
     &:hover {
@@ -556,7 +565,7 @@ table {
     margin-block-end: 8.0775rem;
 
     & span {
-      padding-inline-end: 9.35rem;
+      /* padding-inline-end: 9.35rem; */
     }
   }
 }

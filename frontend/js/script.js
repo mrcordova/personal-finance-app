@@ -17,6 +17,10 @@ const config = { attributes: true, childList: true, subtree: true };
 const itemsPerPage = 10;
 let currentTransactionsPage = 0;
 let transactionItems;
+const searchOption = {
+  category: "",
+  sortBy: "",
+};
 const transactions = data["transactions"];
 
 // console.log(main);
@@ -174,7 +178,7 @@ function checkRange(number) {
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
-  console.log(e.target);
+  // console.log(e.target);
   if (liEle) {
     // console.log(liEle);
     const currentActiveLiEle = document.querySelector("li.checked");
@@ -211,6 +215,8 @@ minimizeMenu.addEventListener("click", (e) => {
 main.addEventListener("click", (e) => {
   // console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
+  const filterParameter = e.target.closest("menu");
+  // console.log(filterCategory);
 
   if (pageButton) {
     currentTransactionsPage =
@@ -218,10 +224,18 @@ main.addEventListener("click", (e) => {
         ? pageButton.dataset.page
         : (currentTransactionsPage += parseInt(pageButton.dataset.move));
 
-    // console.log(Math.ceil(transactionItems.length / itemsPerPage));
     currentTransactionsPage = checkRange(currentTransactionsPage);
-    // console.log(currentTransactionsPage);
     showPage(currentTransactionsPage);
     updateActiveButtonState();
+  } else if (filterParameter) {
+    const btn = e.target.closest("li").children[0];
+    const previousChoice = filterParameter.querySelector(".public-sans-bold");
+    // console.log(previousChoice);
+    previousChoice.classList.remove("public-sans-bold");
+
+    btn.parentElement.classList.add("public-sans-bold");
+    searchOption[filterParameter.dataset.parameter] = btn.textContent;
+    filterParameter.previousElementSibling.childNodes[0].textContent =
+      btn.textContent;
   }
 });
