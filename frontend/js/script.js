@@ -66,6 +66,20 @@ const callback = (mutationList, observer) => {
         // console.log("here");
         observer.disconnect();
         transactionsUpdate();
+        const searchInput = main.querySelector("#search-transaction");
+        searchInput.addEventListener("input", (e) => {
+          // console.log(e.target.value);
+          const val = e.target.value.toLowerCase();
+          transactionItems.forEach((item) => {
+            // console.log(item.dataset.name.includes(e.target.value));
+            item.classList.toggle(
+              "hidden",
+              !item.dataset.name.toLowerCase().startsWith(val)
+            );
+          });
+          // console.log(transactionItems);
+          // updateDisplay();
+        });
       }
 
       // console.log(transactionItems);
@@ -339,7 +353,7 @@ main.addEventListener("click", (e) => {
   // console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
   const filterParameter = e.target.closest("menu");
-  // console.log(filterCategory);
+  console.log(e.target.value);
 
   if (pageButton) {
     currentTransactionsPage =
