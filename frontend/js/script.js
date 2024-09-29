@@ -21,6 +21,7 @@ const searchOption = {
   category: "all transactions",
   sortBy: "",
   previousCategory: "all transactions",
+  search: "",
 };
 
 const sortByFuncs = {
@@ -68,17 +69,45 @@ const callback = (mutationList, observer) => {
         transactionsUpdate();
         const searchInput = main.querySelector("#search-transaction");
         searchInput.addEventListener("input", (e) => {
-          // console.log(e.target.value);
           const val = e.target.value.toLowerCase();
-          transactionItems.forEach((item) => {
-            // console.log(item.dataset.name.includes(e.target.value));
-            item.classList.toggle(
-              "hidden",
-              !item.dataset.name.toLowerCase().startsWith(val)
-            );
+          searchOption["search"] = val;
+
+          const nameItems = transactionItems.filter((item) => {
+            return item.dataset.name.toLowerCase().startsWith(val);
           });
-          // console.log(transactionItems);
-          // updateDisplay();
+
+          currentTransactionsPage = checkRange(
+            currentTransactionsPage,
+            nameItems.length
+          );
+
+          const paginatedData = paginateData(
+            nameItems,
+            currentTransactionsPage
+          );
+
+          // console.log(paginatedData);
+
+          const dataSet = new Set(paginatedData);
+          const totalPages = Math.ceil(nameItems.length / itemsPerPage);
+
+          const pageNumberContainer =
+            document.querySelector(".page-number-btns");
+          pageNumberContainer.replaceChildren();
+
+          for (let index = 0; index < totalPages; index++) {
+            // console.log(index);
+            pageNumberContainer.insertAdjacentHTML(
+              "beforeend",
+              `<button  data-nav="" data-page="${index}" >${index + 1}</button>`
+            );
+          }
+
+          transactionItems.forEach((item, index) => {
+            item.classList.toggle("hidden", !dataSet.has(item));
+          });
+
+          updateActiveButtonState();
         });
       }
 
@@ -182,10 +211,11 @@ function createPageButtons() {
 function filterData(data) {
   return data.filter((item) => {
     return (
-      item.dataset.category.toLowerCase() ===
+      (item.dataset.category.toLowerCase() ===
         searchOption.category.toLowerCase() ||
-      searchOption.category.toLowerCase() === "all transactions" ||
-      searchOption.category === ""
+        searchOption.category.toLowerCase() === "all transactions" ||
+        searchOption.category === "") &&
+      item.dataset.name.toLowerCase().startsWith(searchOption.search)
     );
   });
 }
@@ -217,8 +247,6 @@ function updateDisplay() {
   const dataSet = new Set(paginatedData);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  // console.log(paginatedData);
-
   const pageNumberContainer = document.querySelector(".page-number-btns");
   pageNumberContainer.replaceChildren();
 
@@ -230,25 +258,11 @@ function updateDisplay() {
     );
   }
 
-  // const startIdx = currentTransactionsPage * itemsPerPage;
-
-  // const endIdx = startIdx + itemsPerPage;
-
-  // console.log(arr);
   transactionItems.forEach((item, index) => {
     item.classList.toggle("hidden", !dataSet.has(item));
   });
 
-  // currentTransactionsPage = 0;
-  // console.log(Math.ceil(currentTransactionsPage / itemsPerPage) - 1);
-
-  // console.log(currentTransactionsPage);
-  // console.log(filteredData);
-  // console.log(paginatedData);
   updateActiveButtonState();
-  // console.log(dataSet);/
-
-  // update the display with paginateData
 }
 
 function updateActiveButtonState() {
@@ -353,7 +367,7 @@ main.addEventListener("click", (e) => {
   // console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
   const filterParameter = e.target.closest("menu");
-  console.log(e.target.value);
+  // console.log(e.target.value);
 
   if (pageButton) {
     currentTransactionsPage =
@@ -365,7 +379,7 @@ main.addEventListener("click", (e) => {
       currentTransactionsPage,
       transactionItems.length
     );
-    // console.log(searchOption);
+    console.log(searchOption);
     // console.log(currentTransactionsPage);
     // showPage(currentTransactionsPage);
     // updateActiveButtonState();
