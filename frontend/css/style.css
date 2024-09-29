@@ -186,6 +186,9 @@ main {
   border-radius: 0.75rem;
   display: flex;
   flex-direction: column;
+
+  /* min-width: min-content; */
+
   /* mobile */
   padding-block: 1.5rem;
   padding-inline: 1.25rem;
@@ -216,6 +219,8 @@ main {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+
+  /* min-width: max-content; */
 }
 
 .search-input {
@@ -343,6 +348,10 @@ main {
   }
 }
 
+table {
+  width: 100%;
+}
+
 tbody {
   /* display: block; */
   overflow: auto;
@@ -355,11 +364,39 @@ tbody {
   }
 
   & tr > :is(td, th) {
-    padding-inline: 1rem;
-    padding-block: 0.75rem;
     border-bottom: 1px solid var(--grey-100);
+    /* Mobile */
     font-size: 0.75rem;
     line-height: 1.5;
+    padding-inline: 0.75rem 0rem;
+    padding-block: 1rem;
+
+    /* Desktop */
+    /* font-size: 0.75rem; */
+    /* line-height: 1.5; */
+    /* padding-inline: 1rem; */
+    /* padding-block: 0.75rem; */
+    &:first-child {
+      padding-inline: 0;
+      /* max-width: min-content; */
+    }
+
+    /* &:nth-child(2) > p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    } */
+  }
+
+  & tr > :is(td) {
+    &:is(:nth-child(2)) > p {
+      /* width: 9.1875rem; */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 8.1875rem;
+      /* max-width: 0; */
+    }
   }
 
   & tr:not(.hidden):last-child > :is(td, th) {
@@ -460,8 +497,12 @@ thead {
   content: "...";
 } */
 .profile-pic {
-  width: 2.5rem;
   border-radius: 50%;
+  /* Mobile */
+  min-width: 2rem;
+  width: 2rem;
+  /* Desktop */
+  /* width: 2.5rem; */
 }
 
 table {

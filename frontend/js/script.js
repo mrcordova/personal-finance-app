@@ -40,7 +40,7 @@ const parser = new DOMParser();
 
 const options = {
   year: "numeric",
-  month: "long",
+  month: "short",
   day: "2-digit",
 };
 
