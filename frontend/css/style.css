@@ -95,6 +95,10 @@ body {
       cursor: pointer;
     }
   }
+
+  & > img {
+    min-width: 1rem;
+  }
 }
 
 .dropdown:hover .dropdown-content {
@@ -156,20 +160,37 @@ header {
 }
 main {
   flex: 1;
-  padding-block: 2rem;
-  padding-inline: 2.5rem;
   display: flex;
   flex-direction: column;
   background-color: var(--beige-100);
-  gap: 1rem;
+  /* mobile */
+  gap: 2rem;
+  padding-block: 1.5rem;
+  padding-inline: 1rem;
+  /* Desktop */
+  /* padding-block: 2rem; */
+  /* padding-inline: 2.5rem; */
+
+  & .header-container {
+    & > h1 {
+      color: var(--grey-900);
+      /* mobile */
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+  }
 }
 .main-transactions {
   flex: 1;
   background-color: var(--white);
   border-radius: 0.75rem;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
+  /* mobile */
+  padding-block: 1.5rem;
+  padding-inline: 1.25rem;
+  /* Desktop */
+  /* padding: 2rem; */
   gap: 1.5rem;
 }
 #mini-menu {
@@ -204,19 +225,35 @@ main {
   height: max-content;
   border-radius: 0.5rem;
   margin-inline-end: auto;
+
+  /* Mobile */
+  inline-size: 13.4375rem;
+
+  /* Dekstop */
+  /* inline-size: 20rem; */
   & input {
+    min-width: 0;
     border-radius: 0.5rem;
     border: 0;
+    outline: none;
+    /* Mobile */
     padding-inline-start: 1.25rem;
     padding-block: 0.75rem;
     font-size: 0.875rem;
     line-height: 1.5;
-    inline-size: 20rem;
-    outline: none;
+    /* Desktop */
+    padding-inline-start: 1.25rem;
+    padding-block: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
   }
 
   & img {
-    padding: 0.90625rem;
+    /* Mobile */
+    padding-inline: 1rem 0.90625rem;
+    padding-block: 0.90625rem;
+    /* Desktop */
+    /* padding: 0.90625rem; */
   }
 }
 .sidebar-logo {
@@ -387,6 +424,10 @@ thead {
   padding-inline: 1rem;
   padding-block: 0.59375rem;
   border-radius: 0.5rem;
+
+  & span {
+    display: none;
+  }
 }
 .page-controls {
   display: flex;
@@ -480,6 +521,11 @@ table {
     display: table-cell;
   }
 
+  .page-btns {
+    & span {
+      display: block;
+    }
+  }
   .page-number-btns {
     display: flex;
     gap: 0.5rem;

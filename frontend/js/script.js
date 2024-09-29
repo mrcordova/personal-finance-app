@@ -72,24 +72,24 @@ const callback = (mutationList, observer) => {
           const val = e.target.value.toLowerCase();
           searchOption["search"] = val;
 
-          const nameItems = transactionItems.filter((item) => {
+          const filteredNames = transactionItems.filter((item) => {
             return item.dataset.name.toLowerCase().startsWith(val);
           });
 
           currentTransactionsPage = checkRange(
             currentTransactionsPage,
-            nameItems.length
+            filteredNames.length
           );
 
           const paginatedData = paginateData(
-            nameItems,
+            filteredNames,
             currentTransactionsPage
           );
 
           // console.log(paginatedData);
 
           const dataSet = new Set(paginatedData);
-          const totalPages = Math.ceil(nameItems.length / itemsPerPage);
+          const totalPages = Math.ceil(filteredNames.length / itemsPerPage);
 
           const pageNumberContainer =
             document.querySelector(".page-number-btns");
@@ -379,7 +379,7 @@ main.addEventListener("click", (e) => {
       currentTransactionsPage,
       transactionItems.length
     );
-    console.log(searchOption);
+    // console.log(searchOption);
     // console.log(currentTransactionsPage);
     // showPage(currentTransactionsPage);
     // updateActiveButtonState();
