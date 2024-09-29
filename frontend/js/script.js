@@ -272,6 +272,12 @@ function sortByHighestAmount(a, b) {
   return b.dataset.amount - a.dataset.amount;
 }
 function sortByLatest(a, b) {
+  const bDate = b.dataset.date.substring(0, b.dataset.date.indexOf("T"));
+  const aDate = a.dataset.date.substring(0, a.dataset.date.indexOf("T"));
+
+  if (aDate == bDate) {
+    return b.dataset.date < a.dataset.date;
+  }
   return b.dataset.date > a.dataset.date
     ? 1
     : b.dataset.date < a.dataset.date
@@ -279,6 +285,12 @@ function sortByLatest(a, b) {
     : 0;
 }
 function sortByOldest(a, b) {
+  const bDate = b.dataset.date.substring(0, b.dataset.date.indexOf("T"));
+  const aDate = a.dataset.date.substring(0, a.dataset.date.indexOf("T"));
+
+  if (aDate == bDate) {
+    return a.dataset.date < b.dataset.date;
+  }
   return a.dataset.date > b.dataset.date
     ? 1
     : a.dataset.date < b.dataset.date
