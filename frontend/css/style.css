@@ -58,7 +58,7 @@ body {
   border-radius: 0.75rem;
 
   padding-inline: 1.25rem;
-  padding-block: 1.5rem;
+  padding-block: 1.5rem 1rem;
 }
 
 .budget-chart {
@@ -111,6 +111,62 @@ button[popovertarget] {
 .chart-card {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+
+  & .chart-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    & > h3 {
+      color: var(--grey-900);
+      font-size: 1.25rem;
+      line-height: 1.2;
+    }
+
+    & .chart-category {
+      color: var(--grey-500);
+      display: flex;
+      /* justify-content: space-between; */
+      padding-block: 1rem;
+      border-bottom: 1px solid var(--grey-100);
+      line-height: 1.5;
+
+      & p {
+        font-size: 0.75rem;
+        &:is(:nth-child(2)) {
+          padding-inline-start: 1rem;
+          font-size: 0.875rem;
+          margin-inline-end: auto;
+        }
+      }
+      & span {
+        color: var(--grey-900);
+        font-size: 1rem;
+      }
+
+      & div {
+        width: 0.25rem;
+        border-radius: 0.5rem;
+        background-color: var(--cyan);
+      }
+      &:first-child {
+        padding-block-start: 0;
+      }
+      &:last-child {
+        border-bottom-color: transparent;
+      }
+      &:nth-child(2) > div {
+        background-color: var(--yellow);
+      }
+      &:nth-child(3) > div {
+        background-color: var(--navy);
+      }
+
+      &:last-child > div {
+        background-color: var(--green);
+      }
+    }
+  }
 }
 .dropdown {
   display: inline-flex;
