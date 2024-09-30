@@ -58,7 +58,6 @@ button[popovertarget] {
 }
 
 .dropdown {
-  /* position: relative; */
   display: inline-flex;
   display: inline flex;
   height: max-content;
@@ -152,11 +151,9 @@ header {
 
   & nav {
     display: flex;
-    /* flex-direction: column; */
     align-items: flex-start;
     height: 100%;
     justify-content: center;
-    /* inline-size: 18.75rem; */
   }
 }
 main {
@@ -164,18 +161,12 @@ main {
   display: flex;
   flex-direction: column;
   background-color: var(--beige-100);
-  /* mobile */
   gap: 2rem;
   padding-block: 1.5rem;
   padding-inline: 1rem;
-  /* Desktop */
-  /* padding-block: 2rem; */
-  /* padding-inline: 2.5rem; */
-
   & .header-container {
     & > h1 {
       color: var(--grey-900);
-      /* mobile */
       font-size: 2rem;
       line-height: 1.2;
     }
@@ -188,18 +179,9 @@ main {
   display: flex;
   flex-direction: column;
 
-  /* min-width: min-content; */
-
   padding-inline: clamp(1.25rem, 0.5344rem + 3.0534vw, 2rem);
   padding-block: clamp(1.5rem, 1.0229rem + 2.0356vw, 2rem);
-  /* mobile */
-  /* padding-block: 1.5rem; */
-  /* padding-inline: 1.25rem; */
-  /* Tablet */
-  /* padding-block: 2rem; */
-  /* padding-inline: 2rem; */
-  /* Desktop */
-  /* padding: 2rem; */
+
   gap: 1.5rem;
 }
 #mini-menu {
@@ -225,8 +207,6 @@ main {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-
-  /* min-width: max-content; */
 }
 
 .search-input {
@@ -238,25 +218,12 @@ main {
   margin-inline-end: auto;
 
   inline-size: clamp(10.0625rem, 16.6579rem + -13.7405vw, 13.4375rem);
-  /* Mobile */
-  /* inline-size: 13.4375rem; */
 
-  /*  tablet*/
-  /* inline-size: 10.0625rem; */
-
-  /* Dekstop */
-  /* inline-size: 20rem; */
   & input {
     min-width: 0;
     border-radius: 0.5rem;
     border: 0;
     outline: none;
-    /* Mobile */
-    padding-inline-start: 1.25rem;
-    padding-block: 0.75rem;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    /* Desktop */
     padding-inline-start: 1.25rem;
     padding-block: 0.75rem;
     font-size: 0.875rem;
@@ -268,11 +235,8 @@ main {
   }
 
   & img {
-    /* Mobile */
     padding-inline: 1rem 0.90625rem;
     padding-block: 0.90625rem;
-    /* Desktop */
-    /* padding: 0.90625rem; */
   }
 }
 .sidebar-logo {
@@ -284,49 +248,21 @@ main {
   list-style: none;
 
   gap: clamp(0rem, -2.5048rem + 10.687vw, 2.625rem);
-  /* Desktop */
-  /* padding-inline-end: 1.5rem; */
-  /* padding-block-start: 0rem; */
-  /* Tablet */
+
   padding-inline-end: 0rem;
   padding-block-start: 0.5rem;
-  /* gap: 2.625rem; */
 
-  /* Mobile */
-  /* gap: 0; */
-
-  /* inline-size: 18.75rem; */
   margin-block-end: auto;
 
   & li {
     border-left: 0rem solid transparent;
     border-bottom: 0.25rem solid transparent;
-
-    /* Desktop */
-    /* width: 17.25rem; */
-    /* Tablet */
-    /* width: 6.5rem; */
   }
   & button {
     display: flex;
     flex-direction: column;
     align-items: center;
     line-height: 1.5;
-    /* Desktop */
-    /* padding-block: 1rem; */
-    /* padding-inline: 2rem; */
-    /* gap: 1rem; */
-    /* font-size: 1rem; */
-    /* Tablet */
-    /* padding-block: 0.5rem; */
-    /* padding-inline: 0.9375rem; */
-    /* gap: 0.25rem; */
-    /* font-size: 0.75rem; */
-    /* Mobile */
-    /* padding-block: 0.5rem; */
-    /* padding-inline: 1.39375rem; */
-    /* gap: 0.25rem; */
-    /* font-size: 0.75rem; */
 
     padding-block: 0.5rem;
     padding-inline: clamp(0.9375rem, 1.8291rem + -1.8575vw, 1.3938rem);
@@ -385,7 +321,6 @@ table {
 tbody {
   /* display: block; */
   overflow: auto;
-  /* height: 43.5rem; */
   color: var(--grey-500);
   th {
     display: flex;
@@ -395,38 +330,22 @@ tbody {
 
   & tr > :is(td, th) {
     border-bottom: 1px solid var(--grey-100);
-    /* Mobile */
     font-size: 0.75rem;
     line-height: 1.5;
     padding-inline: 1rem 0rem;
     padding-block: 1rem;
 
-    /* Desktop */
-    /* font-size: 0.75rem; */
-    /* line-height: 1.5; */
-    /* padding-inline: 1rem; */
-    /* padding-block: 0.75rem; */
     &:first-child {
       padding-inline: clamp(0rem, -1.1429rem + 2.381vw, 1rem) 0;
-      /* max-width: min-content; */
     }
-
-    /* &:nth-child(2) > p {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    } */
   }
 
   & tr > :is(td) {
     &:is(:nth-child(2)) > p {
-      /* width: 9.1875rem; */
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       width: clamp(8.1875rem, 3.1183rem + 21.6285vw, 13.5rem);
-      /* width: 8.1875rem; */
-      /* max-width: 0; */
     }
   }
 
@@ -450,10 +369,6 @@ thead {
     border-bottom: 1px solid var(--grey-100);
     font-size: 0.75rem;
     line-height: 1.5;
-    /* border-right: 1px solid var(--grey-100); */
-  }
-  & tr:first-child > :is(td, th) {
-    /* border-bottom: 1.5rem solid transparent; */
   }
 }
 
@@ -526,20 +441,11 @@ thead {
     }
   }
 }
-/* .ellipse::before {
-  content: "...";
-} */
+
 .profile-pic {
   border-radius: 50%;
   min-width: 2rem;
   width: clamp(2rem, 1.5229rem + 2.0356vw, 2.5rem);
-  /* Mobile */
-  /* width: 2rem; */
-  /* Tablet */
-  /* width: 2.5rem; */
-
-  /* Desktop */
-  /* width: 2.5rem; */
 }
 
 @media (min-width: 48rem) {
@@ -573,10 +479,6 @@ thead {
 
   .search-input {
     inline-size: clamp(10.0625rem, -1.2946rem + 23.6607vw, 20rem);
-    /* inline-size: 10.0625rem; */
-
-    /* Dekstop */
-    /* inline-size: 20rem; */
   }
 
   #sidebar-menu {
@@ -586,21 +488,9 @@ thead {
 
     & li {
       max-width: clamp(6.5rem, -5.7857rem + 25.5952vw, 17.25rem);
-      /* width: max-content; */
       min-width: min-content;
     }
     & button {
-      /* Desktop */
-      /* padding-block: 1rem; */
-      /* padding-inline: 2rem; */
-      /* gap: 1rem; */
-      /* font-size: 1rem; */
-      /* Tablet */
-      /* padding-block: 0.5rem; */
-      /* padding-inline: 0.9375rem; */
-      /* gap: 0.25rem; */
-      /* font-size: 0.75rem; */
-
       padding-block: clamp(0.5rem, -0.0714rem + 1.1905vw, 1rem);
       padding-inline: clamp(0.9375rem, -0.2768rem + 2.5298vw, 2rem);
       gap: clamp(0.25rem, -0.6071rem + 1.7857vw, 1rem);
@@ -628,10 +518,6 @@ thead {
         display: block;
       }
     }
-
-    /* .ellipse::before {
-      content: attr(data-page);
-    } */
   }
 
   thead {
@@ -640,25 +526,17 @@ thead {
   th:nth-child(1) {
     width: clamp(17rem, 5.8571rem + 23.2143vw, 26.75rem);
     padding-inline: clamp(0rem, -1.1429rem + 2.381vw, 1rem) 0;
-    /* Tablet */
-    /* width: 17rem; */
-    /* Desktop */
-    /* width: 26.75rem; */
   }
 
   tbody {
     & tr > :is(td) {
       &:is(:nth-child(2)) > p {
-        /* width: 9rem; */
         width: auto;
       }
     }
   }
-  td:nth-child(2) {
-    /* width: 9rem; */
-  }
+
   td:nth-child(3) {
-    /* width: 7.5rem; */
     & p {
       text-align: start;
     }
@@ -680,7 +558,6 @@ thead {
     border-bottom-right-radius: 1rem;
 
     & nav {
-      /* flex-direction: row; */
       flex-direction: column;
     }
   }
@@ -723,9 +600,5 @@ thead {
     line-height: 1.5;
     color: var(--grey-300);
     margin-block-end: 8.0775rem;
-
-    & span {
-      /* padding-inline-end: 9.35rem; */
-    }
   }
 }
