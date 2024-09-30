@@ -53,10 +53,50 @@ body {
   flex-direction: column-reverse;
 }
 
+.budget-card {
+  background-color: var(--white);
+  border-radius: 0.75rem;
+}
+
+.budget-chart {
+  width: 15rem;
+  height: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  background-color: red;
+  & > div {
+    /* position: absolute; */
+    border-radius: 50%;
+    border: 1rem solid hsl(from var(--white) h s l / 0.25);
+
+    & > p {
+      background-color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--grey-500);
+      gap: 0.5rem;
+      padding-block: 3.875rem 3.84375rem;
+      padding-inline: 3.3125rem 3.21875rem;
+      & > span {
+        color: var(--grey-900);
+        font-size: 2rem;
+        line-height: 1.2;
+      }
+    }
+  }
+}
 button[popovertarget] {
   min-width: 1rem;
 }
-
+.chart-card {
+  display: flex;
+  flex-direction: column;
+}
 .dropdown {
   display: inline-flex;
   display: inline flex;
@@ -162,13 +202,26 @@ main {
   flex-direction: column;
   background-color: var(--beige-100);
   gap: 2rem;
-  padding-block: 1.5rem;
-  padding-inline: 1rem;
+  padding-block: clamp(1.5rem, 1.0229rem + 2.0356vw, 2rem);
+  padding-inline: clamp(1rem, -0.4313rem + 6.1069vw, 2.5rem);
   & .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     & > h1 {
       color: var(--grey-900);
       font-size: 2rem;
       line-height: 1.2;
+    }
+
+    & > button {
+      color: var(--white);
+      background-color: var(--grey-900);
+      line-height: 1.5;
+      padding-inline: 1rem;
+      padding-block: 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
     }
   }
 }
@@ -182,6 +235,12 @@ main {
   padding-inline: clamp(1.25rem, 0.5344rem + 3.0534vw, 2rem);
   padding-block: clamp(1.5rem, 1.0229rem + 2.0356vw, 2rem);
 
+  gap: 1.5rem;
+}
+.main-budgets {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 #mini-menu {

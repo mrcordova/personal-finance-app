@@ -1,14 +1,13 @@
 <template id="budgets-template">
+  <div class="header-container public-sans-bold">
+    <h1>Budgets</h1>
+    <button>+ Add New Budget</button>
+  </div>
   <div>
-    <div>
-      <h1>Budgets</h1>
-      <button>+ Add New Budget</button>
-    </div>
-
     <!-- Add budget data -->
 
     <!-- Add/Edit budget start -->
-    <div>
+    <div class="main-budgets">
       <dialog>
         <div>
           <p>Add New Budget</p>
@@ -71,12 +70,13 @@
           <button>Add Budget</button>
         </form>
       </dialog>
-      <div>
-        <div>
+
+      <div class="budget-card chart-card">
+        <div class="budget-chart">
           <div>
-            <p>
-              $338
-              <span>of $975 limit</span>
+            <p class="public-sans-regular">
+              <span class="public-sans-bold">$338</span>
+              of $975 limit
             </p>
           </div>
         </div>
@@ -101,64 +101,67 @@
           </div>
         </div>
       </div>
+
       <div>
-        <div>
-          <div>
-            <span></span>
-            Entertainment
-          </div>
-          <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
-        </div>
-        <div>
-          <label for="max-progress">
-            Maximum of
-            <span>$50.00</span>
-          </label>
-          <progress max="10" value="1" id="max-progress">15</progress>
-
+        <div class="budget-card">
           <div>
             <div>
-              <p>Spent</p>
-              <span>$15.00</span>
+              <span></span>
+              Entertainment
             </div>
-            <div>
-              <p>Remaining</p>
-              <span>$35.00</span>
-            </div>
+            <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
           </div>
           <div>
-            <h3>Latest Spending</h3>
-
-            <button>
-              Seee All
-              <img
-                src="./assets/images/icon-caret-right.svg"
-                alt="caret right" />
-            </button>
+            <label for="max-progress">
+              Maximum of
+              <span>$50.00</span>
+            </label>
+            <progress max="10" value="1" id="max-progress">15</progress>
 
             <div>
               <div>
-                <div>
-                  <img
-                    src="./assets/images/avatars/james-thompson.jpg"
-                    alt="james-thompson" />
-                  <p>James Thomas</p>
-                </div>
-                <div>
-                  <p>-$5.00</p>
-                  <p>11 Aug 2024</p>
-                </div>
+                <p>Spent</p>
+                <span>$15.00</span>
               </div>
               <div>
+                <p>Remaining</p>
+                <span>$35.00</span>
+              </div>
+            </div>
+            <div>
+              <h3>Latest Spending</h3>
+
+              <button>
+                Seee All
+                <img
+                  src="./assets/images/icon-caret-right.svg"
+                  alt="caret right" />
+              </button>
+
+              <div>
                 <div>
-                  <img
-                    src="./assets/images/avatars/pixel-playground.jpg"
-                    alt="pixel playground" />
-                  <p>Pixel Playground</p>
+                  <div>
+                    <img
+                      src="./assets/images/avatars/james-thompson.jpg"
+                      alt="james-thompson" />
+                    <p>James Thomas</p>
+                  </div>
+                  <div>
+                    <p>-$5.00</p>
+                    <p>11 Aug 2024</p>
+                  </div>
                 </div>
                 <div>
-                  <p>-$10.00</p>
-                  <p>11 Aug 2024</p>
+                  <div>
+                    <img
+                      src="./assets/images/avatars/pixel-playground.jpg"
+                      alt="pixel playground" />
+                    <p>Pixel Playground</p>
+                  </div>
+                  <div>
+                    <p>-$10.00</p>
+                    <p>11 Aug 2024</p>
+                  </div>
                 </div>
               </div>
             </div>
