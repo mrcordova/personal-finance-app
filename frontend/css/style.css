@@ -56,20 +56,35 @@ body {
 .budget-card {
   background-color: var(--white);
   border-radius: 0.75rem;
+
+  padding-inline: 1.25rem;
+  padding-block: 1.5rem;
 }
 
 .budget-chart {
+  margin-block: 1.25rem;
+  margin-inline: 1.96875rem;
   width: 15rem;
   height: 15rem;
   display: flex;
   justify-content: center;
   align-items: center;
   align-self: center;
-  background-color: red;
+  border-radius: 50%;
+  background: conic-gradient(
+    at 50% 50%,
+    var(--green) 0%,
+    var(--green) 6%,
+    var(--cyan) 6%,
+    var(--cyan) 67%,
+    var(--yellow) 67%,
+    var(--yellow) 83%,
+    var(--navy) 83%,
+    var(--navy) 100%
+  );
   & > div {
-    /* position: absolute; */
     border-radius: 50%;
-    border: 1rem solid hsl(from var(--white) h s l / 0.25);
+    border: 0.79rem solid hsl(from var(--white) h s l / 0.25);
 
     & > p {
       background-color: var(--white);
@@ -80,8 +95,8 @@ body {
       align-items: center;
       color: var(--grey-500);
       gap: 0.5rem;
-      padding-block: 3.875rem 3.84375rem;
-      padding-inline: 3.3125rem 3.21875rem;
+      padding-block: 3.0625rem;
+      padding-inline: 2.5rem 2.4375rem;
       & > span {
         color: var(--grey-900);
         font-size: 2rem;
