@@ -178,6 +178,30 @@ button[popovertarget] {
         /* padding: 0.25rem; */
       }
     }
+
+    & .budget-numbers-container {
+      display: flex;
+      gap: 1rem;
+
+      & .budget-numbers {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        & p {
+          color: var(--grey-500);
+          font-size: 0.75rem;
+          line-height: 1.5;
+        }
+
+        & span {
+          color: var(--grey-900);
+          font-size: 0.875rem;
+          line-height: 1.5;
+        }
+      }
+    }
   }
 }
 .chart-card {
@@ -216,11 +240,11 @@ button[popovertarget] {
         font-size: 1rem;
       }
 
-      & div {
+      /* & div {
         width: 0.25rem;
         border-radius: 0.5rem;
-        /* background-color: var(--cyan); */
-      }
+        background-color: var(--cyan);
+      } */
       &:first-child {
         padding-block-start: 0;
       }
@@ -239,6 +263,12 @@ button[popovertarget] {
       } */
     }
   }
+}
+
+[data-theme] {
+  width: 0.25rem;
+  border-radius: 0.5rem;
+  background-color: var(--beige-100);
 }
 
 [data-theme="cyan"] {
