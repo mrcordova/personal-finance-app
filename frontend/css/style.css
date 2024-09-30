@@ -61,6 +61,12 @@ body {
   padding-block: 1.5rem 1rem;
 }
 
+.budget-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .budget-chart {
   margin-block: 1.25rem;
   margin-inline: 1.96875rem;
@@ -105,8 +111,74 @@ body {
     }
   }
 }
+
 button[popovertarget] {
   min-width: 1rem;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  & .theme-container {
+    display: flex;
+    justify-content: space-between;
+
+    & div {
+      display: flex;
+      align-items: center;
+      color: var(--grey-900);
+      gap: 1rem;
+      font-size: 1.25rem;
+      line-height: 1.2;
+      & div {
+        border-radius: 50%;
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+
+  & .budget-progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    & label {
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: var(--grey-500);
+    }
+
+    & progress {
+      /* --progress-value: var(--green); */
+
+      -webkit-appearance: none;
+      width: 100%;
+      height: 2rem;
+      border-radius: 0.25rem;
+      background-color: var(--beige-100);
+      /* color: var(--green); */
+      /* border-radius: 62.4375rem; */
+      /* margin-block-end: clamp(2.5rem, 1.0687rem + 6.1069vw, 4rem); */
+
+      &::-webkit-progress-bar {
+        background-color: var(--beige-100);
+        border-radius: 0.25rem;
+        /* border-radius: 62.4375rem; */
+        padding: 0.25rem;
+      }
+
+      &::-webkit-progress-value {
+        background-color: var(--progress-value);
+
+        max-height: 1.5rem;
+        border-radius: 0.25rem;
+        /* padding: 0.25rem; */
+      }
+    }
+  }
 }
 .chart-card {
   display: flex;
@@ -147,7 +219,7 @@ button[popovertarget] {
       & div {
         width: 0.25rem;
         border-radius: 0.5rem;
-        background-color: var(--cyan);
+        /* background-color: var(--cyan); */
       }
       &:first-child {
         padding-block-start: 0;
@@ -155,18 +227,31 @@ button[popovertarget] {
       &:last-child {
         border-bottom-color: transparent;
       }
-      &:nth-child(2) > div {
+      /* &:nth-child(2) > div {
         background-color: var(--yellow);
       }
       &:nth-child(3) > div {
         background-color: var(--navy);
-      }
+      } */
 
-      &:last-child > div {
+      /* &:last-child > div {
         background-color: var(--green);
-      }
+      } */
     }
   }
+}
+
+[data-theme="cyan"] {
+  background-color: var(--cyan);
+}
+[data-theme="yellow"] {
+  background-color: var(--yellow);
+}
+[data-theme="navy"] {
+  background-color: var(--navy);
+}
+[data-theme="green"] {
+  background-color: var(--green);
 }
 .dropdown {
   display: inline-flex;

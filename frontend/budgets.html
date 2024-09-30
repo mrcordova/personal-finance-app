@@ -85,7 +85,7 @@
 
           <div class="public-sans-regular">
             <div class="chart-category">
-              <div data-label=""></div>
+              <div data-theme="cyan"></div>
               <p>Bills</p>
               <p>
                 <span class="public-sans-bold">$250.00</span>
@@ -93,7 +93,7 @@
               </p>
             </div>
             <div class="chart-category">
-              <div data-label=""></div>
+              <div data-theme="yellow"></div>
               <p>Dining Out</p>
               <p>
                 <span class="public-sans-bold">$67.00</span>
@@ -101,7 +101,7 @@
               </p>
             </div>
             <div class="chart-category">
-              <div data-label=""></div>
+              <div data-theme="navy"></div>
               <p>Personal Care</p>
               <p>
                 <span class="public-sans-bold">$65.00</span>
@@ -109,7 +109,7 @@
               </p>
             </div>
             <div class="chart-category">
-              <div data-label=""></div>
+              <div data-theme="green"></div>
               <p>Entertainment</p>
               <p>
                 <span class="public-sans-bold">$25.00</span>
@@ -120,11 +120,84 @@
         </div>
       </div>
 
-      <div>
+      <div class="budget-cards">
+        <div class="budget-card category-card public-sans-regular">
+          <div class="theme-container">
+            <div class="public-sans-bold">
+              <div data-theme="green"></div>
+              Entertainment
+            </div>
+            <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+          </div>
+          <div class="budget-progress-container">
+            <label for="Entertainment-progress">
+              Maximum of
+              <span>$50.00</span>
+            </label>
+            <progress
+              data-theme="green"
+              max="10"
+              value="5"
+              id="Entertainment-progress"
+              style="--progress-value: var(--green)">
+              50
+            </progress>
+
+            <div>
+              <div>
+                <p>Spent</p>
+                <span>$15.00</span>
+              </div>
+              <div>
+                <p>Remaining</p>
+                <span>$35.00</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <h3>Latest Spending</h3>
+
+              <button>
+                Seee All
+                <img
+                  src="./assets/images/icon-caret-right.svg"
+                  alt="caret right" />
+              </button>
+
+              <div>
+                <div>
+                  <div>
+                    <img
+                      src="./assets/images/avatars/james-thompson.jpg"
+                      alt="james-thompson" />
+                    <p>James Thomas</p>
+                  </div>
+                  <div>
+                    <p>-$5.00</p>
+                    <p>11 Aug 2024</p>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <img
+                      src="./assets/images/avatars/pixel-playground.jpg"
+                      alt="pixel playground" />
+                    <p>Pixel Playground</p>
+                  </div>
+                  <div>
+                    <p>-$10.00</p>
+                    <p>11 Aug 2024</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="budget-card">
           <div>
             <div>
-              <span></span>
+              <span data-theme="green"></span>
               Entertainment
             </div>
             <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
