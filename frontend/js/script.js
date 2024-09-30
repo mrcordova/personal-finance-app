@@ -367,8 +367,7 @@ main.addEventListener("click", (e) => {
   // console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
   const filterParameter = e.target.closest("menu");
-  // console.log(e.target.value);
-
+  const mobileFilter = e.target.closest("img[data-dropdown]");
   if (pageButton) {
     currentTransactionsPage =
       pageButton.dataset.page != undefined
@@ -387,31 +386,37 @@ main.addEventListener("click", (e) => {
   } else if (filterParameter) {
     const btn = e.target.closest("li").children[0];
     const previousChoice = filterParameter.querySelector(".public-sans-bold");
-    // console.log(previousChoice);
+
     previousChoice.classList.remove("public-sans-bold");
     btn.parentElement.classList.add("public-sans-bold");
 
+    // console.log(filterParameter);
     if (filterParameter.dataset.parameter === "category") {
+      const categoryBtn = main.querySelector("button#category-btn");
       searchOption["previousCategory"] =
         filterParameter.previousElementSibling.childNodes[0].textContent
           .trim()
           .toLowerCase();
       searchOption[filterParameter.dataset.parameter] = btn.textContent;
-      filterParameter.previousElementSibling.childNodes[0].textContent =
-        btn.textContent;
+
+      categoryBtn.childNodes[0].textContent = btn.textContent;
       updateDisplay();
     } else if (filterParameter.dataset.parameter === "sortBy") {
       // console.log(sortByFuncs[btn.textContent.toLowerCase()]);
       const transactionsTable = main.querySelector("table > tbody");
+      const sortByBtn = main.querySelector("button#sort-by-btn");
       transactionItems.sort(sortByFuncs[btn.textContent.toLowerCase()]);
 
       transactionsTable.replaceChildren(...transactionItems);
 
+      // console.log(sortByBtn);
       // console.log(transactionItems);
       searchOption[filterParameter.dataset.parameter] = btn.textContent;
-      filterParameter.previousElementSibling.childNodes[0].textContent =
-        btn.textContent;
+      sortByBtn.childNodes[0].textContent = btn.textContent;
       updateDisplay();
     }
+  } else if (mobileFilter) {
+    // console.log(mobileFilter);
+    // mobileFilter.nextElementSibling.showModal();
   }
 });

@@ -43,7 +43,38 @@
             </li>
           </menu>
         </div>
-        <img src="./assets/images/icon-sort-mobile.svg" alt="sort by" />
+        <button popovertarget="sortByDialog">
+          <img
+            data-dropdown=""
+            src="./assets/images/icon-sort-mobile.svg"
+            alt="sort by" />
+        </button>
+        <!-- <dialog > -->
+        <menu
+          id="sortByDialog"
+          popover
+          class="dropdown-content popover"
+          data-parameter="sortBy">
+          <li class="public-sans-bold">
+            <button>Latest</button>
+          </li>
+          <li>
+            <button>Oldest</button>
+          </li>
+          <li>
+            <button>A to Z</button>
+          </li>
+          <li>
+            <button>Z to A</button>
+          </li>
+          <li>
+            <button>Highest</button>
+          </li>
+          <li>
+            <button>Lowest</button>
+          </li>
+        </menu>
+        <!-- </dialog> -->
       </div>
       <div class="dropdown public-sans-regular" aria-label="Category">
         <label for="category-btn">Category</label>
@@ -90,7 +121,50 @@
             </li>
           </menu>
         </div>
-        <img src="./assets/images/icon-filter-mobile.svg" alt="Category" />
+        <button>
+          <img
+            data-dropdown
+            src="./assets/images/icon-filter-mobile.svg"
+            alt="Category" />
+        </button>
+        <menu
+          popover
+          class="dropdown-content popover"
+          data-parameter="category">
+          <li class="public-sans-bold">
+            <button>All Transactions</button>
+          </li>
+          <li>
+            <button>Entertainment</button>
+          </li>
+          <li>
+            <button>Bills</button>
+          </li>
+          <li>
+            <button>Groceries</button>
+          </li>
+          <li>
+            <button>Dining Out</button>
+          </li>
+          <li>
+            <button>Transportaion</button>
+          </li>
+          <li>
+            <button>Personal Care</button>
+          </li>
+          <li>
+            <button>Education</button>
+          </li>
+          <li>
+            <button>Lifestyle</button>
+          </li>
+          <li>
+            <button>Shopping</button>
+          </li>
+          <li>
+            <button>General</button>
+          </li>
+        </menu>
       </div>
     </div>
 
@@ -105,9 +179,7 @@
         <th class="public-sans-regular" scope="col">Transaction Date</th>
         <th class="public-sans-regular" scope="col">Amount</th>
       </thead>
-      <tbody>
-       
-      </tbody>
+      <tbody></tbody>
     </table>
 
     <nav aria-label="pagination" class="page-controls">
@@ -119,10 +191,10 @@
         <!-- <button  data-nav="" data-page="1" class="active">1</button> -->
         <!-- <button  data-nav="" data-page="2" >2</button> -->
       </div>
-      <button    data-nav="" data-move="1" class="page-btns public-sans-regular">
+      <button data-nav="" data-move="1" class="page-btns public-sans-regular">
         <span>Next</span>
         <img src="./assets/images/icon-caret-right.svg" alt="right caret" />
       </button>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </template>
