@@ -101,10 +101,6 @@ body {
   }
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 .dropdown-content {
   max-height: 18.75rem;
   overflow-y: auto;
@@ -351,9 +347,18 @@ main {
 .popover {
   margin: auto;
   border: 0;
+  display: none;
   /* height: 100%; */
   /* width: 23.5rem;
   height: 23rem; */
+
+  &::backdrop {
+    background-color: hsl(from black h s l / 0.25);
+  }
+}
+
+:popover-open {
+  display: block;
 }
 table {
   width: 100%;
@@ -531,6 +536,17 @@ thead {
     }
   }
 
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown:hover .popover {
+    display: none;
+  }
+
+  :popover-open {
+    display: none;
+  }
   .mobile-name {
     display: none;
   }
