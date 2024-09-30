@@ -108,6 +108,10 @@ Use this section to outline areas that you want to continue focusing on in futur
 
 https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
 https://www.sitepoint.com/simple-pagination-html-css-javascript/
+https://stackoverflow.com/questions/9789723/css-text-overflow-in-a-table-cell
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options
+
+https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date-property
 
 - [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
 - [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
