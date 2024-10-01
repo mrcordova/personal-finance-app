@@ -390,10 +390,13 @@ main.addEventListener("click", (e) => {
     const btn = e.target.closest("li").children[0];
 
     // console.log(btn);
-    const previousChoice = filterParameter.querySelector(".public-sans-bold");
 
-    previousChoice?.classList.remove("public-sans-bold");
-    btn.parentElement.classList.add("public-sans-bold");
+    if (filterParameter.dataset.parameter !== "editBudget") {
+      const previousChoice = filterParameter.querySelector(".public-sans-bold");
+
+      previousChoice?.classList.remove("public-sans-bold");
+      btn.parentElement.classList.add("public-sans-bold");
+    }
 
     // console.log(filterParameter);
     if (filterParameter.dataset.parameter === "category") {
@@ -420,12 +423,22 @@ main.addEventListener("click", (e) => {
       sortByBtn.childNodes[0].textContent = btn.textContent;
       updateDisplay();
     } else if (filterParameter.dataset.parameter === "editBudget") {
-      console.log(btn.dataset);
+      // console.log(btn.dataset);
       if (btn.dataset.action === "delete") {
         const deleteDialog = document.querySelector("#delete-budget-dialog");
         const dialogCateTitle = deleteDialog.querySelector("[data-category]");
-        dialogCateTitle.textContent = budgetCard.dataset.category;
+
+        dialogCateTitle.textContent = budgetCard.dataset.category.trim();
         deleteDialog.showModal();
+
+        deleteDialog.addEventListener("click", (e) => {
+          const btn = e.target.closest("button");
+          const choice = btn.dataset.action;
+          if (choice === "delete") {
+            budgetCard.remove();
+          }
+          deleteDialog.close();
+        });
         // console.log();
         // btn.closest("div.budget-card").remove();
       }

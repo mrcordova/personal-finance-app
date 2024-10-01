@@ -9,13 +9,13 @@
   <!-- Add/Edit budget start -->
   <div class="main-budgets">
     <dialog id="delete-budget-dialog">
-      <div>
-        <p>
-          Delete '
+      <div class="dialog-title">
+        <p class="public-sans-bold">
+          Delete &OpenCurlyQuote;
           <span data-category></span>
-          ' ?
+          &CloseCurlyQuote;?
         </p>
-        <button>
+        <button data-action="close">
           <img src="./assets/images/icon-close-modal.svg" alt="close" />
         </button>
       </div>
@@ -23,8 +23,12 @@
         Are you sure you want to delete this budget? This action cannot be
         reversed, and all the data inside it will be removed forever.
       </p>
-      <button>Yes, Confirm Deletion</button>
-      <button>No, I want to Back</button>
+      <button data-action="delete" class="yes-btn public-sans-bold">
+        Yes, Confirm Deletion
+      </button>
+      <button data-action="close" class="no-btn public-sans-regular">
+        No, I want to Back
+      </button>
     </dialog>
     <dialog>
       <div>
@@ -254,7 +258,9 @@
           </table>
         </div>
       </div>
-      <div class="budget-card category-card public-sans-regular">
+      <div
+        data-category="Bills"
+        class="budget-card category-card public-sans-regular">
         <div class="theme-container">
           <div class="public-sans-bold">
             <div data-theme="cyan"></div>

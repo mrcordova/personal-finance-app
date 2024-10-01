@@ -391,6 +391,42 @@ dialog#delete-budget-dialog[open] {
   margin: auto;
   border-radius: 0.75rem;
   gap: 1.25rem;
+  padding-block: 1.5rem;
+  padding-inline: 1.25rem;
+
+  min-width: 20.9375rem;
+
+  & .dialog-title {
+    display: flex;
+    justify-content: space-between;
+
+    & > p {
+      font-size: 1.25rem;
+      line-height: 1.2;
+      color: var(--grey-900);
+    }
+  }
+
+  & p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--grey-500);
+  }
+  & .yes-btn {
+    background-color: var(--red);
+    color: var(--white);
+    border-radius: 0.75rem;
+    padding-block: 1rem;
+  }
+
+  & .no-btn {
+    color: var(--grey-500);
+  }
+  & button {
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
 }
 .dropdown {
   display: inline-flex;
