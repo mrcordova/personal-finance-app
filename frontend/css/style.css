@@ -130,7 +130,7 @@ button[popovertarget] {
     & img {
       width: 1rem;
     }
-    & div {
+    & .theme-title {
       display: flex;
       align-items: center;
       color: var(--grey-900);
@@ -141,6 +141,26 @@ button[popovertarget] {
         border-radius: 50%;
         width: 1rem;
         height: 1rem;
+      }
+    }
+
+    & .dropdown {
+      position: relative;
+
+      & .dropdown-content {
+        position: absolute;
+        /* display: block; */
+        width: 8.375rem;
+        bottom: -5.6875rem;
+        left: -7.375rem;
+
+        & #delete-btn {
+          color: var(--red);
+        }
+      }
+
+      & .show-drop-content {
+        display: block;
       }
     }
   }

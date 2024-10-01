@@ -364,10 +364,12 @@ minimizeMenu.addEventListener("click", (e) => {
 });
 
 main.addEventListener("click", (e) => {
-  // console.log(e.target);
+  console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
   const filterParameter = e.target.closest("menu");
   const mobileFilter = e.target.closest("img[data-dropdown]");
+  const budgetEditBtn = e.target.closest("button[data-budget-show]");
+
   if (pageButton) {
     currentTransactionsPage =
       pageButton.dataset.page != undefined
@@ -418,5 +420,15 @@ main.addEventListener("click", (e) => {
   } else if (mobileFilter) {
     // console.log(mobileFilter);
     // mobileFilter.nextElementSibling.showModal();
+  } else if (budgetEditBtn) {
+    budgetEditBtn.nextElementSibling.classList.toggle(
+      "show-drop-content",
+      budgetEditBtn.dataset.budgetShow === "true" ? true : false
+    );
+
+    budgetEditBtn.setAttribute(
+      "data-budget-show",
+      budgetEditBtn.dataset.budgetShow === "true" ? "false" : "true"
+    );
   }
 });

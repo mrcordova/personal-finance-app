@@ -123,11 +123,20 @@
     <div class="budget-cards">
       <div class="budget-card category-card public-sans-regular">
         <div class="theme-container">
-          <div class="public-sans-bold">
+          <div class="theme-title public-sans-bold">
             <div data-theme="green"></div>
             Entertainment
           </div>
-          <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+          <div class="dropdown">
+            <button data-budget-show="true">
+              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+            </button>
+
+            <menu class="dropdown-content">
+              <li><button>Edit Budget</button></li>
+              <li><button id="delete-btn">Delete Budget</button></li>
+            </menu>
+          </div>
         </div>
         <div class="budget-progress-container">
           <label for="Entertainment-progress">
@@ -168,7 +177,6 @@
             </button>
           </div>
 
-          <!-- <div> -->
           <table class="latest-spending-table">
             <tbody>
               <tr>
@@ -224,8 +232,6 @@
               </tr>
             </tbody>
           </table>
-          <!-- </div> -->
-          <!-- </div> -->
         </div>
       </div>
       <div class="budget-card category-card public-sans-regular">
@@ -234,7 +240,16 @@
             <div data-theme="cyan"></div>
             Bills
           </div>
-          <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+          <div class="dropdown">
+            <button data-budget-show="true">
+              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+            </button>
+
+            <menu class="dropdown-content">
+              <li><button>Edit Budget</button></li>
+              <li><button id="delete-btn">Delete Budget</button></li>
+            </menu>
+          </div>
         </div>
         <div class="budget-progress-container">
           <label for="Entertainment-progress">
