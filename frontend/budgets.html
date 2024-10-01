@@ -3,307 +3,338 @@
     <h1>Budgets</h1>
     <button>+ Add New Budget</button>
   </div>
-  <div>
-    <!-- Add budget data -->
+  <!-- <div> -->
+  <!-- Add budget data -->
 
-    <!-- Add/Edit budget start -->
-    <div class="main-budgets">
-      <dialog>
+  <!-- Add/Edit budget start -->
+  <div class="main-budgets">
+    <dialog>
+      <div>
+        <p>Add New Budget</p>
+        <img src="./assets/images/icon-close-modal.svg" alt="close" />
+      </div>
+      <p>
+        Choose a category to set a spending budget. These categories can help
+        you monitor spending.
+      </p>
+      <form>
         <div>
-          <p>Add New Budget</p>
-          <img src="./assets/images/icon-close-modal.svg" alt="close" />
+          <label for="budget-cate-btn">Budget Category</label>
+          <button id="budget-cate-btn">
+            Entertainment
+            <img
+              src="./assets/images/icon-caret-down.svg"
+              alt="drop down caret" />
+          </button>
+          <menu>
+            <li>All Transactions</li>
+            <li>Entertainment</li>
+            <li>Bills</li>
+            <li>Groceries</li>
+            <li>Dining Out</li>
+            <li>Personal Care</li>
+            <li>Education</li>
+            <li>Lifestyle</li>
+            <li>Shopping</li>
+            <li>General</li>
+          </menu>
         </div>
-        <p>
-          Choose a category to set a spending budget. These categories can help
-          you monitor spending.
-        </p>
-        <form>
-          <div>
-            <label for="budget-cate-btn">Budget Category</label>
-            <button id="budget-cate-btn">
-              Entertainment
-              <img
-                src="./assets/images/icon-caret-down.svg"
-                alt="drop down caret" />
-            </button>
-            <menu>
-              <li>All Transactions</li>
-              <li>Entertainment</li>
-              <li>Bills</li>
-              <li>Groceries</li>
-              <li>Dining Out</li>
-              <li>Personal Care</li>
-              <li>Education</li>
-              <li>Lifestyle</li>
-              <li>Shopping</li>
-              <li>General</li>
-            </menu>
-          </div>
-          <div>
-            <label for="max-spend">Maximum Spend</label>
-            <input type="text" id="max-spend" />
-          </div>
-          <div>
-            <label for="theme">Budget Category</label>
-            <button id="theme">
+        <div>
+          <label for="max-spend">Maximum Spend</label>
+          <input type="text" id="max-spend" />
+        </div>
+        <div>
+          <label for="theme">Budget Category</label>
+          <button id="theme">
+            <span></span>
+            Green
+            <img
+              src="./assets/images/icon-caret-down.svg"
+              alt="drop down caret" />
+          </button>
+          <menu>
+            <li>
               <span></span>
               Green
-              <img
-                src="./assets/images/icon-caret-down.svg"
-                alt="drop down caret" />
-            </button>
-            <menu>
-              <li>
-                <span></span>
-                Green
-              </li>
-              <li>
-                <span></span>
-                Yellow
-              </li>
-              <li>
-                <span></span>
-                Cyan
-              </li>
-            </menu>
-          </div>
-          <button>Add Budget</button>
-        </form>
-      </dialog>
+            </li>
+            <li>
+              <span></span>
+              Yellow
+            </li>
+            <li>
+              <span></span>
+              Cyan
+            </li>
+          </menu>
+        </div>
+        <button>Add Budget</button>
+      </form>
+    </dialog>
 
-      <div class="budget-card chart-card">
-        <div class="budget-chart">
-          <div>
-            <p class="public-sans-regular">
-              <span class="public-sans-bold">$407</span>
-              of $975 limit
+    <div class="budget-card chart-card">
+      <div class="budget-chart">
+        <div>
+          <p class="public-sans-regular">
+            <span class="public-sans-bold">$407</span>
+            of $975 limit
+          </p>
+        </div>
+      </div>
+      <div class="chart-summary">
+        <h3 class="public-sans-bold">Spending Summary</h3>
+
+        <div class="public-sans-regular">
+          <div class="chart-category">
+            <div data-theme="cyan"></div>
+            <p>Bills</p>
+            <p>
+              <span class="public-sans-bold">$250.00</span>
+              &ThickSpace; of $750.00
+            </p>
+          </div>
+          <div class="chart-category">
+            <div data-theme="yellow"></div>
+            <p>Dining Out</p>
+            <p>
+              <span class="public-sans-bold">$67.00</span>
+              &ThickSpace; of $75.00
+            </p>
+          </div>
+          <div class="chart-category">
+            <div data-theme="navy"></div>
+            <p>Personal Care</p>
+            <p>
+              <span class="public-sans-bold">$65.00</span>
+              &ThickSpace; of $100.00
+            </p>
+          </div>
+          <div class="chart-category">
+            <div data-theme="green"></div>
+            <p>Entertainment</p>
+            <p>
+              <span class="public-sans-bold">$25.00</span>
+              &ThickSpace; of $50.00
             </p>
           </div>
         </div>
-        <div class="chart-summary">
-          <h3 class="public-sans-bold">Spending Summary</h3>
-
-          <div class="public-sans-regular">
-            <div class="chart-category">
-              <div data-theme="cyan"></div>
-              <p>Bills</p>
-              <p>
-                <span class="public-sans-bold">$250.00</span>
-                &ThickSpace; of $750.00
-              </p>
-            </div>
-            <div class="chart-category">
-              <div data-theme="yellow"></div>
-              <p>Dining Out</p>
-              <p>
-                <span class="public-sans-bold">$67.00</span>
-                &ThickSpace; of $75.00
-              </p>
-            </div>
-            <div class="chart-category">
-              <div data-theme="navy"></div>
-              <p>Personal Care</p>
-              <p>
-                <span class="public-sans-bold">$65.00</span>
-                &ThickSpace; of $100.00
-              </p>
-            </div>
-            <div class="chart-category">
-              <div data-theme="green"></div>
-              <p>Entertainment</p>
-              <p>
-                <span class="public-sans-bold">$25.00</span>
-                &ThickSpace; of $50.00
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
+    </div>
 
-      <div class="budget-cards">
-        <div class="budget-card category-card public-sans-regular">
-          <div class="theme-container">
-            <div class="public-sans-bold">
-              <div data-theme="green"></div>
-              Entertainment
-            </div>
-            <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+    <div class="budget-cards">
+      <div class="budget-card category-card public-sans-regular">
+        <div class="theme-container">
+          <div class="public-sans-bold">
+            <div data-theme="green"></div>
+            Entertainment
           </div>
-          <div class="budget-progress-container">
-            <label for="Entertainment-progress">
-              Maximum of
-              <span>$50.00</span>
-            </label>
-            <progress
-              data-theme="green"
-              max="10"
-              value="5"
-              id="Entertainment-progress"
-              style="--progress-value: var(--green)">
-              50
-            </progress>
+          <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+        </div>
+        <div class="budget-progress-container">
+          <label for="Entertainment-progress">
+            Maximum of
+            <span>$50.00</span>
+          </label>
+          <progress
+            data-theme="green"
+            max="10"
+            value="5"
+            id="Entertainment-progress"
+            style="--progress-value: var(--green)">
+            50
+          </progress>
 
-            <div class="budget-numbers-container">
-              <div data-theme="green"></div>
-              <div class="budget-numbers">
-                <p>Spent</p>
-                <span class="public-sans-bold">$15.00</span>
-              </div>
-              <div data-theme></div>
-              <div class="budget-numbers">
-                <p>Remaining</p>
-                <span class="public-sans-bold">$35.00</span>
-              </div>
+          <div class="budget-numbers-container">
+            <div data-theme="green"></div>
+            <div class="budget-numbers">
+              <p>Spent</p>
+              <span class="public-sans-bold">$15.00</span>
             </div>
-          </div>
-          <!-- <div> -->
-          <div class="latest-spending-container">
-            <div class="latest-spending-header">
-              <h3 class="public-sans-bold">Latest Spending</h3>
-              <button>
-                <span>See All</span>
-                <img
-                  src="./assets/images/icon-caret-right.svg"
-                  alt="caret right" />
-              </button>
+            <div data-theme></div>
+            <div class="budget-numbers">
+              <p>Remaining</p>
+              <span class="public-sans-bold">$35.00</span>
             </div>
-
-            <!-- <div> -->
-            <table class="latest-spending-table">
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="table-name">
-                      <img
-                        loading="lazy"
-                        src="./assets/images/avatars/james-thompson.jpg"
-                        alt="james-thompson" />
-                      <p class="public-sans-bold">James Thomas</p>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="spending-info">
-                      <p class="spending-amount public-sans-bold">-$10.00</p>
-                      <p class="speding-date">16 Aug 2024</p>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="table-name">
-                      <img
-                        loading="lazy"
-                        src="./assets/images/avatars/savory-bites-bistro.jpg"
-                        alt="james-thompson" />
-                      <p class="public-sans-bold">Quebec Services</p>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="spending-info">
-                      <p class="spending-amount public-sans-bold">-$5.00</p>
-                      <p class="speding-date">12 Aug 2024</p>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- </div> -->
-            <!-- </div> -->
           </div>
         </div>
-        <div class="budget-card category-card public-sans-regular">
-          <div class="theme-container">
-            <div class="public-sans-bold">
-              <div data-theme="green"></div>
-              Entertainment
-            </div>
-            <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+        <!-- <div> -->
+        <div class="latest-spending-container">
+          <div class="latest-spending-header">
+            <h3 class="public-sans-bold">Latest Spending</h3>
+            <button>
+              <span>See All</span>
+              <img
+                src="./assets/images/icon-caret-right.svg"
+                alt="caret right" />
+            </button>
           </div>
-          <div class="budget-progress-container">
-            <label for="Entertainment-progress">
-              Maximum of
-              <span>$50.00</span>
-            </label>
-            <progress
-              data-theme="green"
-              max="10"
-              value="5"
-              id="Entertainment-progress"
-              style="--progress-value: var(--green)">
-              50
-            </progress>
 
-            <div class="budget-numbers-container">
-              <div data-theme="green"></div>
-              <div class="budget-numbers">
-                <p>Spent</p>
-                <span class="public-sans-bold">$15.00</span>
-              </div>
-              <div data-theme></div>
-              <div class="budget-numbers">
-                <p>Remaining</p>
-                <span class="public-sans-bold">$35.00</span>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div>
-                <h3>Latest Spending</h3>
-                <button>
-                  Seee All
-                  <img
-                    src="./assets/images/icon-caret-right.svg"
-                    alt="caret right" />
-                </button>
-              </div>
-
-              <div>
-                <div>
-                  <div>
+          <!-- <div> -->
+          <table class="latest-spending-table">
+            <tbody>
+              <tr>
+                <td>
+                  <div class="table-name">
                     <img
+                      loading="lazy"
                       src="./assets/images/avatars/james-thompson.jpg"
                       alt="james-thompson" />
-                    <p>James Thomas</p>
+                    <p class="public-sans-bold">James Thomas</p>
                   </div>
-                  <div>
-                    <p>-$5.00</p>
-                    <p>11 Aug 2024</p>
+                </td>
+                <td>
+                  <div class="spending-info">
+                    <p class="spending-amount public-sans-bold">-$10.00</p>
+                    <p class="speding-date">16 Aug 2024</p>
                   </div>
-                </div>
-                <div>
-                  <div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="table-name">
                     <img
-                      src="./assets/images/avatars/pixel-playground.jpg"
-                      alt="pixel playground" />
-                    <p>Pixel Playground</p>
+                      loading="lazy"
+                      src="./assets/images/avatars/savory-bites-bistro.jpg"
+                      alt="james-thompson" />
+                    <p class="public-sans-bold">Quebec Services</p>
                   </div>
-                  <div>
-                    <p>-$10.00</p>
-                    <p>11 Aug 2024</p>
+                </td>
+                <td>
+                  <div class="spending-info">
+                    <p class="spending-amount public-sans-bold">-$5.00</p>
+                    <p class="speding-date">12 Aug 2024</p>
                   </div>
-                </div>
-              </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="table-name">
+                    <img
+                      loading="lazy"
+                      src="./assets/images/avatars/rina-sato.jpg"
+                      alt="james-thompson" />
+                    <p class="public-sans-bold">Romeo Cloud Services</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="spending-info">
+                    <p class="spending-amount public-sans-bold">-$10.00</p>
+                    <p class="speding-date">05 Aug 2024</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- </div> -->
+          <!-- </div> -->
+        </div>
+      </div>
+      <div class="budget-card category-card public-sans-regular">
+        <div class="theme-container">
+          <div class="public-sans-bold">
+            <div data-theme="cyan"></div>
+            Bills
+          </div>
+          <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+        </div>
+        <div class="budget-progress-container">
+          <label for="Entertainment-progress">
+            Maximum of
+            <span>$750.00</span>
+          </label>
+          <progress
+            data-theme="cyan"
+            max="10"
+            value="5"
+            id="Entertainment-progress"
+            style="--progress-value: var(--cyan)">
+            50
+          </progress>
+
+          <div class="budget-numbers-container">
+            <div data-theme="cyan"></div>
+            <div class="budget-numbers">
+              <p>Spent</p>
+              <span class="public-sans-bold">$250</span>
+            </div>
+            <div data-theme></div>
+            <div class="budget-numbers">
+              <p>Remaining</p>
+              <span class="public-sans-bold">$750</span>
             </div>
           </div>
         </div>
+        <!-- <div> -->
+        <div class="latest-spending-container">
+          <div class="latest-spending-header">
+            <h3 class="public-sans-bold">Latest Spending</h3>
+            <button>
+              <span>See All</span>
+              <img
+                src="./assets/images/icon-caret-right.svg"
+                alt="caret right" />
+            </button>
+          </div>
+
+          <!-- <div> -->
+          <table class="latest-spending-table">
+            <tbody>
+              <tr>
+                <td>
+                  <div class="table-name">
+                    <img
+                      loading="lazy"
+                      src="./assets/images/avatars/spark-electric-solutions.jpg"
+                      alt="james-thompson" />
+                    <p class="public-sans-bold">Charlie Electric Company</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="spending-info">
+                    <p class="spending-amount public-sans-bold">-$100.00</p>
+                    <p class="speding-date">1 Aug 2024</p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="table-name">
+                    <img
+                      loading="lazy"
+                      src="./assets/images/avatars/flavor-fiesta.jpg"
+                      alt="james-thompson" />
+                    <p class="public-sans-bold">Foxtrot Waterline</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="spending-info">
+                    <p class="spending-amount public-sans-bold">-$100.00</p>
+                    <p class="speding-date">1 Aug 2024</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- </div> -->
+          <!-- </div> -->
+        </div>
       </div>
-      <!-- Edit Budget As your budgets change, feel free to update your spending
+    </div>
+    <!-- Edit Budget As your budgets change, feel free to update your spending
       limits. Budget Category Entertainment Bills Groceries Dining Out
       Transportation Personal Care Education Lifestyle Shopping General Maximum
       Spend Theme Green Yellow Cyan Navy Red Purple Turquoise Brown Magenta Blue
       Navy Grey Army Green Pink Gold Orange Add Budget / Save Changes -->
 
-      <!-- Add/Edit budget end -->
+    <!-- Add/Edit budget end -->
 
-      <!-- Delete budget start -->
+    <!-- Delete budget start -->
 
-      <!-- Delete ' -->
-      <!-- budget name -->
-      <!-- ' Are you sure you want to delete this budget? This action cannot be
+    <!-- Delete ' -->
+    <!-- budget name -->
+    <!-- ' Are you sure you want to delete this budget? This action cannot be
       reversed, and all the data inside it will be removed forever. Yes, Confirm
       Deletion No, Go Back -->
-    </div>
-    <!-- Delete budget end -->
   </div>
+  <!-- Delete budget end -->
+  <!-- </div> -->
 </template>
