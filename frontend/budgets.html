@@ -8,7 +8,7 @@
 
   <!-- Add/Edit budget start -->
   <div class="main-budgets">
-    <dialog id="delete-budget-dialog">
+    <dialog class="budget-dialogs" id="delete-budget-dialog">
       <div class="dialog-title">
         <p class="public-sans-bold">
           Delete &OpenCurlyQuote;
@@ -30,12 +30,12 @@
         No, I want to Back
       </button>
     </dialog>
-    <dialog>
-      <div>
+    <dialog class="budget-dialogs" id="edit-budget-dialog">
+      <div class="public-sans-bold dialog-title">
         <p>Add New Budget</p>
         <img src="./assets/images/icon-close-modal.svg" alt="close" />
       </div>
-      <p>
+      <p class="public-sans-regular">
         Choose a category to set a spending budget. These categories can help
         you monitor spending.
       </p>
@@ -89,8 +89,8 @@
             </li>
           </menu>
         </div>
-        <button>Add Budget</button>
       </form>
+      <button class="public-sans-bold">Add Budget</button>
     </dialog>
 
     <div class="budget-card chart-card">

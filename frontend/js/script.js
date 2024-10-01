@@ -441,6 +441,9 @@ main.addEventListener("click", (e) => {
         });
         // console.log();
         // btn.closest("div.budget-card").remove();
+      } else if (btn.dataset.action === "edit") {
+        const editDialog = document.querySelector("#edit-budget-dialog");
+        editDialog.showModal();
       }
     }
   } else if (mobileFilter) {

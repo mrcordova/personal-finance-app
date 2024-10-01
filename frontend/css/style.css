@@ -384,7 +384,7 @@ button[popovertarget] {
   background-color: var(--green);
 }
 
-dialog#delete-budget-dialog[open] {
+dialog.budget-dialogs[open] {
   display: flex;
   flex-direction: column;
   border: 0;
