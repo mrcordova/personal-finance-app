@@ -126,6 +126,10 @@ button[popovertarget] {
     display: flex;
     justify-content: space-between;
 
+    align-items: center;
+    & img {
+      width: 1rem;
+    }
     & div {
       display: flex;
       align-items: center;
