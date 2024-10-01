@@ -154,7 +154,7 @@ button[popovertarget] {
         bottom: -5.6875rem;
         left: -7.375rem;
 
-        & #delete-btn {
+        & [data-action="delete"] {
           color: var(--red);
         }
       }
@@ -382,6 +382,15 @@ button[popovertarget] {
 }
 [data-theme="green"] {
   background-color: var(--green);
+}
+
+dialog#delete-budget-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  margin: auto;
+  border-radius: 0.75rem;
+  gap: 1.25rem;
 }
 .dropdown {
   display: inline-flex;

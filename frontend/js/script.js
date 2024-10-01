@@ -34,6 +34,7 @@ const sortByFuncs = {
 };
 const transactions = data["transactions"];
 
+let budgetCard;
 // console.log(main);
 // Initialize the DOM parser
 const parser = new DOMParser();
@@ -364,7 +365,7 @@ minimizeMenu.addEventListener("click", (e) => {
 });
 
 main.addEventListener("click", (e) => {
-  console.log(e.target);
+  // console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
   const filterParameter = e.target.closest("menu");
   const mobileFilter = e.target.closest("img[data-dropdown]");
@@ -387,9 +388,11 @@ main.addEventListener("click", (e) => {
     updateDisplay();
   } else if (filterParameter) {
     const btn = e.target.closest("li").children[0];
+
+    // console.log(btn);
     const previousChoice = filterParameter.querySelector(".public-sans-bold");
 
-    previousChoice.classList.remove("public-sans-bold");
+    previousChoice?.classList.remove("public-sans-bold");
     btn.parentElement.classList.add("public-sans-bold");
 
     // console.log(filterParameter);
@@ -416,11 +419,23 @@ main.addEventListener("click", (e) => {
       searchOption[filterParameter.dataset.parameter] = btn.textContent;
       sortByBtn.childNodes[0].textContent = btn.textContent;
       updateDisplay();
+    } else if (filterParameter.dataset.parameter === "editBudget") {
+      console.log(btn.dataset);
+      if (btn.dataset.action === "delete") {
+        const deleteDialog = document.querySelector("#delete-budget-dialog");
+        const dialogCateTitle = deleteDialog.querySelector("[data-category]");
+        dialogCateTitle.textContent = budgetCard.dataset.category;
+        deleteDialog.showModal();
+        // console.log();
+        // btn.closest("div.budget-card").remove();
+      }
     }
   } else if (mobileFilter) {
     // console.log(mobileFilter);
     // mobileFilter.nextElementSibling.showModal();
   } else if (budgetEditBtn) {
+    budgetCard = budgetEditBtn.closest("[data-category");
+    // console.log(budgetCard);
     budgetEditBtn.nextElementSibling.classList.toggle(
       "show-drop-content",
       budgetEditBtn.dataset.budgetShow === "true" ? true : false
