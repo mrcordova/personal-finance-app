@@ -203,6 +203,77 @@ button[popovertarget] {
       }
     }
   }
+
+  & .latest-spending-container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--beige-100);
+    border-radius: 0.75rem;
+    gap: 1.25rem;
+    padding-inline: 1rem;
+    padding-block: 1rem;
+
+    & .latest-spending-header {
+      display: flex;
+      justify-content: space-between;
+
+      & h3 {
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--grey-900);
+      }
+
+      & button {
+        display: flex;
+        align-items: center;
+        color: var(--grey-500);
+        line-height: 1.5;
+        gap: 0.75rem;
+        font-size: 0.875rem;
+      }
+    }
+
+    & .latest-spending-table {
+      & img {
+        display: none;
+        border-radius: 50%;
+        width: 2rem;
+      }
+
+      & :is(td, th) {
+        padding-block: 0.75rem;
+        border-bottom: 1px solid hsl(from var(--grey-500) h s l / 0.15);
+      }
+
+      & .table-name {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--grey-900);
+        line-height: 1.5;
+        font-size: 0.75rem;
+      }
+
+      & .spending-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      & .spending-amount {
+        color: var(--grey-900);
+        line-height: 1.5;
+        font-size: 0.75rem;
+      }
+
+      & .spending-date {
+        font-size: 0.75rem;
+        line-height: 1.5;
+      }
+      & td:last-child {
+        text-align: end;
+      }
+    }
+  }
 }
 .chart-card {
   display: flex;
@@ -212,6 +283,8 @@ button[popovertarget] {
   & .chart-summary {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
     gap: 1.5rem;
     & > h3 {
       color: var(--grey-900);
@@ -694,6 +767,19 @@ thead {
 }
 
 @media (min-width: 48rem) {
+  .category-card {
+    & .latest-spending-container {
+      & .latest-spending-table {
+        & img {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .chart-card {
+    flex-direction: row;
+  }
   .dropdown {
     & > div {
       display: block;
@@ -718,6 +804,7 @@ thead {
   :popover-open {
     display: none;
   }
+
   .mobile-name {
     display: none;
   }
@@ -797,6 +884,10 @@ thead {
     flex-direction: row;
   }
 
+  .chart-card {
+    flex-direction: column;
+  }
+
   header {
     border-top-left-radius: 0rem;
     border-top-right-radius: 1rem;
@@ -805,6 +896,10 @@ thead {
     & nav {
       flex-direction: column;
     }
+  }
+
+  .main-budgets {
+    flex-direction: row;
   }
 
   .sidebar-logo {

@@ -156,80 +156,107 @@
               </div>
             </div>
           </div>
-          <div>
-            <div>
-              <h3>Latest Spending</h3>
-
+          <!-- <div> -->
+          <div class="latest-spending-container">
+            <div class="latest-spending-header">
+              <h3 class="public-sans-bold">Latest Spending</h3>
               <button>
-                Seee All
+                <span>See All</span>
                 <img
                   src="./assets/images/icon-caret-right.svg"
                   alt="caret right" />
               </button>
-
-              <div>
-                <div>
-                  <div>
-                    <img
-                      src="./assets/images/avatars/james-thompson.jpg"
-                      alt="james-thompson" />
-                    <p>James Thomas</p>
-                  </div>
-                  <div>
-                    <p>-$5.00</p>
-                    <p>11 Aug 2024</p>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <img
-                      src="./assets/images/avatars/pixel-playground.jpg"
-                      alt="pixel playground" />
-                    <p>Pixel Playground</p>
-                  </div>
-                  <div>
-                    <p>-$10.00</p>
-                    <p>11 Aug 2024</p>
-                  </div>
-                </div>
-              </div>
             </div>
+
+            <!-- <div> -->
+            <table class="latest-spending-table">
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="table-name">
+                      <img
+                        loading="lazy"
+                        src="./assets/images/avatars/james-thompson.jpg"
+                        alt="james-thompson" />
+                      <p class="public-sans-bold">James Thomas</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="spending-info">
+                      <p class="spending-amount public-sans-bold">-$10.00</p>
+                      <p class="speding-date">16 Aug 2024</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="table-name">
+                      <img
+                        loading="lazy"
+                        src="./assets/images/avatars/savory-bites-bistro.jpg"
+                        alt="james-thompson" />
+                      <p class="public-sans-bold">Quebec Services</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="spending-info">
+                      <p class="spending-amount public-sans-bold">-$5.00</p>
+                      <p class="speding-date">12 Aug 2024</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- </div> -->
+            <!-- </div> -->
           </div>
         </div>
-        <div class="budget-card">
-          <div>
-            <div>
-              <span data-theme="green"></span>
+        <div class="budget-card category-card public-sans-regular">
+          <div class="theme-container">
+            <div class="public-sans-bold">
+              <div data-theme="green"></div>
               Entertainment
             </div>
             <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
           </div>
-          <div>
-            <label for="max-progress">
+          <div class="budget-progress-container">
+            <label for="Entertainment-progress">
               Maximum of
               <span>$50.00</span>
             </label>
-            <progress max="10" value="1" id="max-progress">15</progress>
+            <progress
+              data-theme="green"
+              max="10"
+              value="5"
+              id="Entertainment-progress"
+              style="--progress-value: var(--green)">
+              50
+            </progress>
 
-            <div>
-              <div>
+            <div class="budget-numbers-container">
+              <div data-theme="green"></div>
+              <div class="budget-numbers">
                 <p>Spent</p>
-                <span>$15.00</span>
+                <span class="public-sans-bold">$15.00</span>
               </div>
-              <div>
+              <div data-theme></div>
+              <div class="budget-numbers">
                 <p>Remaining</p>
-                <span>$35.00</span>
+                <span class="public-sans-bold">$35.00</span>
               </div>
             </div>
+          </div>
+          <div>
             <div>
-              <h3>Latest Spending</h3>
-
-              <button>
-                Seee All
-                <img
-                  src="./assets/images/icon-caret-right.svg"
-                  alt="caret right" />
-              </button>
+              <div>
+                <h3>Latest Spending</h3>
+                <button>
+                  Seee All
+                  <img
+                    src="./assets/images/icon-caret-right.svg"
+                    alt="caret right" />
+                </button>
+              </div>
 
               <div>
                 <div>
