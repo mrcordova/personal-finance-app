@@ -279,6 +279,7 @@ button[popovertarget] {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  max-height: 37.4375rem;
 
   & .chart-summary {
     display: flex;
