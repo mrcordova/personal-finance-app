@@ -383,10 +383,47 @@ button[popovertarget] {
 [data-theme="green"] {
   background-color: var(--green);
 }
+[data-theme="purple"] {
+  background-color: var(--purple);
+}
+[data-theme="pink"] {
+  background-color: var(--pink);
+}
+[data-theme="turquoise"] {
+  background-color: var(--turquoise);
+}
+[data-theme="brown"] {
+  background-color: var(--brown);
+}
+[data-theme="magenta"] {
+  background-color: var(--magenta);
+}
+[data-theme="blue"] {
+  background-color: var(--blue);
+}
+[data-theme="navy-grey"] {
+  background-color: var(--navy-grey);
+}
+[data-theme="army-green"] {
+  background-color: var(--army-green);
+}
+[data-theme="gold"] {
+  background-color: var(--gold);
+}
+[data-theme="orange"] {
+  background-color: var(--orange);
+}
+[data-theme="red"] {
+  background-color: var(--red);
+}
+[data-theme="white"] {
+  background-color: var(--white);
+}
 
 dialog.budget-dialogs[open] {
   display: flex;
   flex-direction: column;
+  overflow: visible;
   border: 0;
   margin: auto;
   border-radius: 0.75rem;
@@ -422,7 +459,7 @@ dialog.budget-dialogs[open] {
   & .no-btn {
     color: var(--grey-500);
   }
-  & button {
+  & > button {
     text-align: center;
     font-size: 0.875rem;
     line-height: 1.5;
@@ -437,12 +474,13 @@ dialog.budget-dialogs[open] {
       gap: 0.25rem;
 
       & label {
+        display: block;
         font-size: 0.75rem;
         line-height: 1.5;
         color: var(--grey-500);
       }
 
-      & button {
+      & > button {
         color: var(--grey-900);
         border: 1px solid var(--beige-500);
         border-radius: 0.5rem;
@@ -453,12 +491,12 @@ dialog.budget-dialogs[open] {
 
         padding-block: 0.75rem;
         padding-inline: 1.25rem 0.90625rem;
-
-        & span {
-          display: flex;
-          gap: 0.75rem;
-          align-items: center;
-        }
+      }
+      & span {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        text-transform: capitalize;
       }
     }
   }
@@ -472,6 +510,23 @@ dialog.budget-dialogs[open] {
     border-radius: 50%;
     width: 1rem;
     height: 1rem;
+  }
+
+  & .dropdown {
+    position: relative;
+
+    & .dropdown-content {
+      position: absolute;
+
+      /* width: 8.375rem; */
+      max-height: 15.75rem;
+      top: 4.19rem;
+      left: 0rem;
+    }
+
+    & .show-drop-content {
+      display: block;
+    }
   }
 }
 .dropdown {

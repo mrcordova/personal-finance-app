@@ -365,12 +365,13 @@ minimizeMenu.addEventListener("click", (e) => {
 });
 
 main.addEventListener("click", (e) => {
-  // console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
   const filterParameter = e.target.closest("menu");
   const newBudgetBtn = e.target.closest("button[data-action='new']");
   const budgetEditBtn = e.target.closest("button[data-budget-show]");
 
+  // e.preventDefault();
+  // console.log(e.target);
   if (pageButton) {
     currentTransactionsPage =
       pageButton.dataset.page != undefined
@@ -381,15 +382,10 @@ main.addEventListener("click", (e) => {
       currentTransactionsPage,
       transactionItems.length
     );
-    // console.log(searchOption);
-    // console.log(currentTransactionsPage);
-    // showPage(currentTransactionsPage);
-    // updateActiveButtonState();
+
     updateDisplay();
   } else if (filterParameter) {
     const btn = e.target.closest("li").children[0];
-
-    // console.log(btn);
 
     if (filterParameter.dataset.parameter !== "editBudget") {
       const previousChoice = filterParameter.querySelector(".public-sans-bold");
@@ -398,7 +394,6 @@ main.addEventListener("click", (e) => {
       btn.parentElement.classList.add("public-sans-bold");
     }
 
-    // console.log(filterParameter);
     if (filterParameter.dataset.parameter === "category") {
       const categoryBtn = main.querySelector("button#category-btn");
       searchOption["previousCategory"] =
@@ -410,15 +405,12 @@ main.addEventListener("click", (e) => {
       categoryBtn.childNodes[0].textContent = btn.textContent;
       updateDisplay();
     } else if (filterParameter.dataset.parameter === "sortBy") {
-      // console.log(sortByFuncs[btn.textContent.toLowerCase()]);
       const transactionsTable = main.querySelector("table > tbody");
       const sortByBtn = main.querySelector("button#sort-by-btn");
       transactionItems.sort(sortByFuncs[btn.textContent.toLowerCase()]);
 
       transactionsTable.replaceChildren(...transactionItems);
 
-      // console.log(sortByBtn);
-      // console.log(transactionItems);
       searchOption[filterParameter.dataset.parameter] = btn.textContent;
       sortByBtn.childNodes[0].textContent = btn.textContent;
       updateDisplay();
@@ -438,8 +430,6 @@ main.addEventListener("click", (e) => {
           }
           deleteDialog.close();
         });
-        // console.log();
-        // btn.closest("div.budget-card").remove();
       } else if (btn.dataset.action === "edit") {
         const editDialog = document.querySelector("#edit-budget-dialog");
         editDialog.showModal();
@@ -448,9 +438,30 @@ main.addEventListener("click", (e) => {
   } else if (newBudgetBtn) {
     const newDialog = document.querySelector("#new-budget-dialog");
     newDialog.showModal();
+
+    // e.preventDefault();
+    newDialog.addEventListener("click", (e) => {
+      e.preventDefault();
+      //   const newDialogBtn = e.target.closest("button[data-budget-show]");
+      // console.log(newDialogBtn);
+      // console.log(newDialogBtn.nextElementSibling);
+      // newDialogBtn.nextElementSibling.classList.toggle(
+      //   "show-drop-content",
+      //   newDialogBtn.dataset.budgetShow === "true" ? true : false
+      // );
+
+      // // console.log(newDialogBtn.nextElementSibling);
+      // newDialogBtn.setAttribute(
+      //   "data-budget-show",
+      //   newDialogBtn.dataset.budgetShow === "true" ? "false" : "true"
+      // );
+      // console.log(newDialogBtn);
+      // console.log(newDialogBtn.dataset.budgetShow);
+    });
   } else if (budgetEditBtn) {
-    budgetCard = budgetEditBtn.closest("[data-category");
-    // console.log(budgetCard);
+    budgetCard = budgetEditBtn.closest("[data-category]");
+    console.log(budgetCard);
+
     budgetEditBtn.nextElementSibling.classList.toggle(
       "show-drop-content",
       budgetEditBtn.dataset.budgetShow === "true" ? true : false
