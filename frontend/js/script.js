@@ -433,6 +433,11 @@ main.addEventListener("click", (e) => {
       } else if (btn.dataset.action === "edit") {
         const editDialog = document.querySelector("#edit-budget-dialog");
         editDialog.showModal();
+
+        editDialog.addEventListener("click", (e) => {
+          e.preventDefault();
+          console.log(e.target);
+        });
       }
     }
   } else if (newBudgetBtn) {
@@ -442,6 +447,8 @@ main.addEventListener("click", (e) => {
     // e.preventDefault();
     newDialog.addEventListener("click", (e) => {
       e.preventDefault();
+
+      console.log(e.target);
       //   const newDialogBtn = e.target.closest("button[data-budget-show]");
       // console.log(newDialogBtn);
       // console.log(newDialogBtn.nextElementSibling);
@@ -460,7 +467,7 @@ main.addEventListener("click", (e) => {
     });
   } else if (budgetEditBtn) {
     budgetCard = budgetEditBtn.closest("[data-category]");
-    console.log(budgetCard);
+    // console.log(budgetCard);
 
     budgetEditBtn.nextElementSibling.classList.toggle(
       "show-drop-content",

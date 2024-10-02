@@ -35,87 +35,26 @@
     <dialog class="budget-dialogs" id="edit-budget-dialog">
       <div class="public-sans-bold dialog-title">
         <p>Edit Budget</p>
-        <img src="./assets/images/icon-close-modal.svg" alt="close" />
+        <button data-action="close">
+          <img src="./assets/images/icon-close-modal.svg" alt="close" />
+        </button>
       </div>
       <p class="public-sans-regular">
         As your budgets change, feel free to update your spending limits.
       </p>
       <form>
-        <div>
+        <div class="dropdown public-sans-regular">
           <label for="budget-cate-btn">Budget Category</label>
-          <button id="budget-cate-btn">
-            Entertainment
-            <img
-              src="./assets/images/icon-caret-down.svg"
-              alt="drop down caret" />
-          </button>
-          <menu>
-            <li>All Transactions</li>
-            <li>Entertainment</li>
-            <li>Bills</li>
-            <li>Groceries</li>
-            <li>Dining Out</li>
-            <li>Personal Care</li>
-            <li>Education</li>
-            <li>Lifestyle</li>
-            <li>Shopping</li>
-            <li>General</li>
-          </menu>
-        </div>
-        <div>
-          <label for="max-spend">Maximum Spend</label>
-          <input type="text" id="max-spend" />
-        </div>
-        <div>
-          <label for="theme">Color Tag</label>
-          <button id="theme">
-            <span>
-              <span class="theme-circle"></span>
-              Green
-            </span>
-            <img
-              src="./assets/images/icon-caret-down.svg"
-              alt="drop down caret" />
-          </button>
-          <menu>
-            <li>
-              <span></span>
-              Green
-            </li>
-            <li>
-              <span></span>
-              Yellow
-            </li>
-            <li>
-              <span></span>
-              Cyan
-            </li>
-          </menu>
-        </div>
-      </form>
-      <button class="public-sans-bold dialog-btns">Save Changes</button>
-    </dialog>
-    <dialog class="budget-dialogs" id="new-budget-dialog">
-      <div class="public-sans-bold dialog-title">
-        <p>Add New Budget</p>
-        <img src="./assets/images/icon-close-modal.svg" alt="close" />
-      </div>
-      <p class="public-sans-regular">
-        Choose a category to set a spending budget. These categories can help
-        you monitor spending.
-      </p>
-      <form novalidate>
-        <div class="public-sans-regular dropdown">
-          <label for="budget-cate-btn" class="public-sans-bold">
-            Budget Category
-          </label>
+
           <button id="budget-cate-btn" data-budget-show="true">
             Entertainment
             <img
               src="./assets/images/icon-caret-down.svg"
               alt="drop down caret" />
           </button>
-          <menu class="dropdown-content">
+          <menu
+            data-parameter="editBudget"
+            class="public-sans-regular dropdown-content">
             <li><button>All Transactions</button></li>
             <li><button>Entertainment</button></li>
             <li><button>Bills</button></li>
@@ -129,17 +68,10 @@
           </menu>
         </div>
         <div>
-          <!-- <div> -->
           <label for="max-spend">Maximum Spend</label>
-          <!-- <img src="./assets/images/icon-bill-paid.svg" alt="dollar sign" /> -->
           <span class="public-sans-regular input-container">
-            <input
-              type="text"
-              id="max-spend"
-              placeholder="e.g. 2000"
-              class="public-sans-regular" />
+            <input type="text" id="max-spend" />
           </span>
-          <!-- </div> -->
         </div>
         <div class="public-sans-regular dropdown">
           <label for="theme" class="public-sans-bold">Color Tag</label>
@@ -152,7 +84,7 @@
               src="./assets/images/icon-caret-down.svg"
               alt="drop down caret" />
           </button>
-          <menu class="dropdown-content">
+          <menu data-parameter="editBudget" class="dropdown-content">
             <li>
               <button id="theme">
                 <span>
@@ -284,7 +216,204 @@
           </menu>
         </div>
       </form>
-      <button class="public-sans-bold dialog-btns">Add Budget</button>
+      <button class="public-sans-bold dialog-btns" data-action="save-budget">
+        Save Changes
+      </button>
+    </dialog>
+    <dialog class="budget-dialogs" id="new-budget-dialog">
+      <div class="public-sans-bold dialog-title">
+        <p>Add New Budget</p>
+        <button data-action="close">
+          <img src="./assets/images/icon-close-modal.svg" alt="close" />
+        </button>
+      </div>
+      <p class="public-sans-regular">
+        Choose a category to set a spending budget. These categories can help
+        you monitor spending.
+      </p>
+      <form novalidate>
+        <div class="public-sans-regular dropdown">
+          <label for="budget-cate-btn" class="public-sans-bold">
+            Budget Category
+          </label>
+          <button id="budget-cate-btn" data-budget-show="true">
+            Entertainment
+            <img
+              src="./assets/images/icon-caret-down.svg"
+              alt="drop down caret" />
+          </button>
+          <menu data-parameter="editBudget" class="dropdown-content">
+            <li><button>All Transactions</button></li>
+            <li><button>Entertainment</button></li>
+            <li><button>Bills</button></li>
+            <li><button>Groceries</button></li>
+            <li><button>Dining Out</button></li>
+            <li><button>Personal Care</button></li>
+            <li><button>Education</button></li>
+            <li><button>Lifestyle</button></li>
+            <li><button>Shopping</button></li>
+            <li><button>General</button></li>
+          </menu>
+        </div>
+        <div>
+          <!-- <div> -->
+          <label for="max-spend">Maximum Spend</label>
+          <!-- <img src="./assets/images/icon-bill-paid.svg" alt="dollar sign" /> -->
+          <span class="public-sans-regular input-container">
+            <input
+              type="text"
+              id="max-spend"
+              placeholder="e.g. 2000"
+              class="public-sans-regular" />
+          </span>
+          <!-- </div> -->
+        </div>
+        <div class="public-sans-regular dropdown">
+          <label for="theme" class="public-sans-bold">Color Tag</label>
+          <button id="theme" data-budget-show="true">
+            <span>
+              <span data-theme="green" class="theme-circle"></span>
+              Green
+            </span>
+            <img
+              src="./assets/images/icon-caret-down.svg"
+              alt="drop down caret" />
+          </button>
+          <menu data-parameter="editBudget" class="dropdown-content">
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="green" class="theme-circle"></span>
+                  Green
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="yellow" class="theme-circle"></span>
+                  yellow
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="cyan" class="theme-circle"></span>
+                  cyan
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="navy" class="theme-circle"></span>
+                  navy
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="red" class="theme-circle"></span>
+                  red
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="purple" class="theme-circle"></span>
+                  purple
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="pink" class="theme-circle"></span>
+                  pink
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="turquoise" class="theme-circle"></span>
+                  turquoise
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="brown" class="theme-circle"></span>
+                  brown
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="magenta" class="theme-circle"></span>
+                  magenta
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="blue" class="theme-circle"></span>
+                  blue
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="navy-grey" class="theme-circle"></span>
+                  navy-grey
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="army-green" class="theme-circle"></span>
+                  army-green
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="gold" class="theme-circle"></span>
+                  gold
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="orange" class="theme-circle"></span>
+                  orange
+                </span>
+              </button>
+            </li>
+            <li>
+              <button id="theme">
+                <span>
+                  <span data-theme="white" class="theme-circle"></span>
+                  white
+                </span>
+              </button>
+            </li>
+          </menu>
+        </div>
+      </form>
+      <button class="public-sans-bold dialog-btns" data-action="add-budget">
+        Add Budget
+      </button>
     </dialog>
 
     <div class="budget-card chart-card">
