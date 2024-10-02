@@ -70,7 +70,7 @@
           <label for="theme">Color Tag</label>
           <button id="theme">
             <span>
-              <span></span>
+              <span class="theme-circle"></span>
               Green
             </span>
             <img
@@ -93,7 +93,7 @@
           </menu>
         </div>
       </form>
-      <button class="public-sans-bold">Add Budget</button>
+      <button class="public-sans-bold dialog-btns">Save Changes</button>
     </dialog>
     <dialog class="budget-dialogs" id="new-budget-dialog">
       <div class="public-sans-bold dialog-title">
@@ -105,15 +105,17 @@
         you monitor spending.
       </p>
       <form>
-        <div>
-          <label for="budget-cate-btn">Budget Category</label>
+        <div class="public-sans-regular dropdown">
+          <label for="budget-cate-btn" class="public-sans-bold">
+            Budget Category
+          </label>
           <button id="budget-cate-btn">
             Entertainment
             <img
               src="./assets/images/icon-caret-down.svg"
               alt="drop down caret" />
           </button>
-          <menu>
+          <menu class="dropdown-content">
             <li>All Transactions</li>
             <li>Entertainment</li>
             <li>Bills</li>
@@ -128,20 +130,20 @@
         </div>
         <div>
           <label for="max-spend">Maximum Spend</label>
-          <input type="text" id="max-spend" />
+          <input type="text" id="max-spend" class="public-sans-regular" />
         </div>
-        <div>
-          <label for="theme">Color Tag</label>
+        <div class="public-sans-regular dropdown">
+          <label for="theme" class="public-sans-bold">Color Tag</label>
           <button id="theme">
             <span>
-              <span></span>
+              <span data-theme="green" class="theme-circle"></span>
               Green
             </span>
             <img
               src="./assets/images/icon-caret-down.svg"
               alt="drop down caret" />
           </button>
-          <menu>
+          <menu class="dropdown-content">
             <li>
               <span></span>
               Green
@@ -157,7 +159,7 @@
           </menu>
         </div>
       </form>
-      <button class="public-sans-bold">Add Budget</button>
+      <button class="public-sans-bold dialog-btns">Add Budget</button>
     </dialog>
 
     <div class="budget-card chart-card">
@@ -215,7 +217,7 @@
         class="budget-card category-card public-sans-regular">
         <div class="theme-container">
           <div class="theme-title public-sans-bold">
-            <div data-theme="green"></div>
+            <div data-theme="green" class="theme-circle"></div>
             Entertainment
           </div>
           <div class="dropdown">

@@ -137,7 +137,7 @@ button[popovertarget] {
       gap: 1rem;
       font-size: 1.25rem;
       line-height: 1.2;
-      & div {
+      & .theme-circle {
         border-radius: 50%;
         width: 1rem;
         height: 1rem;
@@ -434,12 +434,44 @@ dialog.budget-dialogs[open] {
 
     & > div {
       display: grid;
+      gap: 0.25rem;
+
+      & label {
+        font-size: 0.75rem;
+        line-height: 1.5;
+        color: var(--grey-500);
+      }
 
       & button {
+        color: var(--grey-900);
+        border: 1px solid var(--beige-500);
+        border-radius: 0.5rem;
         display: flex;
         justify-content: space-between;
+        font-size: 0.875rem;
+        line-height: 1.5;
+
+        padding-block: 0.75rem;
+        padding-inline: 1.25rem 0.90625rem;
+
+        & span {
+          display: flex;
+          gap: 0.75rem;
+          align-items: center;
+        }
       }
     }
+  }
+  & .dialog-btns {
+    color: var(--white);
+    background-color: var(--grey-900);
+    padding-block: 1rem;
+    border-radius: 0.5rem;
+  }
+  & .theme-circle {
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
   }
 }
 .dropdown {
