@@ -368,7 +368,7 @@ main.addEventListener("click", (e) => {
   // console.log(e.target);
   const pageButton = e.target.closest("button[data-nav]");
   const filterParameter = e.target.closest("menu");
-  const mobileFilter = e.target.closest("img[data-dropdown]");
+  const newBudgetBtn = e.target.closest("button[data-action='new']");
   const budgetEditBtn = e.target.closest("button[data-budget-show]");
 
   if (pageButton) {
@@ -423,7 +423,6 @@ main.addEventListener("click", (e) => {
       sortByBtn.childNodes[0].textContent = btn.textContent;
       updateDisplay();
     } else if (filterParameter.dataset.parameter === "editBudget") {
-      // console.log(btn.dataset);
       if (btn.dataset.action === "delete") {
         const deleteDialog = document.querySelector("#delete-budget-dialog");
         const dialogCateTitle = deleteDialog.querySelector("[data-category]");
@@ -446,9 +445,9 @@ main.addEventListener("click", (e) => {
         editDialog.showModal();
       }
     }
-  } else if (mobileFilter) {
-    // console.log(mobileFilter);
-    // mobileFilter.nextElementSibling.showModal();
+  } else if (newBudgetBtn) {
+    const newDialog = document.querySelector("#new-budget-dialog");
+    newDialog.showModal();
   } else if (budgetEditBtn) {
     budgetCard = budgetEditBtn.closest("[data-category");
     // console.log(budgetCard);

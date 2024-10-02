@@ -427,6 +427,20 @@ dialog.budget-dialogs[open] {
     font-size: 0.875rem;
     line-height: 1.5;
   }
+
+  & form {
+    display: grid;
+    gap: 1rem;
+
+    & > div {
+      display: grid;
+
+      & button {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
 }
 .dropdown {
   display: inline-flex;
