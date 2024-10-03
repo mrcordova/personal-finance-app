@@ -369,9 +369,13 @@ main.addEventListener("click", (e) => {
   const filterParameter = e.target.closest("menu");
   const newBudgetBtn = e.target.closest("button[data-action='new']");
   const budgetEditBtn = e.target.closest("button[data-budget-show]");
+  const budgetDialogEditBtn = e.target.closest(
+    "button[data-budget-dialog-show]"
+  );
 
-  // e.preventDefault();
   // console.log(e.target);
+  // e.preventDefault();
+  // console.log(budgetEditBtn);
   if (pageButton) {
     currentTransactionsPage =
       pageButton.dataset.page != undefined
@@ -424,20 +428,77 @@ main.addEventListener("click", (e) => {
 
         deleteDialog.addEventListener("click", (e) => {
           const btn = e.target.closest("button");
+          const optionDropdown = budgetCard.querySelector(
+            "button[data-budget-show]"
+          );
           const choice = btn.dataset.action;
           if (choice === "delete") {
             budgetCard.remove();
           }
+          optionDropdown?.nextElementSibling.classList.toggle(
+            "show-drop-content",
+            false
+          );
+
+          optionDropdown?.setAttribute("data-budget-show", "true");
           deleteDialog.close();
         });
       } else if (btn.dataset.action === "edit") {
         const editDialog = document.querySelector("#edit-budget-dialog");
+        const optionDropdown = budgetCard.querySelector(
+          "button[data-budget-show]"
+        );
         editDialog.showModal();
 
+        let dropdownBtn;
         editDialog.addEventListener("click", (e) => {
           e.preventDefault();
-          console.log(e.target);
+          // console.log(e.target);
+          const btnAction = e.target.closest("[data-action]");
+
+          if (btnAction) {
+            if (btnAction.dataset.action === "close") {
+              editDialog.close();
+              budgetCard = null;
+              // dropdownBtn = null;
+            } else if (
+              btnAction.dataset.action === "category" ||
+              btnAction.dataset.action === "tag"
+            ) {
+              dropdownBtn = btnAction;
+            } else if (btnAction.dataset.action === "value") {
+              // console.log(dropdownBtn);
+              // dropdownBtn.children[0] = btnAction.children[0];
+              let dummy = document.createElement("span");
+              dropdownBtn.children[0].after(dummy);
+
+              // console.log(btnAction.children[0].click());
+              btnAction.children[0].children[0].after(dropdownBtn.children[0]);
+              dummy.replaceWith(btnAction.children[0].children[0]);
+
+              // console.log(e.target.tagName);
+              // console.log(btnAction);
+              // dropdownBtn.children[0].replaceWith(btnAction.children[0]);
+              if (e.target.tagName !== "SPAN") {
+                console.log("here");
+                dropdownBtn.nextElementSibling.classList.toggle(
+                  "show-drop-content",
+                  false
+                );
+
+                dropdownBtn.setAttribute("data-budget-dialog-show", true);
+              }
+            }
+          }
+          // console.log(btnAction);
         });
+
+        optionDropdown?.nextElementSibling.classList.toggle(
+          "show-drop-content",
+          false
+        );
+
+        optionDropdown?.setAttribute("data-budget-show", "true");
       }
     }
   } else if (newBudgetBtn) {
@@ -447,25 +508,9 @@ main.addEventListener("click", (e) => {
     // e.preventDefault();
     newDialog.addEventListener("click", (e) => {
       e.preventDefault();
-
-      console.log(e.target);
-      //   const newDialogBtn = e.target.closest("button[data-budget-show]");
-      // console.log(newDialogBtn);
-      // console.log(newDialogBtn.nextElementSibling);
-      // newDialogBtn.nextElementSibling.classList.toggle(
-      //   "show-drop-content",
-      //   newDialogBtn.dataset.budgetShow === "true" ? true : false
-      // );
-
-      // // console.log(newDialogBtn.nextElementSibling);
-      // newDialogBtn.setAttribute(
-      //   "data-budget-show",
-      //   newDialogBtn.dataset.budgetShow === "true" ? "false" : "true"
-      // );
-      // console.log(newDialogBtn);
-      // console.log(newDialogBtn.dataset.budgetShow);
     });
   } else if (budgetEditBtn) {
+    // console.log(budgetEditBtn);
     budgetCard = budgetEditBtn.closest("[data-category]");
     // console.log(budgetCard);
 
@@ -477,6 +522,17 @@ main.addEventListener("click", (e) => {
     budgetEditBtn.setAttribute(
       "data-budget-show",
       budgetEditBtn.dataset.budgetShow === "true" ? "false" : "true"
+    );
+  } else if (budgetDialogEditBtn) {
+    // console.log(budgetCard);
+    budgetDialogEditBtn.nextElementSibling.classList.toggle(
+      "show-drop-content",
+      budgetDialogEditBtn.dataset.budgetDialogShow === "true" ? true : false
+    );
+
+    budgetDialogEditBtn.setAttribute(
+      "data-budget-dialog-show",
+      budgetDialogEditBtn.dataset.budgetDialogShow === "true" ? "false" : "true"
     );
   }
 });
