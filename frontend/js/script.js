@@ -24,6 +24,24 @@ const searchOption = {
   search: "",
 };
 
+const themes = {
+  "#82C9D7": "cyan",
+  "#277C78": "green",
+  "#F2CDAC": "yellow",
+  "#626070": "navy",
+  "#C94736": "red",
+  "#826CB0": "purple",
+  "#AF81BA": "pink",
+  "#597C7C": "turquoise",
+  "#93674F": "brown",
+  "#934F6F": "magenta",
+  "#3F82B2": "blue",
+  "#97A0AC": "navy-grey",
+  "#7F9161": "army-green",
+  "#CAB361": "gold",
+  "#BE6C49": "orange",
+  "#FFFFFF": "white",
+};
 const sortByFuncs = {
   latest: sortByLatest,
   oldest: sortByOldest,
@@ -33,7 +51,9 @@ const sortByFuncs = {
   lowest: sortByLowestAmount,
 };
 const transactions = data["transactions"];
-
+const budgets = data["budgets"];
+const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
+// console.log(currentMonth);
 let budgetCard;
 // console.log(main);
 // Initialize the DOM parser
@@ -63,9 +83,9 @@ const templates = {
 const callback = (mutationList, observer) => {
   for (const mutation of mutationList) {
     if (mutation.type === "childList") {
-      const ele = document.querySelector(".main-transactions");
-      if (ele?.classList.contains("main-transactions")) {
-        // console.log("here");
+      const mainTransaction = document.querySelector(".main-transactions");
+      const mainBudgets = document.querySelector(".main-budgets");
+      if (mainTransaction) {
         observer.disconnect();
         transactionsUpdate();
         const searchInput = main.querySelector("#search-transaction");
@@ -110,9 +130,150 @@ const callback = (mutationList, observer) => {
 
           updateActiveButtonState();
         });
+      } else if (mainBudgets) {
+        observer.disconnect();
+
+        // console.log(mainBudgets);
+        const chartCard = mainBudgets.querySelector(".chart-card");
+        const budgetCards = mainBudgets.querySelector(".budget-cards");
+
+        // console.log(chartCard);
+        // console.log(budgetCards);
+
+        for (const budget of budgets) {
+          const amountSpend = getSpendingAmountForMonth(budget.category);
+
+          budgetCards.insertAdjacentHTML(
+            "beforeend",
+            `<div
+        data-category="${budget.category}"
+        class="budget-card category-card public-sans-regular">
+        <div class="theme-container">
+          <div class="theme-title public-sans-bold">
+            <div data-theme="${
+              themes[budget.theme]
+            }" class="theme-circle"></div>
+            ${budget.category}
+          </div>
+          <div class="dropdown">
+            <button data-budget-show="true">
+              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+            </button>
+
+            <menu data-parameter="editBudget" class="dropdown-content">
+              <li><button data-action="edit">Edit Budget</button></li>
+              <li><button data-action="delete">Delete Budget</button></li>
+            </menu>
+          </div>
+        </div>
+        <div class="budget-progress-container">
+          <label for="${budget.category}-progress">
+            Maximum of
+            <span>$${budget.maximum.toFixed(2)}</span>
+          </label>
+          <progress
+            data-theme="${themes[budget.theme]}"
+            max="${budget.maximum}"
+            value="${
+              amountSpend.length === 0 ? 0 : String(amountSpend).slice(1)
+            }"
+            id="${budget.category}-progress"
+            style="--progress-value: var(--${themes[budget.theme]})">
+            ${budget.maximum}
+          </progress>
+
+          <div class="budget-numbers-container">
+            <div data-theme="${themes[budget.theme]}"></div>
+            <div class="budget-numbers">
+              <p>Spent</p>
+              <span class="public-sans-bold">$${
+                amountSpend.length === 0 ? 0 : String(amountSpend).slice(1)
+              }</span>
+            </div>
+            <div data-theme></div>
+            <div class="budget-numbers">
+              <p>Remaining</p>
+              <span class="public-sans-bold">$${Math.max(
+                budget.maximum + amountSpend,
+                0
+              )}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="latest-spending-container">
+          <div class="latest-spending-header">
+            <h3 class="public-sans-bold">Latest Spending</h3>
+            <button>
+              <span>See All</span>
+              <img
+                src="./assets/images/icon-caret-right.svg"
+                alt="caret right" />
+            </button>
+          </div>
+
+          <table class="latest-spending-table">
+            <tbody>
+              <tr>
+                <td>
+                  <div class="table-name">
+                    <img
+                      loading="lazy"
+                      src="./assets/images/avatars/james-thompson.jpg"
+                      alt="james-thompson" />
+                    <p class="public-sans-bold">James Thomas</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="spending-info">
+                    <p class="spending-amount public-sans-bold">-$10.00</p>
+                    <p class="speding-date">16 Aug 2024</p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="table-name">
+                    <img
+                      loading="lazy"
+                      src="./assets/images/avatars/savory-bites-bistro.jpg"
+                      alt="james-thompson" />
+                    <p class="public-sans-bold">Quebec Services</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="spending-info">
+                    <p class="spending-amount public-sans-bold">-$5.00</p>
+                    <p class="speding-date">12 Aug 2024</p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="table-name">
+                    <img
+                      loading="lazy"
+                      src="./assets/images/avatars/rina-sato.jpg"
+                      alt="james-thompson" />
+                    <p class="public-sans-bold">Romeo Cloud Services</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="spending-info">
+                    <p class="spending-amount public-sans-bold">-$10.00</p>
+                    <p class="speding-date">05 Aug 2024</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`
+          );
+        }
       }
 
-      // console.log(transactionItems);
+      // console.log(mutation);
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
     }
@@ -227,6 +388,26 @@ function paginateData(data, currentPage) {
   return data.slice(startIdx, endIdx);
 }
 
+function getSpendingAmountForMonth(category) {
+  let amountSpent = 0;
+  for (const transaction of transactions) {
+    const date = new Date(transaction.date).toLocaleDateString("en-AU", {
+      month: "short",
+    });
+
+    if (
+      transaction.category.toLowerCase() === category.toLowerCase() &&
+      date === "Aug" &&
+      transaction.amount < 0
+    ) {
+      amountSpent += transaction.amount;
+    }
+  }
+  return amountSpent;
+}
+
+function getLatestSpending() {}
+
 function updateDisplay() {
   const filteredData = filterData(transactionItems);
   // console.log(
@@ -269,11 +450,6 @@ function updateDisplay() {
 function updateActiveButtonState() {
   const pageButtons = document.querySelectorAll("button[data-page]");
   pageButtons.forEach((btn, idx) => {
-    // if (idx === currentTransactionsPage) {
-    //   btn.classList.add("active");
-    // } else {
-    //   btn.classList.remove("active");
-    // }
     btn.classList.toggle("active", idx === currentTransactionsPage);
     btn.nextElementSibling?.classList.toggle(
       "ellipse",
@@ -330,13 +506,10 @@ function sortByOldest(a, b) {
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
-  // console.log(e.target);
   if (liEle) {
-    // console.log(liEle);
     const currentActiveLiEle = document.querySelector("li.checked");
     currentActiveLiEle.classList.remove("checked");
     liEle.classList.add("checked");
-    // console.log(templates[`${liEle.dataset.menu}`]);
     observer.observe(main, config);
     const clone = templates[`${liEle.dataset.menu}`].content.cloneNode(true);
     main.replaceChildren(clone);
@@ -450,6 +623,7 @@ main.addEventListener("click", (e) => {
         );
         editDialog.showModal();
 
+        e.preventDefault();
         // let dropdownBtn;
         editDialog.addEventListener("click", (e) => {
           e.preventDefault();
@@ -460,11 +634,7 @@ main.addEventListener("click", (e) => {
             if (btnAction.dataset.action === "close") {
               editDialog.close();
               budgetCard = null;
-              // dropdownBtn = null;
             } else if (btnAction.dataset.action === "value") {
-              // console.log(
-              //   btnAction.parentElement.previousElementSibling.children[0]
-              // );
               let dummy = document.createElement("span");
               btnAction.parentElement.previousElementSibling.children[0].after(
                 dummy
@@ -482,17 +652,16 @@ main.addEventListener("click", (e) => {
                   false
                 );
 
-                // dropdownBtn.setAttribute("data-budget-dialog-show", true);
                 btnAction.parentElement.previousElementSibling.setAttribute(
                   "data-budget-dialog-show",
                   true
                 );
               }
             } else if (btnAction.dataset.action === "save-budget") {
+              // e.preventDefault();
               console.log(btnAction);
             }
           }
-          // console.log(btnAction);
         });
 
         optionDropdown?.nextElementSibling.classList.toggle(
