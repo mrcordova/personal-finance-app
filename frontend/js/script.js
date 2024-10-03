@@ -485,6 +485,8 @@ main.addEventListener("click", (e) => {
 
                 dropdownBtn.setAttribute("data-budget-dialog-show", true);
               }
+            } else if (btnAction.dataset.action === "save-budget") {
+              console.log(btnAction);
             }
           }
           // console.log(btnAction);
@@ -525,9 +527,6 @@ main.addEventListener("click", (e) => {
           btnAction.children[0].children[0].after(dropdownBtn.children[0]);
           dummy.replaceWith(btnAction.children[0].children[0]);
 
-          // console.log(e.target.tagName);
-          // console.log(btnAction);
-          // dropdownBtn.children[0].replaceWith(btnAction.children[0]);
           if (e.target.tagName !== "SPAN") {
             // console.log("here");
             dropdownBtn.nextElementSibling.classList.toggle(
@@ -537,6 +536,8 @@ main.addEventListener("click", (e) => {
 
             dropdownBtn.setAttribute("data-budget-dialog-show", true);
           }
+        } else if (btnAction.dataset.action === "add-budget") {
+          console.log(btnAction);
         }
       }
     });
