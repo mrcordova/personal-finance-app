@@ -142,11 +142,17 @@ const callback = (mutationList, observer) => {
 
         for (const budget of budgets) {
           const amountSpend = getSpendingAmountForMonth(budget.category);
+          const amountSpendToDisplay =
+            amountSpend.length === 0 ? 0 : String(amountSpend).slice(1);
+
+          const latestSpending = getLatestSpending(budget.category);
 
           budgetCards.insertAdjacentHTML(
             "beforeend",
             `<div
-        data-category="${budget.category}"
+        data-category="${budget.category}" data-max-amount="${
+              budget.maximum
+            }" data-color-tag="${themes[budget.theme]}"
         class="budget-card category-card public-sans-regular">
         <div class="theme-container">
           <div class="theme-title public-sans-bold">
@@ -155,7 +161,7 @@ const callback = (mutationList, observer) => {
             }" class="theme-circle"></div>
             ${budget.category}
           </div>
-          <div class="dropdown">
+          <div class="dropdown"  >
             <button data-budget-show="true">
               <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
             </button>
@@ -174,9 +180,7 @@ const callback = (mutationList, observer) => {
           <progress
             data-theme="${themes[budget.theme]}"
             max="${budget.maximum}"
-            value="${
-              amountSpend.length === 0 ? 0 : String(amountSpend).slice(1)
-            }"
+            value="${amountSpendToDisplay}"
             id="${budget.category}-progress"
             style="--progress-value: var(--${themes[budget.theme]})">
             ${budget.maximum}
@@ -186,9 +190,7 @@ const callback = (mutationList, observer) => {
             <div data-theme="${themes[budget.theme]}"></div>
             <div class="budget-numbers">
               <p>Spent</p>
-              <span class="public-sans-bold">$${
-                amountSpend.length === 0 ? 0 : String(amountSpend).slice(1)
-              }</span>
+              <span class="public-sans-bold">$${amountSpendToDisplay}</span>
             </div>
             <div data-theme></div>
             <div class="budget-numbers">
@@ -219,15 +221,17 @@ const callback = (mutationList, observer) => {
                   <div class="table-name">
                     <img
                       loading="lazy"
-                      src="./assets/images/avatars/james-thompson.jpg"
-                      alt="james-thompson" />
-                    <p class="public-sans-bold">James Thomas</p>
+                      src="${latestSpending[0].avatar}"
+                      alt="${latestSpending[0].name}" />
+                    <p class="public-sans-bold">${latestSpending[0].name}</p>
                   </div>
                 </td>
                 <td>
                   <div class="spending-info">
-                    <p class="spending-amount public-sans-bold">-$10.00</p>
-                    <p class="speding-date">16 Aug 2024</p>
+                    <p class="spending-amount public-sans-bold">${
+                      latestSpending[0].strAmount
+                    }</p>
+                    <p class="speding-date">${latestSpending[0].date}</p>
                   </div>
                 </td>
               </tr>
@@ -236,15 +240,17 @@ const callback = (mutationList, observer) => {
                   <div class="table-name">
                     <img
                       loading="lazy"
-                      src="./assets/images/avatars/savory-bites-bistro.jpg"
-                      alt="james-thompson" />
-                    <p class="public-sans-bold">Quebec Services</p>
+                      src="${latestSpending[1].avatar}"
+                      alt="${latestSpending[1].name}" />
+                    <p class="public-sans-bold">${latestSpending[1].name}</p>
                   </div>
                 </td>
                 <td>
                   <div class="spending-info">
-                    <p class="spending-amount public-sans-bold">-$5.00</p>
-                    <p class="speding-date">12 Aug 2024</p>
+                    <p class="spending-amount public-sans-bold">${
+                      latestSpending[1].strAmount
+                    }</p>
+                    <p class="speding-date">${latestSpending[1].date}</p>
                   </div>
                 </td>
               </tr>
@@ -253,18 +259,21 @@ const callback = (mutationList, observer) => {
                   <div class="table-name">
                     <img
                       loading="lazy"
-                      src="./assets/images/avatars/rina-sato.jpg"
-                      alt="james-thompson" />
-                    <p class="public-sans-bold">Romeo Cloud Services</p>
+                      src="${latestSpending[2].avatar}"
+                      alt="${latestSpending[2].name}" />
+                    <p class="public-sans-bold">${latestSpending[2].name}</p>
                   </div>
                 </td>
                 <td>
                   <div class="spending-info">
-                    <p class="spending-amount public-sans-bold">-$10.00</p>
-                    <p class="speding-date">05 Aug 2024</p>
+                    <p class="spending-amount public-sans-bold">${
+                      latestSpending[2].strAmount
+                    }</p>
+                    <p class="speding-date">${latestSpending[2].date}</p>
                   </div>
                 </td>
               </tr>
+             
             </tbody>
           </table>
         </div>
@@ -387,7 +396,7 @@ function paginateData(data, currentPage) {
   const endIdx = startIdx + itemsPerPage;
   return data.slice(startIdx, endIdx);
 }
-
+// TODO: budgets
 function getSpendingAmountForMonth(category) {
   let amountSpent = 0;
   for (const transaction of transactions) {
@@ -406,7 +415,30 @@ function getSpendingAmountForMonth(category) {
   return amountSpent;
 }
 
-function getLatestSpending() {}
+function getLatestSpending(category) {
+  let lastThreeTransactions = [];
+  for (let index = 0; index < transactions.length; index++) {
+    const element = transactions[index];
+    if (element.category === category && element.amount < 0) {
+      const strAmount = String(element.amount.toFixed(2));
+      const pos = strAmount.indexOf("-") == -1 ? 0 : 1;
+      let temp =
+        (pos == 0 ? "+" : "") +
+        strAmount.substring(0, pos) +
+        "$" +
+        strAmount.substring(pos);
+      lastThreeTransactions.push({
+        name: element.name,
+        strAmount: temp,
+        amount: element.amount,
+        date: createDate(element.date),
+        avatar: element.avatar,
+      });
+    }
+  }
+  // console.log(lastThreeTransactions);
+  return lastThreeTransactions.slice(0, 3);
+}
 
 function updateDisplay() {
   const filteredData = filterData(transactionItems);
