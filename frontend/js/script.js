@@ -450,7 +450,7 @@ main.addEventListener("click", (e) => {
         );
         editDialog.showModal();
 
-        let dropdownBtn;
+        // let dropdownBtn;
         editDialog.addEventListener("click", (e) => {
           e.preventDefault();
           // console.log(e.target);
@@ -461,29 +461,32 @@ main.addEventListener("click", (e) => {
               editDialog.close();
               budgetCard = null;
               // dropdownBtn = null;
-            } else if (
-              btnAction.dataset.action === "category" ||
-              btnAction.dataset.action === "tag"
-            ) {
-              dropdownBtn = btnAction;
             } else if (btnAction.dataset.action === "value") {
+              // console.log(
+              //   btnAction.parentElement.previousElementSibling.children[0]
+              // );
               let dummy = document.createElement("span");
-              dropdownBtn.children[0].after(dummy);
+              btnAction.parentElement.previousElementSibling.children[0].after(
+                dummy
+              );
 
-              btnAction.children[0].children[0].after(dropdownBtn.children[0]);
+              btnAction.children[0].children[0].after(
+                btnAction.parentElement.previousElementSibling.children[0]
+              );
+
               dummy.replaceWith(btnAction.children[0].children[0]);
 
-              // console.log(e.target.tagName);
-              // console.log(btnAction);
-              // dropdownBtn.children[0].replaceWith(btnAction.children[0]);
               if (e.target.tagName !== "SPAN") {
-                // console.log("here");
-                dropdownBtn.nextElementSibling.classList.toggle(
+                btnAction.parentElement.classList.toggle(
                   "show-drop-content",
                   false
                 );
 
-                dropdownBtn.setAttribute("data-budget-dialog-show", true);
+                // dropdownBtn.setAttribute("data-budget-dialog-show", true);
+                btnAction.parentElement.previousElementSibling.setAttribute(
+                  "data-budget-dialog-show",
+                  true
+                );
               }
             } else if (btnAction.dataset.action === "save-budget") {
               console.log(btnAction);
@@ -503,8 +506,7 @@ main.addEventListener("click", (e) => {
   } else if (newBudgetBtn) {
     const newDialog = document.querySelector("#new-budget-dialog");
     newDialog.showModal();
-    let dropdownBtn;
-    // e.preventDefault();
+
     newDialog.addEventListener("click", (e) => {
       e.preventDefault();
       // console.log(e.target);
@@ -515,26 +517,29 @@ main.addEventListener("click", (e) => {
           newDialog.close();
           budgetCard = null;
           // dropdownBtn = null;
-        } else if (
-          btnAction.dataset.action === "category" ||
-          btnAction.dataset.action === "tag"
-        ) {
-          dropdownBtn = btnAction;
         } else if (btnAction.dataset.action === "value") {
           let dummy = document.createElement("span");
-          dropdownBtn.children[0].after(dummy);
+          btnAction.parentElement.previousElementSibling.children[0].after(
+            dummy
+          );
 
-          btnAction.children[0].children[0].after(dropdownBtn.children[0]);
+          btnAction.children[0].children[0].after(
+            btnAction.parentElement.previousElementSibling.children[0]
+          );
+
           dummy.replaceWith(btnAction.children[0].children[0]);
 
           if (e.target.tagName !== "SPAN") {
-            // console.log("here");
-            dropdownBtn.nextElementSibling.classList.toggle(
+            btnAction.parentElement.classList.toggle(
               "show-drop-content",
               false
             );
 
-            dropdownBtn.setAttribute("data-budget-dialog-show", true);
+            // dropdownBtn.setAttribute("data-budget-dialog-show", true);
+            btnAction.parentElement.previousElementSibling.setAttribute(
+              "data-budget-dialog-show",
+              true
+            );
           }
         } else if (btnAction.dataset.action === "add-budget") {
           console.log(btnAction);

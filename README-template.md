@@ -115,6 +115,7 @@ https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date
 https://stackoverflow.com/questions/10556365/is-it-possible-to-ellipsize-placeholders-watermarks-in-html5
 https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient
 https://stackoverflow.com/questions/9732624/how-to-swap-dom-child-nodes-in-javascript
+https://stackoverflow.com/questions/24369197/how-to-add-static-text-inside-an-input-form
 
 - [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
 - [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.

@@ -997,13 +997,13 @@ thead {
     }
   }
 
-  .dropdown:hover .dropdown-content {
+  /* .dropdown:hover .dropdown-content {
     display: block;
   }
 
   .dropdown:hover .popover {
     display: none;
-  }
+  } */
 
   :popover-open {
     display: none;
@@ -1055,7 +1055,11 @@ thead {
       }
     }
   }
-
+  .theme-container {
+    & button {
+      display: block;
+    }
+  }
   thead {
     display: table-header-group;
   }
