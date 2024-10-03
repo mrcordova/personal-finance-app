@@ -467,12 +467,9 @@ main.addEventListener("click", (e) => {
             ) {
               dropdownBtn = btnAction;
             } else if (btnAction.dataset.action === "value") {
-              // console.log(dropdownBtn);
-              // dropdownBtn.children[0] = btnAction.children[0];
               let dummy = document.createElement("span");
               dropdownBtn.children[0].after(dummy);
 
-              // console.log(btnAction.children[0].click());
               btnAction.children[0].children[0].after(dropdownBtn.children[0]);
               dummy.replaceWith(btnAction.children[0].children[0]);
 
@@ -480,7 +477,7 @@ main.addEventListener("click", (e) => {
               // console.log(btnAction);
               // dropdownBtn.children[0].replaceWith(btnAction.children[0]);
               if (e.target.tagName !== "SPAN") {
-                console.log("here");
+                // console.log("here");
                 dropdownBtn.nextElementSibling.classList.toggle(
                   "show-drop-content",
                   false
@@ -504,10 +501,44 @@ main.addEventListener("click", (e) => {
   } else if (newBudgetBtn) {
     const newDialog = document.querySelector("#new-budget-dialog");
     newDialog.showModal();
-
+    let dropdownBtn;
     // e.preventDefault();
     newDialog.addEventListener("click", (e) => {
       e.preventDefault();
+      // console.log(e.target);
+      const btnAction = e.target.closest("[data-action]");
+
+      if (btnAction) {
+        if (btnAction.dataset.action === "close") {
+          newDialog.close();
+          budgetCard = null;
+          // dropdownBtn = null;
+        } else if (
+          btnAction.dataset.action === "category" ||
+          btnAction.dataset.action === "tag"
+        ) {
+          dropdownBtn = btnAction;
+        } else if (btnAction.dataset.action === "value") {
+          let dummy = document.createElement("span");
+          dropdownBtn.children[0].after(dummy);
+
+          btnAction.children[0].children[0].after(dropdownBtn.children[0]);
+          dummy.replaceWith(btnAction.children[0].children[0]);
+
+          // console.log(e.target.tagName);
+          // console.log(btnAction);
+          // dropdownBtn.children[0].replaceWith(btnAction.children[0]);
+          if (e.target.tagName !== "SPAN") {
+            // console.log("here");
+            dropdownBtn.nextElementSibling.classList.toggle(
+              "show-drop-content",
+              false
+            );
+
+            dropdownBtn.setAttribute("data-budget-dialog-show", true);
+          }
+        }
+      }
     });
   } else if (budgetEditBtn) {
     // console.log(budgetEditBtn);

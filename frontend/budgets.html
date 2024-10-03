@@ -58,9 +58,6 @@
           <menu
             data-parameter="editBudget"
             class="public-sans-regular dropdown-content">
-            <!-- <li data-action="value">
-              <button><span>Entertainment</span></button>
-            </li> -->
             <li data-action="value">
               <button>
                 <span>Bills</span>
@@ -264,22 +261,40 @@
             data-action="category"
             id="budget-cate-btn"
             data-budget-dialog-show="true">
-            Entertainment
+            <span>Entertainment</span>
             <img
               src="./assets/images/icon-caret-down.svg"
               alt="drop down caret" />
           </button>
-          <menu data-parameter="editBudget" class="dropdown-content">
-            <li><button>All Transactions</button></li>
-            <li><button>Entertainment</button></li>
-            <li><button>Bills</button></li>
-            <li><button>Groceries</button></li>
-            <li><button>Dining Out</button></li>
-            <li><button>Personal Care</button></li>
-            <li><button>Education</button></li>
-            <li><button>Lifestyle</button></li>
-            <li><button>Shopping</button></li>
-            <li><button>General</button></li>
+          <menu
+            data-parameter="editBudget"
+            class="public-sans-regular dropdown-content">
+            <li data-action="value">
+              <button>
+                <span>Bills</span>
+              </button>
+            </li>
+            <li data-action="value">
+              <button><span>Groceries</span></button>
+            </li>
+            <li data-action="value">
+              <button><span>Dining Out</span></button>
+            </li>
+            <li data-action="value">
+              <button><span>Personal Care</span></button>
+            </li>
+            <li data-action="value">
+              <button><span>Education</span></button>
+            </li>
+            <li data-action="value">
+              <button><span>Lifestyle</span></button>
+            </li>
+            <li data-action="value">
+              <button><span>Shopping</span></button>
+            </li>
+            <li data-action="value">
+              <button><span>General</span></button>
+            </li>
           </menu>
         </div>
         <div>
@@ -297,7 +312,7 @@
         </div>
         <div class="public-sans-regular dropdown">
           <label for="theme" class="public-sans-bold">Color Tag</label>
-          <button data-action="tag" id="theme" data-budget-show="true">
+          <button data-action="tag" id="theme" data-budget-dialog-show="true">
             <span>
               <span data-theme="green" class="theme-circle"></span>
               Green
@@ -307,15 +322,15 @@
               alt="drop down caret" />
           </button>
           <menu data-parameter="editBudget" class="dropdown-content">
-            <li>
+            <!-- <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="green" class="theme-circle"></span>
                   Green
                 </span>
               </button>
-            </li>
-            <li>
+            </li> -->
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="yellow" class="theme-circle"></span>
@@ -323,7 +338,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="cyan" class="theme-circle"></span>
@@ -331,7 +346,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="navy" class="theme-circle"></span>
@@ -339,7 +354,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="red" class="theme-circle"></span>
@@ -347,7 +362,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="purple" class="theme-circle"></span>
@@ -355,7 +370,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="pink" class="theme-circle"></span>
@@ -363,7 +378,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="turquoise" class="theme-circle"></span>
@@ -371,7 +386,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="brown" class="theme-circle"></span>
@@ -379,7 +394,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="magenta" class="theme-circle"></span>
@@ -387,7 +402,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="blue" class="theme-circle"></span>
@@ -395,7 +410,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="navy-grey" class="theme-circle"></span>
@@ -403,7 +418,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="army-green" class="theme-circle"></span>
@@ -411,7 +426,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="gold" class="theme-circle"></span>
@@ -419,7 +434,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="orange" class="theme-circle"></span>
@@ -427,7 +442,7 @@
                 </span>
               </button>
             </li>
-            <li>
+            <li data-action="value">
               <button id="theme">
                 <span>
                   <span data-theme="white" class="theme-circle"></span>
