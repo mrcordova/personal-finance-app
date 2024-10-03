@@ -317,7 +317,9 @@ function transactionsUpdate() {
       "beforeend",
       `  <tr data-category="${transaction.category}" data-name="${
         transaction.name
-      }" data-amount="${transaction.amount}" data-date="${transaction.date}">
+      }" data-max-spending="${transaction.amount}" data-date="${
+        transaction.date
+      }">
           <th colspan="1" role="row">
             <img
               class="profile-pic"
@@ -654,7 +656,11 @@ main.addEventListener("click", (e) => {
           "button[data-budget-show]"
         );
         editDialog.showModal();
+        const actions = editDialog.querySelectorAll(
+          '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
+        );
 
+        console.log(actions);
         e.preventDefault();
         // let dropdownBtn;
         editDialog.addEventListener("click", (e) => {
