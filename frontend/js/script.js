@@ -135,10 +135,8 @@ const callback = (mutationList, observer) => {
 
         // console.log(mainBudgets);
         const chartCard = mainBudgets.querySelector(".chart-card");
+        const spendingObjs = {};
         const budgetCards = mainBudgets.querySelector(".budget-cards");
-
-        // console.log(chartCard);
-        // console.log(budgetCards);
 
         for (const budget of budgets) {
           const amountSpend = getSpendingAmountForMonth(budget.category);
@@ -146,6 +144,12 @@ const callback = (mutationList, observer) => {
             amountSpend.length === 0 ? 0 : String(amountSpend).slice(1);
 
           const latestSpending = getLatestSpending(budget.category);
+
+          spendingObjs[budget.category] = {
+            spending: parseFloat(amountSpendToDisplay),
+            max: budget.maximum,
+            theme: themes[budget.theme],
+          };
 
           budgetCards.insertAdjacentHTML(
             "beforeend",
@@ -282,9 +286,50 @@ const callback = (mutationList, observer) => {
       </div>`
           );
         }
-      }
 
-      // console.log(mutation);
+        console.log(spendingObjs);
+
+        chartCard.insertAdjacentHTML(
+          "afterbegin",
+          `
+      <div class="budget-chart">
+        <div>
+          <p class="public-sans-regular">
+            <span data-total-spend="407" class="public-sans-bold">$${accumalateAmount`${spendingObjs}`}</span>
+            of $${accumalateAmount`limit${spendingObjs}`} limit
+          </p>
+        </div>
+      </div>
+      <div class="chart-summary">
+        <h3 class="public-sans-bold">Spending Summary</h3>
+
+        <div class="public-sans-regular">
+        ${createCategoryElements`${spendingObjs}`}
+       
+        </div>
+      </div>
+    `
+        );
+        const budgetChart = chartCard.querySelector(".budget-chart");
+        const totalSpending = accumalateAmount("", spendingObjs);
+        let percentage = [];
+        let idx = 0;
+        for (const [key, value] of Object.entries(spendingObjs)) {
+          const end = (value.spending / totalSpending) * 100;
+
+          if (percentage.length === 0) {
+            percentage.push({ category: key, values: { start: 0, end } });
+          } else {
+            const start = percentage[idx].values.end;
+            percentage.push({
+              category: key,
+              values: { start: start, end: start + end },
+            });
+            idx++;
+          }
+        }
+        console.log(percentage);
+      }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
     }
@@ -301,6 +346,38 @@ async function extractTemplate(id) {
     .querySelector(`#${id}-template`);
 }
 
+function createCategoryElements(strings, obj) {
+  let finalStr = "";
+
+  for (const [key, value] of Object.entries(obj)) {
+    const title = key;
+    // console.log(title);
+    const { theme, max, spending } = value;
+    finalStr += `
+          <div class="chart-category">
+            <div data-theme=${theme}></div>
+            <p>${title}</p>
+            <p>
+              <span class="public-sans-bold">$${spending.toFixed(2)}</span>
+              &ThickSpace; of $${max.toFixed(2)}
+            </p>
+          </div>
+         `;
+  }
+  return finalStr;
+}
+function accumalateAmount(strings, obj) {
+  let spendingTotal = 0;
+
+  for (const [key, value] of Object.entries(obj)) {
+    if (strings[0] !== "limit") {
+      spendingTotal += value.spending;
+    } else {
+      spendingTotal += value.max;
+    }
+  }
+  return spendingTotal;
+}
 function transactionsUpdate() {
   const transactionsTable = main.querySelector("table > tbody");
 
