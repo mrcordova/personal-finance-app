@@ -318,17 +318,25 @@ const callback = (mutationList, observer) => {
           const end = (value.spending / totalSpending) * 100;
 
           if (percentage.length === 0) {
-            percentage.push({ category: key, values: { start: 0, end } });
+            percentage.push({
+              category: key,
+              values: { start: 0, end },
+              theme: value.theme,
+            });
           } else {
             const start = percentage[idx].values.end;
             percentage.push({
               category: key,
               values: { start: start, end: start + end },
+              theme: value.theme,
             });
             idx++;
           }
         }
-        console.log(percentage);
+        budgetChart.setAttribute(
+          "style",
+          `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
+        );
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
@@ -377,6 +385,16 @@ function accumalateAmount(strings, obj) {
     }
   }
   return spendingTotal;
+}
+
+function returnChartStr(strings, percentage) {
+  let finalStr = "";
+  for (const element of percentage) {
+    const theme = element.theme;
+    const values = element.values;
+    finalStr += `, var(--${theme}) ${values.start}%, var(--${theme}) ${values.end}%`;
+  }
+  return finalStr;
 }
 function transactionsUpdate() {
   const transactionsTable = main.querySelector("table > tbody");
