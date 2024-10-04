@@ -150,9 +150,11 @@ const callback = (mutationList, observer) => {
           budgetCards.insertAdjacentHTML(
             "beforeend",
             `<div
-        data-category="${budget.category}" data-max-amount="${
-              budget.maximum
-            }" data-color-tag="${themes[budget.theme]}"
+        data-category="${
+          budget.category
+        }" data-max-amount="${budget.maximum.toFixed(2)}" data-color-tag="${
+              themes[budget.theme]
+            }"
         class="budget-card category-card public-sans-regular">
         <div class="theme-container">
           <div class="theme-title public-sans-bold">
@@ -655,17 +657,26 @@ main.addEventListener("click", (e) => {
         const optionDropdown = budgetCard.querySelector(
           "button[data-budget-show]"
         );
-        editDialog.showModal();
+
         const actions = editDialog.querySelectorAll(
           '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
         );
 
-        console.log(actions);
+        actions[0].children[0].textContent = budgetCard.dataset.category;
+        actions[1].value = budgetCard.dataset.maxAmount;
+        actions[2].children[0].children[0].setAttribute(
+          "data-theme",
+          budgetCard.dataset.colorTag
+        );
+
+        actions[2].children[0].childNodes[2].textContent =
+          budgetCard.dataset.colorTag;
+
+        editDialog.showModal();
         e.preventDefault();
-        // let dropdownBtn;
+
         editDialog.addEventListener("click", (e) => {
           e.preventDefault();
-          // console.log(e.target);
           const btnAction = e.target.closest("[data-action]");
 
           if (btnAction) {

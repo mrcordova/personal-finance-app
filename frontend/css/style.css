@@ -734,6 +734,7 @@ main {
 .search-input {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border: 1px solid var(--beige-500);
   height: max-content;
   border-radius: 0.5rem;
