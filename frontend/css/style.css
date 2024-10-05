@@ -265,6 +265,9 @@ button[popovertarget] {
         width: 2rem;
       }
 
+      & tr:last-child > :is(td, th) {
+        border-bottom: 1px solid transparent;
+      }
       & :is(td, th) {
         padding-block: 0.75rem;
         border-bottom: 1px solid hsl(from var(--grey-500) h s l / 0.15);

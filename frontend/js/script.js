@@ -141,8 +141,9 @@ const callback = (mutationList, observer) => {
         for (const budget of budgets) {
           createBudgetCard(budgetCards, budget);
           const amountSpend = getSpendingAmountForMonth(budget.category);
-          const amountSpendToDisplay =
-            amountSpend.length === 0 ? 0 : String(amountSpend).slice(1);
+          // const amountSpendToDisplay =
+          //   amountSpend.length === 0 ? 0 : String(amountSpend).slice(1);
+          const amountSpendToDisplay = Math.abs(amountSpend);
 
           // const latestSpending = getLatestSpending(budget.category);
 
@@ -233,14 +234,16 @@ const callback = (mutationList, observer) => {
 
         // console.log(spendingObjs);
 
+        const totalSpend = accumalateAmount`${spendingObjs}`;
+        const totalLimit = accumalateAmount`limit${spendingObjs}`;
         chartCard.insertAdjacentHTML(
           "afterbegin",
           `
       <div class="budget-chart">
         <div>
           <p class="public-sans-regular">
-            <span data-total-spend="407" class="public-sans-bold">$${accumalateAmount`${spendingObjs}`}</span>
-            of $${accumalateAmount`limit${spendingObjs}`} limit
+            <span data-total-spend="${totalSpend}" data-total-limit="${totalLimit}" class="public-sans-bold">$${totalSpend}</span>
+            of $${totalLimit} limit
           </p>
         </div>
       </div>
@@ -300,8 +303,7 @@ async function extractTemplate(id) {
 
 function createBudgetCard(budgetCards, budget) {
   const amountSpend = getSpendingAmountForMonth(budget.category);
-  const amountSpendToDisplay =
-    amountSpend.length === 0 ? 0 : String(amountSpend).slice(1);
+  const amountSpendToDisplay = Math.abs(amountSpend);
 
   const latestSpending = getLatestSpending(budget.category);
 
@@ -864,7 +866,21 @@ main.addEventListener("click", (e) => {
               const theme = actions[2].children[0].children[0].dataset.theme;
               const category = actions[0].children[0].textContent;
               const max = actions[1].value;
-              // console.log(themes);
+              const chart = budgetCard.parentElement.previousElementSibling;
+              const spendingSummary = chart.querySelector(
+                `.chart-category:has([data-theme=${budgetCard.dataset.colorTag}])`
+              );
+              const totalSpend = chart.querySelector("[data-total-spend]");
+              // const budgetChart = chart.children[0];
+              const newLimit =
+                parseFloat(totalSpend.dataset.totalLimit) -
+                parseFloat(budgetCard.dataset.maxAmount) +
+                parseFloat(max);
+              totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
+
+              spendingSummary.children[0].setAttribute("data-theme", theme);
+              spendingSummary.children[1].textContent = category;
+              spendingSummary.children[2].childNodes[2].textContent = `\xa0 of $${max}`;
 
               themes[0].setAttribute("data-theme", theme);
               themes[0].nextSibling.nodeValue = category;
@@ -946,18 +962,49 @@ main.addEventListener("click", (e) => {
           }
         } else if (btnAction.dataset.action === "add-budget") {
           const budgetCards = main.querySelector(".budget-cards");
+          const totalSpend = main.querySelector(
+            ".chart-card [data-total-spend]"
+          );
+          const spendingSummary = main.querySelector(
+            ".chart-card>div>:has(.chart-category)"
+          );
+
+          // console.log(spendingSummary);
           const actions = newDialog.querySelectorAll(
             '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
           );
 
-          createBudgetCard(budgetCards, {
+          const max = parseFloat(actions[1].value);
+          const newLimit =
+            parseFloat(totalSpend.dataset.totalLimit) + parseFloat(max);
+          totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
+
+          const budgetCardObj = {
             category: actions[0].children[0].textContent,
             theme: getKeyByValue(
               themes,
               actions[2].children[0].children[0].dataset.theme
             ),
-            maximum: parseFloat(actions[1].value),
-          });
+            maximum: max,
+          };
+          const categorySummartObj = {};
+          const amountSpend = getSpendingAmountForMonth(budgetCardObj.category);
+
+          // console.log(getSpendingAmountForMonth(budgetCardObj.category));
+          const amountSpendToDisplay = Math.abs(amountSpend);
+
+          categorySummartObj[`${budgetCardObj.category}`] = {
+            theme: themes[budgetCardObj.theme],
+            max: budgetCardObj.maximum,
+            spending: amountSpendToDisplay,
+          };
+
+          // console.log(categorySummartObj);
+          createBudgetCard(budgetCards, budgetCardObj);
+          spendingSummary.insertAdjacentHTML(
+            "beforeend",
+            createCategoryElements("", categorySummartObj)
+          );
           newDialog.close();
         }
       }
