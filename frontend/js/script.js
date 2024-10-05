@@ -139,11 +139,12 @@ const callback = (mutationList, observer) => {
         const budgetCards = mainBudgets.querySelector(".budget-cards");
 
         for (const budget of budgets) {
+          createBudgetCard(budgetCards, budget);
           const amountSpend = getSpendingAmountForMonth(budget.category);
           const amountSpendToDisplay =
             amountSpend.length === 0 ? 0 : String(amountSpend).slice(1);
 
-          const latestSpending = getLatestSpending(budget.category);
+          // const latestSpending = getLatestSpending(budget.category);
 
           spendingObjs[budget.category] = {
             spending: parseFloat(amountSpendToDisplay),
@@ -151,143 +152,86 @@ const callback = (mutationList, observer) => {
             theme: themes[budget.theme],
           };
 
-          budgetCards.insertAdjacentHTML(
-            "beforeend",
-            `<div
-        data-category="${
-          budget.category
-        }" data-max-amount="${budget.maximum.toFixed(2)}" data-color-tag="${
-              themes[budget.theme]
-            }"
-        class="budget-card category-card public-sans-regular">
-        <div class="theme-container">
-          <div class="theme-title public-sans-bold">
-            <div data-theme="${
-              themes[budget.theme]
-            }" class="theme-circle"></div>
-            ${budget.category}
-          </div>
-          <div class="dropdown"  >
-            <button data-budget-show="true">
-              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
-            </button>
+          //     budgetCards.insertAdjacentHTML(
+          //       "beforeend",
+          //       `<div
+          //   data-category="${
+          //     budget.category
+          //   }" data-max-amount="${budget.maximum.toFixed(2)}" data-color-tag="${
+          //         themes[budget.theme]
+          //       }"
+          //   class="budget-card category-card public-sans-regular">
+          //   <div class="theme-container">
+          //     <div class="theme-title public-sans-bold">
+          //       <div data-theme="${
+          //         themes[budget.theme]
+          //       }" class="theme-circle"></div>
+          //       ${budget.category}
+          //     </div>
+          //     <div class="dropdown"  >
+          //       <button data-budget-show="true">
+          //         <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+          //       </button>
 
-            <menu data-parameter="editBudget" class="dropdown-content">
-              <li><button data-action="edit">Edit Budget</button></li>
-              <li><button data-action="delete">Delete Budget</button></li>
-            </menu>
-          </div>
-        </div>
-        <div class="budget-progress-container">
-          <label for="${budget.category}-progress">
-            Maximum of
-            <span>$${budget.maximum.toFixed(2)}</span>
-          </label>
-          <progress
-            data-theme="${themes[budget.theme]}"
-            max="${budget.maximum}"
-            value="${amountSpendToDisplay}"
-            id="${budget.category}-progress"
-            style="--progress-value: var(--${themes[budget.theme]})">
-            ${budget.maximum}
-          </progress>
+          //       <menu data-parameter="editBudget" class="dropdown-content">
+          //         <li><button data-action="edit">Edit Budget</button></li>
+          //         <li><button data-action="delete">Delete Budget</button></li>
+          //       </menu>
+          //     </div>
+          //   </div>
+          //   <div class="budget-progress-container">
+          //     <label for="${budget.category}-progress">
+          //       Maximum of
+          //       <span>$${budget.maximum.toFixed(2)}</span>
+          //     </label>
+          //     <progress
+          //       data-theme="${themes[budget.theme]}"
+          //       max="${budget.maximum}"
+          //       value="${amountSpendToDisplay}"
+          //       id="${budget.category}-progress"
+          //       style="--progress-value: var(--${themes[budget.theme]})">
+          //       ${budget.maximum}
+          //     </progress>
 
-          <div class="budget-numbers-container">
-            <div data-theme="${themes[budget.theme]}"></div>
-            <div class="budget-numbers">
-              <p>Spent</p>
-              <span class="public-sans-bold">$${amountSpendToDisplay}</span>
-            </div>
-            <div data-theme></div>
-            <div class="budget-numbers">
-              <p>Remaining</p>
-              <span class="public-sans-bold">$${Math.max(
-                budget.maximum + amountSpend,
-                0
-              )}</span>
-            </div>
-          </div>
-        </div>
+          //     <div class="budget-numbers-container">
+          //       <div data-theme="${themes[budget.theme]}"></div>
+          //       <div class="budget-numbers">
+          //         <p>Spent</p>
+          //         <span class="public-sans-bold">$${amountSpendToDisplay}</span>
+          //       </div>
+          //       <div data-theme></div>
+          //       <div class="budget-numbers">
+          //         <p>Remaining</p>
+          //         <span class="public-sans-bold">$${Math.max(
+          //           budget.maximum + amountSpend,
+          //           0
+          //         )}</span>
+          //       </div>
+          //     </div>
+          //   </div>
 
-        <div class="latest-spending-container">
-          <div class="latest-spending-header">
-            <h3 class="public-sans-bold">Latest Spending</h3>
-            <button>
-              <span>See All</span>
-              <img
-                src="./assets/images/icon-caret-right.svg"
-                alt="caret right" />
-            </button>
-          </div>
+          //   <div class="latest-spending-container">
+          //     <div class="latest-spending-header">
+          //       <h3 class="public-sans-bold">Latest Spending</h3>
+          //       <button>
+          //         <span>See All</span>
+          //         <img
+          //           src="./assets/images/icon-caret-right.svg"
+          //           alt="caret right" />
+          //       </button>
+          //     </div>
 
-          <table class="latest-spending-table">
-            <tbody>
-              <tr>
-                <td>
-                  <div class="table-name">
-                    <img
-                      loading="lazy"
-                      src="${latestSpending[0].avatar}"
-                      alt="${latestSpending[0].name}" />
-                    <p class="public-sans-bold">${latestSpending[0].name}</p>
-                  </div>
-                </td>
-                <td>
-                  <div class="spending-info">
-                    <p class="spending-amount public-sans-bold">${
-                      latestSpending[0].strAmount
-                    }</p>
-                    <p class="speding-date">${latestSpending[0].date}</p>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="table-name">
-                    <img
-                      loading="lazy"
-                      src="${latestSpending[1].avatar}"
-                      alt="${latestSpending[1].name}" />
-                    <p class="public-sans-bold">${latestSpending[1].name}</p>
-                  </div>
-                </td>
-                <td>
-                  <div class="spending-info">
-                    <p class="spending-amount public-sans-bold">${
-                      latestSpending[1].strAmount
-                    }</p>
-                    <p class="speding-date">${latestSpending[1].date}</p>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="table-name">
-                    <img
-                      loading="lazy"
-                      src="${latestSpending[2].avatar}"
-                      alt="${latestSpending[2].name}" />
-                    <p class="public-sans-bold">${latestSpending[2].name}</p>
-                  </div>
-                </td>
-                <td>
-                  <div class="spending-info">
-                    <p class="spending-amount public-sans-bold">${
-                      latestSpending[2].strAmount
-                    }</p>
-                    <p class="speding-date">${latestSpending[2].date}</p>
-                  </div>
-                </td>
-              </tr>
-             
-            </tbody>
-          </table>
-        </div>
-      </div>`
-          );
+          //     <table class="latest-spending-table">
+          //       <tbody>
+          //        ${createLatestSpending([""], latestSpending)}
+          //        </tbody>
+          //     </table>
+          //   </div>
+          // </div>`
+          //     );
         }
 
-        console.log(spendingObjs);
+        // console.log(spendingObjs);
 
         chartCard.insertAdjacentHTML(
           "afterbegin",
@@ -354,6 +298,116 @@ async function extractTemplate(id) {
     .querySelector(`#${id}-template`);
 }
 
+function createBudgetCard(budgetCards, budget) {
+  const amountSpend = getSpendingAmountForMonth(budget.category);
+  const amountSpendToDisplay =
+    amountSpend.length === 0 ? 0 : String(amountSpend).slice(1);
+
+  const latestSpending = getLatestSpending(budget.category);
+
+  budgetCards.insertAdjacentHTML(
+    "beforeend",
+    `<div
+        data-category="${
+          budget.category
+        }" data-max-amount="${budget.maximum.toFixed(2)}" data-color-tag="${
+      themes[budget.theme]
+    }"
+        class="budget-card category-card public-sans-regular">
+        <div class="theme-container">
+          <div class="theme-title public-sans-bold">
+            <div data-theme="${
+              themes[budget.theme]
+            }" class="theme-circle"></div>
+            ${budget.category}
+          </div>
+          <div class="dropdown"  >
+            <button data-budget-show="true">
+              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+            </button>
+
+            <menu data-parameter="editBudget" class="dropdown-content">
+              <li><button data-action="edit">Edit Budget</button></li>
+              <li><button data-action="delete">Delete Budget</button></li>
+            </menu>
+          </div>
+        </div>
+        <div class="budget-progress-container">
+          <label for="${budget.category}-progress">
+            Maximum of
+            <span>$${budget.maximum.toFixed(2)}</span>
+          </label>
+          <progress
+            data-theme="${themes[budget.theme]}"
+            max="${budget.maximum}"
+            value="${amountSpendToDisplay}"
+            id="${budget.category}-progress"
+            style="--progress-value: var(--${themes[budget.theme]})">
+            ${budget.maximum}
+          </progress>
+
+          <div class="budget-numbers-container">
+            <div data-theme="${themes[budget.theme]}"></div>
+            <div class="budget-numbers">
+              <p>Spent</p>
+              <span class="public-sans-bold">$${amountSpendToDisplay}</span>
+            </div>
+            <div data-theme></div>
+            <div class="budget-numbers">
+              <p>Remaining</p>
+              <span class="public-sans-bold">$${Math.max(
+                budget.maximum + amountSpend,
+                0
+              )}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="latest-spending-container">
+          <div class="latest-spending-header">
+            <h3 class="public-sans-bold">Latest Spending</h3>
+            <button>
+              <span>See All</span>
+              <img
+                src="./assets/images/icon-caret-right.svg"
+                alt="caret right" />
+            </button>
+          </div>
+
+          <table class="latest-spending-table">
+            <tbody>
+             ${createLatestSpending([""], latestSpending)}
+             </tbody>
+          </table>
+        </div>
+      </div>`
+  );
+}
+
+function createLatestSpending(strings, latestSpendingArray) {
+  let finalStr = "";
+  for (const latestSpending of latestSpendingArray) {
+    finalStr += `<tr>
+                <td>
+                  <div class="table-name">
+                    <img
+                      loading="lazy"
+                      src="${latestSpending.avatar}"
+                      alt="${latestSpending.name}" />
+                    <p class="public-sans-bold">${latestSpending.name}</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="spending-info">
+                    <p class="spending-amount public-sans-bold">${latestSpending.strAmount}</p>
+                    <p class="speding-date">${latestSpending.date}</p>
+                  </div>
+                </td>
+              </tr>
+             `;
+  }
+  return finalStr;
+}
 function createCategoryElements(strings, obj) {
   let finalStr = "";
 
@@ -633,6 +687,9 @@ function sortByOldest(a, b) {
     ? -1
     : 0;
 }
+function getKeyByValue(object, value) {
+  return Object.keys(object).find((key) => object[key] === value);
+}
 
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
@@ -855,7 +912,19 @@ main.addEventListener("click", (e) => {
             );
           }
         } else if (btnAction.dataset.action === "add-budget") {
-          console.log(btnAction);
+          const budgetCards = main.querySelector(".budget-cards");
+          const actions = newDialog.querySelectorAll(
+            '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
+          );
+
+          createBudgetCard(budgetCards, {
+            category: actions[0].children[0].textContent,
+            theme: getKeyByValue(
+              themes,
+              actions[2].children[0].children[0].dataset.theme
+            ),
+            maximum: parseFloat(actions[1].value),
+          });
         }
       }
     });
