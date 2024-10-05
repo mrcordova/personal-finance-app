@@ -310,9 +310,9 @@ function createBudgetCard(budgetCards, budget) {
     `<div
         data-category="${
           budget.category
-        }" data-max-amount="${budget.maximum.toFixed(2)}" data-color-tag="${
-      themes[budget.theme]
-    }"
+        }" data-spend="${amountSpend}" data-max-amount="${budget.maximum.toFixed(
+      2
+    )}" data-color-tag="${themes[budget.theme]}"
         class="budget-card category-card public-sans-regular">
         <div class="theme-container">
           <div class="theme-title public-sans-bold">
@@ -860,7 +860,40 @@ main.addEventListener("click", (e) => {
               }
             } else if (btnAction.dataset.action === "save-budget") {
               // e.preventDefault();
-              console.log(btnAction);
+              const themes = budgetCard.querySelectorAll(`[data-theme]`);
+              const theme = actions[2].children[0].children[0].dataset.theme;
+              const category = actions[0].children[0].textContent;
+              const max = actions[1].value;
+              // console.log(themes);
+
+              themes[0].setAttribute("data-theme", theme);
+              themes[0].nextSibling.nodeValue = category;
+              themes[1].previousElementSibling.children[0].textContent = `$${max}`;
+              themes[1].previousElementSibling.setAttribute(
+                "for",
+                `${category}-progress`
+              );
+              themes[1].setAttribute("id", `${category}-progress`);
+              themes[1].setAttribute("data-theme", theme);
+              themes[1].setAttribute("max", max);
+              themes[1].setAttribute(
+                "style",
+                `--progress-value: var(--${theme})`
+              );
+              themes[2].setAttribute("data-theme", theme);
+
+              // console.log(max + parseFloat(budgetCard.dataset.spend));
+              themes[3].nextElementSibling.children[1].textContent = `$${Math.max(
+                0,
+                parseFloat(max) + parseFloat(budgetCard.dataset.spend)
+              )}`;
+
+              budgetCard.setAttribute("data-category", category);
+              budgetCard.setAttribute("data-max-amount", max);
+              budgetCard.setAttribute("data-color-tag", theme);
+              // budgetCard.setAttribute('data-category', category);
+
+              editDialog.close();
             }
           }
         });
@@ -925,6 +958,7 @@ main.addEventListener("click", (e) => {
             ),
             maximum: parseFloat(actions[1].value),
           });
+          newDialog.close();
         }
       }
     });
