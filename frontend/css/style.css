@@ -71,8 +71,8 @@ body {
 .budget-chart {
   margin-block: 1.25rem;
   margin-inline: 1.96875rem;
-  width: 15rem;
-  height: 15rem;
+  min-width: 15.7rem;
+  min-height: 15rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -316,12 +316,17 @@ button[popovertarget] {
     flex: 1;
     justify-content: space-between;
     gap: 1.5rem;
+    overflow: hidden;
     & > h3 {
       color: var(--grey-900);
       font-size: 1.25rem;
       line-height: 1.2;
     }
 
+    & .spending-category-container {
+      overflow-y: auto;
+      flex: 1;
+    }
     & .chart-category {
       color: var(--grey-500);
       display: flex;
@@ -354,16 +359,6 @@ button[popovertarget] {
       &:last-child {
         border-bottom-color: transparent;
       }
-      /* &:nth-child(2) > div {
-        background-color: var(--yellow);
-      }
-      &:nth-child(3) > div {
-        background-color: var(--navy);
-      } */
-
-      /* &:last-child > div {
-        background-color: var(--green);
-      } */
     }
   }
 }

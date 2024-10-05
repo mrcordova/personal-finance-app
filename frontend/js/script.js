@@ -250,7 +250,7 @@ const callback = (mutationList, observer) => {
       <div class="chart-summary">
         <h3 class="public-sans-bold">Spending Summary</h3>
 
-        <div class="public-sans-regular">
+        <div class="spending-category-container public-sans-regular">
         ${createCategoryElements`${spendingObjs}`}
        
         </div>
@@ -966,7 +966,7 @@ main.addEventListener("click", (e) => {
             ".chart-card [data-total-spend]"
           );
           const spendingSummary = main.querySelector(
-            ".chart-card>div>:has(.chart-category)"
+            ".chart-card .spending-category-container"
           );
 
           // console.log(spendingSummary);
