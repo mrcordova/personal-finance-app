@@ -258,28 +258,27 @@ const callback = (mutationList, observer) => {
     `
         );
         const budgetChart = chartCard.querySelector(".budget-chart");
-        const totalSpending = accumalateAmount("", spendingObjs);
-        let percentage = [];
-        let idx = 0;
-        for (const [key, value] of Object.entries(spendingObjs)) {
-          const end = (value.spending / totalSpending) * 100;
+        const percentage = createChartPercentageObject(spendingObjs);
+        // let idx = 0;
+        // for (const [key, value] of Object.entries(spendingObjs)) {
+        //   const end = (value.spending / totalSpending) * 100;
 
-          if (percentage.length === 0) {
-            percentage.push({
-              category: key,
-              values: { start: 0, end },
-              theme: value.theme,
-            });
-          } else {
-            const start = percentage[idx].values.end;
-            percentage.push({
-              category: key,
-              values: { start: start, end: start + end },
-              theme: value.theme,
-            });
-            idx++;
-          }
-        }
+        //   if (percentage.length === 0) {
+        //     percentage.push({
+        //       category: key,
+        //       values: { start: 0, end },
+        //       theme: value.theme,
+        //     });
+        //   } else {
+        //     const start = percentage[idx].values.end;
+        //     percentage.push({
+        //       category: key,
+        //       values: { start: start, end: start + end },
+        //       theme: value.theme,
+        //     });
+        //     idx++;
+        //   }
+        // }
         budgetChart.setAttribute(
           "style",
           `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
@@ -299,6 +298,33 @@ async function extractTemplate(id) {
   return parser
     .parseFromString(await (await fetch(`./${id}.html`)).text(), "text/html")
     .querySelector(`#${id}-template`);
+}
+
+function createChartPercentageObject(obj) {
+  const totalSpending = accumalateAmount("", obj);
+
+  let percentage = [];
+  let idx = 0;
+  for (const [key, value] of Object.entries(obj)) {
+    const end = (value.spending / totalSpending) * 100;
+
+    if (percentage.length === 0) {
+      percentage.push({
+        category: key,
+        values: { start: 0, end },
+        theme: value.theme,
+      });
+    } else {
+      const start = percentage[idx].values.end;
+      percentage.push({
+        category: key,
+        values: { start: start, end: start + end },
+        theme: value.theme,
+      });
+      idx++;
+    }
+  }
+  return percentage;
 }
 
 function createBudgetCard(budgetCards, budget) {
@@ -421,7 +447,7 @@ function createCategoryElements(strings, obj) {
           <div class="chart-category">
             <div data-theme=${theme}></div>
             <p>${title}</p>
-            <p>
+            <p data-spending="${spending.toFixed(2)}" data-total="${max}">
               <span class="public-sans-bold">$${spending.toFixed(2)}</span>
               &ThickSpace; of $${max.toFixed(2)}
             </p>
@@ -865,17 +891,22 @@ main.addEventListener("click", (e) => {
               const themes = budgetCard.querySelectorAll(`[data-theme]`);
               const theme = actions[2].children[0].children[0].dataset.theme;
               const category = actions[0].children[0].textContent;
-              const max = actions[1].value;
+              const max = parseFloat(actions[1].value).toFixed(2);
               const chart = budgetCard.parentElement.previousElementSibling;
               const budgetChart = chart.children[0];
+              const spendingCategoryEles = chart.children[1].querySelector(
+                ".spending-category-container"
+              ).children;
               const spendingSummary = chart.querySelector(
                 `.chart-category:has([data-theme=${budgetCard.dataset.colorTag}])`
               );
+
               const totalSpend = chart.querySelector("[data-total-spend]");
               const spendForMonth = Math.abs(
                 getSpendingAmountForMonth(category)
               );
-              // const budgetChart = chart.children[0];
+
+              const spendingObjs = {};
               const newLimit =
                 parseFloat(totalSpend.dataset.totalLimit) -
                 parseFloat(budgetCard.dataset.maxAmount) +
@@ -887,6 +918,15 @@ main.addEventListener("click", (e) => {
                 parseFloat(budgetCard.dataset.spend) +
                 spendForMonth;
 
+              // console.log(spendingCategoryEles);
+
+              // console.log(spendingObjs);
+
+              // budgetChart.setAttribute(
+              //   "style",
+              //   `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
+              // );
+
               totalSpend.setAttribute("data-total-spend", newTotalSpend);
               totalSpend.setAttribute("data-total-limit", newLimit);
               totalSpend.textContent = `$${newTotalSpend}`;
@@ -894,6 +934,11 @@ main.addEventListener("click", (e) => {
 
               spendingSummary.children[0].setAttribute("data-theme", theme);
               spendingSummary.children[1].textContent = category;
+              spendingSummary.children[2].setAttribute(
+                "data-spending",
+                spendForMonth.toFixed(2)
+              );
+              spendingSummary.children[2].setAttribute("data-total", max);
               spendingSummary.children[2].childNodes[1].textContent = `$${spendForMonth.toFixed(
                 2
               )}`;
@@ -922,6 +967,34 @@ main.addEventListener("click", (e) => {
                 0,
                 parseFloat(max) - parseFloat(spendForMonth)
               )}`;
+
+              for (const spendingEle of spendingCategoryEles) {
+                //  spendingObjs[budget.category] = {
+                //    spending: parseFloat(amountSpendToDisplay),
+                //    max: budget.maximum,
+                //    theme: themes[budget.theme],
+                //  };
+                // console.log(spendingEle.children[1].textContent);
+                spendingObjs[spendingEle.children[1].textContent] = {
+                  theme: spendingEle.children[0].dataset.theme,
+                  spending: parseFloat(
+                    spendingEle.children[2].dataset.spending
+                  ),
+                  max: parseFloat(spendingEle.children[2].dataset.total),
+                };
+              }
+              // console.log(spendingObjs);
+              // const totalSpend = accumalateAmount`${spendingObjs}`;
+
+              const percentage = createChartPercentageObject(spendingObjs);
+
+              // console.log(percentage);
+              budgetChart.setAttribute(
+                "style",
+                `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
+              );
+
+              // console.log(spendingObjs);
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
