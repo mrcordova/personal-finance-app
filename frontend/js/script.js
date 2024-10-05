@@ -867,19 +867,36 @@ main.addEventListener("click", (e) => {
               const category = actions[0].children[0].textContent;
               const max = actions[1].value;
               const chart = budgetCard.parentElement.previousElementSibling;
+              const budgetChart = chart.children[0];
               const spendingSummary = chart.querySelector(
                 `.chart-category:has([data-theme=${budgetCard.dataset.colorTag}])`
               );
               const totalSpend = chart.querySelector("[data-total-spend]");
+              const spendForMonth = Math.abs(
+                getSpendingAmountForMonth(category)
+              );
               // const budgetChart = chart.children[0];
               const newLimit =
                 parseFloat(totalSpend.dataset.totalLimit) -
                 parseFloat(budgetCard.dataset.maxAmount) +
                 parseFloat(max);
+
+              // console.log(totalSpend.dataset);
+              const newTotalSpend =
+                parseFloat(totalSpend.dataset.totalSpend) +
+                parseFloat(budgetCard.dataset.spend) +
+                spendForMonth;
+
+              totalSpend.setAttribute("data-total-spend", newTotalSpend);
+              totalSpend.setAttribute("data-total-limit", newLimit);
+              totalSpend.textContent = `$${newTotalSpend}`;
               totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
 
               spendingSummary.children[0].setAttribute("data-theme", theme);
               spendingSummary.children[1].textContent = category;
+              spendingSummary.children[2].childNodes[1].textContent = `$${spendForMonth.toFixed(
+                2
+              )}`;
               spendingSummary.children[2].childNodes[2].textContent = `\xa0 of $${max}`;
 
               themes[0].setAttribute("data-theme", theme);
@@ -896,17 +913,20 @@ main.addEventListener("click", (e) => {
                 "style",
                 `--progress-value: var(--${theme})`
               );
+
+              themes[2].nextElementSibling.children[1].textContent = `$${spendForMonth}`;
               themes[2].setAttribute("data-theme", theme);
 
               // console.log(max + parseFloat(budgetCard.dataset.spend));
               themes[3].nextElementSibling.children[1].textContent = `$${Math.max(
                 0,
-                parseFloat(max) + parseFloat(budgetCard.dataset.spend)
+                parseFloat(max) - parseFloat(spendForMonth)
               )}`;
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
               budgetCard.setAttribute("data-color-tag", theme);
+              budgetCard.setAttribute("data-spend", spendForMonth * -1);
               // budgetCard.setAttribute('data-category', category);
 
               editDialog.close();
@@ -974,13 +994,25 @@ main.addEventListener("click", (e) => {
             '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
           );
 
+          const category = actions[0].children[0].textContent;
+          const spendForMonth = Math.abs(getSpendingAmountForMonth(category));
+          // const budgetChart = chart.children[0];
+
+          // console.log(totalSpend.dataset);
+          const newTotalSpend =
+            parseFloat(totalSpend.dataset.totalSpend) + spendForMonth;
           const max = parseFloat(actions[1].value);
           const newLimit =
             parseFloat(totalSpend.dataset.totalLimit) + parseFloat(max);
+
+          totalSpend.setAttribute("data-total-spend", newTotalSpend);
+          totalSpend.textContent = `$${newTotalSpend}`;
+
           totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
+          totalSpend.setAttribute("data-total-limit", newLimit);
 
           const budgetCardObj = {
-            category: actions[0].children[0].textContent,
+            category,
             theme: getKeyByValue(
               themes,
               actions[2].children[0].children[0].dataset.theme
@@ -988,15 +1020,11 @@ main.addEventListener("click", (e) => {
             maximum: max,
           };
           const categorySummartObj = {};
-          const amountSpend = getSpendingAmountForMonth(budgetCardObj.category);
-
-          // console.log(getSpendingAmountForMonth(budgetCardObj.category));
-          const amountSpendToDisplay = Math.abs(amountSpend);
 
           categorySummartObj[`${budgetCardObj.category}`] = {
             theme: themes[budgetCardObj.theme],
             max: budgetCardObj.maximum,
-            spending: amountSpendToDisplay,
+            spending: spendForMonth,
           };
 
           // console.log(categorySummartObj);
