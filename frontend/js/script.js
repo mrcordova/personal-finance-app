@@ -917,6 +917,16 @@ main.addEventListener("click", (e) => {
                 parseFloat(totalSpend.dataset.totalSpend) +
                 parseFloat(budgetCard.dataset.spend) +
                 spendForMonth;
+              const latestSpending = getLatestSpending(category);
+              const tbodySpending = budgetCard.querySelector(
+                ".latest-spending-table > tbody"
+              );
+
+              tbodySpending.replaceChildren();
+              tbodySpending.insertAdjacentHTML(
+                "beforeend",
+                createLatestSpending`${latestSpending}`
+              );
 
               // console.log(spendingCategoryEles);
 
@@ -954,6 +964,7 @@ main.addEventListener("click", (e) => {
               themes[1].setAttribute("id", `${category}-progress`);
               themes[1].setAttribute("data-theme", theme);
               themes[1].setAttribute("max", max);
+              themes[1].setAttribute("value", spendForMonth);
               themes[1].setAttribute(
                 "style",
                 `--progress-value: var(--${theme})`
