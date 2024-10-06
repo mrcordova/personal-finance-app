@@ -879,7 +879,7 @@ main.addEventListener("click", (e) => {
                   btnAction.parentElement.parentElement.querySelector(
                     `li:has([data-theme="${prevThemeChoice}"])`
                   );
-                oldChoice.children[0].children[0].children[0].style = "";
+                // oldChoice.children[0].children[0].children[0].style = "";
                 updateThemeChoice(oldChoice);
               }
               editDialog.close();
@@ -1067,7 +1067,7 @@ main.addEventListener("click", (e) => {
               btnAction.parentElement.parentElement.querySelector(
                 `li:has([data-theme="${prevThemeChoice}"])`
               );
-            oldChoice.children[0].children[0].children[0].style = "";
+            // oldChoice.children[0].children[0].children[0].style = "";
             updateThemeChoice(oldChoice);
           }
           newDialog.close();
