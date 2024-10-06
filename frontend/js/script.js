@@ -646,7 +646,35 @@ function sortByOldest(a, b) {
 function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);
 }
+function updateThemeChoice(btnAction) {
+  const menu = btnAction.parentElement;
 
+  const btnSpanClone = btnAction.children[0].children[0].cloneNode(true);
+  const mainSpan = btnAction.parentElement.previousElementSibling.children[0];
+  const oldTheme = mainSpan.children[0].dataset.theme;
+  const newTheme = btnSpanClone.children[0].dataset.theme;
+
+  mainSpan.replaceWith(btnSpanClone);
+
+  //get old li and make it clickable again
+  const oldLiChoice = menu.querySelector(`li:has([data-theme="${oldTheme}"])`);
+  oldLiChoice.setAttribute("data-used", "false");
+  oldLiChoice.children[0].setAttribute("tabindex", 0);
+
+  oldLiChoice.children[0].children[0].children[0].style = "";
+
+  // new li and make it unclickable
+  btnAction.setAttribute("data-used", "true");
+  btnAction.children[0].setAttribute("tabindex", -1);
+  btnAction.children[0].children[0].children[0].style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
+
+  btnAction.parentElement.classList.toggle("show-drop-content", false);
+
+  btnAction.parentElement.previousElementSibling.setAttribute(
+    "data-budget-dialog-show",
+    true
+  );
+}
 // change template when sidebar list item is clikcked
 sidebarMenu.addEventListener("click", async (e) => {
   const liEle = e.target.closest("li");
@@ -794,33 +822,13 @@ main.addEventListener("click", (e) => {
               editDialog.close();
               budgetCard = null;
             } else if (btnAction.dataset.action === "value") {
-              // let dummy = document.createElement("span");
-              const menu = btnAction.parentElement;
-
-              const btnSpanClone =
-                btnAction.children[0].children[0].cloneNode(true);
-              const mainSpan =
-                btnAction.parentElement.previousElementSibling.children[0];
-              const oldTheme = mainSpan.children[0].dataset.theme;
-              const newTheme = btnSpanClone.children[0].dataset.theme;
-
-              mainSpan.replaceWith(btnSpanClone);
-
-              //get old li and make it clickable again
-              const oldLiChoice = menu.querySelector(
-                `li:has([data-theme="${oldTheme}"])`
-              );
-              oldLiChoice.setAttribute("data-used", "false");
-              oldLiChoice.children[0].setAttribute("tabindex", 0);
-
-              oldLiChoice.children[0].children[0].children[0].style = "";
-
-              // console.log(btnAction);
-              // new li and make it unclickable
-              btnAction.setAttribute("data-used", "true");
-              btnAction.children[0].setAttribute("tabindex", -1);
-              btnAction.children[0].children[0].children[0].style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
-              // console.log(oldLiChoice.children[0].children[0]);
+              const mainBtnAction =
+                btnAction.parentElement.previousElementSibling.dataset.action;
+              if (mainBtnAction === "tag") {
+                updateThemeChoice(btnAction);
+              } else if (mainBtnAction === "category") {
+                console.log("category");
+              }
 
               // console.log(mainBtn);
               // btnAction.parentElement.previousElementSibling.children[0].after(
@@ -832,19 +840,6 @@ main.addEventListener("click", (e) => {
               // );
 
               // dummy.replaceWith(btnAction.children[0].children[0]);
-
-              // console.log(e.target.tagName);
-              // if (e.target.tagName == "SPAN") {
-              btnAction.parentElement.classList.toggle(
-                "show-drop-content",
-                false
-              );
-
-              btnAction.parentElement.previousElementSibling.setAttribute(
-                "data-budget-dialog-show",
-                true
-              );
-              // }
             } else if (btnAction.dataset.action === "save-budget") {
               // e.preventDefault();
               const themes = budgetCard.querySelectorAll(`[data-theme]`);
@@ -1001,29 +996,7 @@ main.addEventListener("click", (e) => {
           budgetCard = null;
           // dropdownBtn = null;
         } else if (btnAction.dataset.action === "value") {
-          let dummy = document.createElement("span");
-          btnAction.parentElement.previousElementSibling.children[0].after(
-            dummy
-          );
-
-          btnAction.children[0].children[0].after(
-            btnAction.parentElement.previousElementSibling.children[0]
-          );
-
-          dummy.replaceWith(btnAction.children[0].children[0]);
-
-          if (e.target.tagName !== "SPAN") {
-            btnAction.parentElement.classList.toggle(
-              "show-drop-content",
-              false
-            );
-
-            // dropdownBtn.setAttribute("data-budget-dialog-show", true);
-            btnAction.parentElement.previousElementSibling.setAttribute(
-              "data-budget-dialog-show",
-              true
-            );
-          }
+          updateThemeChoice(btnAction);
         } else if (btnAction.dataset.action === "add-budget") {
           const budgetCards = main.querySelector(".budget-cards");
           const totalSpend = main.querySelector(
