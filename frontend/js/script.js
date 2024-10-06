@@ -176,10 +176,21 @@ const callback = (mutationList, observer) => {
         const budgetChart = chartCard.querySelector(".budget-chart");
         const percentage = createChartPercentageObject(spendingObjs);
 
-        // const menuValues = main.querySelector('[data-parameter="editBudget"')
-        // for (const [key, value] of Object.entries(spendingObjs)) {
+        const menuValues = main.querySelectorAll(
+          '[data-parameter="editBudget"]:has([data-theme])'
+        );
+        console.log(menuValues);
+        for (const [key, value] of Object.entries(spendingObjs)) {
+          const menuItemOne = menuValues[0].querySelector(
+            `li:has([data-theme="${value.theme}"])`
+          );
+          const menuItemTwo = menuValues[1].querySelector(
+            `li:has([data-theme="${value.theme}"])`
+          );
 
-        // }
+          menuItemOne.setAttribute("data-used", "true");
+          menuItemTwo.setAttribute("data-used", "true");
+        }
         budgetChart.setAttribute(
           "style",
           `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
