@@ -641,6 +641,7 @@ dialog.budget-dialogs[open] {
     }
 
     &[data-used="true"] {
+      pointer-events: none;
       & .show {
         display: flex;
       }

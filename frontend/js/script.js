@@ -141,98 +141,14 @@ const callback = (mutationList, observer) => {
         for (const budget of budgets) {
           createBudgetCard(budgetCards, budget);
           const amountSpend = getSpendingAmountForMonth(budget.category);
-          // const amountSpendToDisplay =
-          //   amountSpend.length === 0 ? 0 : String(amountSpend).slice(1);
           const amountSpendToDisplay = Math.abs(amountSpend);
-
-          // const latestSpending = getLatestSpending(budget.category);
 
           spendingObjs[budget.category] = {
             spending: parseFloat(amountSpendToDisplay),
             max: budget.maximum,
             theme: themes[budget.theme],
           };
-
-          //     budgetCards.insertAdjacentHTML(
-          //       "beforeend",
-          //       `<div
-          //   data-category="${
-          //     budget.category
-          //   }" data-max-amount="${budget.maximum.toFixed(2)}" data-color-tag="${
-          //         themes[budget.theme]
-          //       }"
-          //   class="budget-card category-card public-sans-regular">
-          //   <div class="theme-container">
-          //     <div class="theme-title public-sans-bold">
-          //       <div data-theme="${
-          //         themes[budget.theme]
-          //       }" class="theme-circle"></div>
-          //       ${budget.category}
-          //     </div>
-          //     <div class="dropdown"  >
-          //       <button data-budget-show="true">
-          //         <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
-          //       </button>
-
-          //       <menu data-parameter="editBudget" class="dropdown-content">
-          //         <li><button data-action="edit">Edit Budget</button></li>
-          //         <li><button data-action="delete">Delete Budget</button></li>
-          //       </menu>
-          //     </div>
-          //   </div>
-          //   <div class="budget-progress-container">
-          //     <label for="${budget.category}-progress">
-          //       Maximum of
-          //       <span>$${budget.maximum.toFixed(2)}</span>
-          //     </label>
-          //     <progress
-          //       data-theme="${themes[budget.theme]}"
-          //       max="${budget.maximum}"
-          //       value="${amountSpendToDisplay}"
-          //       id="${budget.category}-progress"
-          //       style="--progress-value: var(--${themes[budget.theme]})">
-          //       ${budget.maximum}
-          //     </progress>
-
-          //     <div class="budget-numbers-container">
-          //       <div data-theme="${themes[budget.theme]}"></div>
-          //       <div class="budget-numbers">
-          //         <p>Spent</p>
-          //         <span class="public-sans-bold">$${amountSpendToDisplay}</span>
-          //       </div>
-          //       <div data-theme></div>
-          //       <div class="budget-numbers">
-          //         <p>Remaining</p>
-          //         <span class="public-sans-bold">$${Math.max(
-          //           budget.maximum + amountSpend,
-          //           0
-          //         )}</span>
-          //       </div>
-          //     </div>
-          //   </div>
-
-          //   <div class="latest-spending-container">
-          //     <div class="latest-spending-header">
-          //       <h3 class="public-sans-bold">Latest Spending</h3>
-          //       <button>
-          //         <span>See All</span>
-          //         <img
-          //           src="./assets/images/icon-caret-right.svg"
-          //           alt="caret right" />
-          //       </button>
-          //     </div>
-
-          //     <table class="latest-spending-table">
-          //       <tbody>
-          //        ${createLatestSpending([""], latestSpending)}
-          //        </tbody>
-          //     </table>
-          //   </div>
-          // </div>`
-          //     );
         }
-
-        // console.log(spendingObjs);
 
         const totalSpend = accumalateAmount`${spendingObjs}`;
         const totalLimit = accumalateAmount`limit${spendingObjs}`;
@@ -259,25 +175,10 @@ const callback = (mutationList, observer) => {
         );
         const budgetChart = chartCard.querySelector(".budget-chart");
         const percentage = createChartPercentageObject(spendingObjs);
-        // let idx = 0;
-        // for (const [key, value] of Object.entries(spendingObjs)) {
-        //   const end = (value.spending / totalSpending) * 100;
 
-        //   if (percentage.length === 0) {
-        //     percentage.push({
-        //       category: key,
-        //       values: { start: 0, end },
-        //       theme: value.theme,
-        //     });
-        //   } else {
-        //     const start = percentage[idx].values.end;
-        //     percentage.push({
-        //       category: key,
-        //       values: { start: start, end: start + end },
-        //       theme: value.theme,
-        //     });
-        //     idx++;
-        //   }
+        // const menuValues = main.querySelector('[data-parameter="editBudget"')
+        // for (const [key, value] of Object.entries(spendingObjs)) {
+
         // }
         budgetChart.setAttribute(
           "style",
@@ -778,9 +679,10 @@ main.addEventListener("click", (e) => {
 
     updateDisplay();
   } else if (filterParameter) {
-    const btn = e.target.closest("li").children[0];
+    // console.log(e.target);
+    const btn = e.target.closest("li")?.children[0];
 
-    if (filterParameter.dataset.parameter !== "editBudget") {
+    if (btn && filterParameter.dataset.parameter !== "editBudget") {
       const previousChoice = filterParameter.querySelector(".public-sans-bold");
 
       previousChoice?.classList.remove("public-sans-bold");
@@ -808,7 +710,7 @@ main.addEventListener("click", (e) => {
       sortByBtn.childNodes[0].textContent = btn.textContent;
       updateDisplay();
     } else if (filterParameter.dataset.parameter === "editBudget") {
-      if (btn.dataset.action === "delete") {
+      if (btn && btn.dataset.action === "delete") {
         const deleteDialog = document.querySelector("#delete-budget-dialog");
         const dialogCateTitle = deleteDialog.querySelector("[data-category]");
 
@@ -832,7 +734,7 @@ main.addEventListener("click", (e) => {
           optionDropdown?.setAttribute("data-budget-show", "true");
           deleteDialog.close();
         });
-      } else if (btn.dataset.action === "edit") {
+      } else if (btn && btn.dataset.action === "edit") {
         const editDialog = document.querySelector("#edit-budget-dialog");
         const optionDropdown = budgetCard.querySelector(
           "button[data-budget-show]"
