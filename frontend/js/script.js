@@ -647,26 +647,80 @@ function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);
 }
 function updateThemeChoice(btnAction) {
-  const menu = btnAction.parentElement;
+  // console.log(btnAction.parentElement.previousElementSibling);
+  const dropdownBtns = main.querySelectorAll(
+    `[data-action="${btnAction.parentElement.previousElementSibling.dataset.action}"]`
+  );
 
-  const btnSpanClone = btnAction.children[0].children[0].cloneNode(true);
-  const mainSpan = btnAction.parentElement.previousElementSibling.children[0];
-  const oldTheme = mainSpan.children[0].dataset.theme;
-  const newTheme = btnSpanClone.children[0].dataset.theme;
+  for (const dropdownBtn of dropdownBtns) {
+    // console.log(btnAction);
+    const menu = dropdownBtn.nextElementSibling;
+    const btnSpanClone = btnAction.children[0].children[0].cloneNode(true);
+    const mainSpan = dropdownBtn.children[0];
+    const oldTheme = mainSpan.children[0].dataset.theme;
+    const newTheme = btnSpanClone.children[0].dataset.theme;
+    const newLiChoice = menu.querySelector(
+      `li:has([data-theme="${newTheme}"])`
+    );
+    const oldLiChoice = menu.querySelector(
+      `li:has([data-theme="${oldTheme}"])`
+    );
 
-  mainSpan.replaceWith(btnSpanClone);
+    // console.log(btnSpanClone);
+    btnSpanClone.children[0].style = "";
+
+    mainSpan.replaceWith(btnSpanClone);
+
+    //get old li and make it clickable again
+    oldLiChoice.setAttribute("data-used", "false");
+    oldLiChoice.children[0].setAttribute("tabindex", 0);
+    oldLiChoice.children[0].children[0].children[0].style = "";
+
+    newLiChoice.setAttribute("data-used", "true");
+    newLiChoice.children[0].setAttribute("tabindex", -1);
+    newLiChoice.children[0].children[0].children[0].style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
+
+    // console.log(newLiChoice);
+  }
+  btnAction.parentElement.classList.toggle("show-drop-content", false);
+
+  btnAction.parentElement.previousElementSibling.setAttribute(
+    "data-budget-dialog-show",
+    true
+  );
+  // const menu = btnAction.parentElement;
+
+  // const btnSpanClone = btnAction.children[0].children[0].cloneNode(true);
+  // const mainSpan = btnAction.parentElement.previousElementSibling.children[0];
+  // const oldTheme = mainSpan.children[0].dataset.theme;
+  // const newTheme = btnSpanClone.children[0].dataset.theme;
+
+  // mainSpan.replaceWith(btnSpanClone);
 
   //get old li and make it clickable again
-  const oldLiChoice = menu.querySelector(`li:has([data-theme="${oldTheme}"])`);
-  oldLiChoice.setAttribute("data-used", "false");
-  oldLiChoice.children[0].setAttribute("tabindex", 0);
+  // const oldLiChoice = menu.querySelector(`li:has([data-theme="${oldTheme}"])`);
+  // oldLiChoice.setAttribute("data-used", "false");
+  // oldLiChoice.children[0].setAttribute("tabindex", 0);
 
-  oldLiChoice.children[0].children[0].children[0].style = "";
+  // oldLiChoice.children[0].children[0].children[0].style = "";
 
   // new li and make it unclickable
-  btnAction.setAttribute("data-used", "true");
-  btnAction.children[0].setAttribute("tabindex", -1);
-  btnAction.children[0].children[0].children[0].style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
+  // btnAction.setAttribute("data-used", "true");
+  // btnAction.children[0].setAttribute("tabindex", -1);
+  // btnAction.children[0].children[0].children[0].style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
+
+  // btnAction.parentElement.classList.toggle("show-drop-content", false);
+
+  // btnAction.parentElement.previousElementSibling.setAttribute(
+  //   "data-budget-dialog-show",
+  //   true
+  // );
+}
+function updateCategoryChoice(btnAction) {
+  const btnSpanClone = btnAction.children[0].children[0].cloneNode(true);
+  const mainSpan = btnAction.parentElement.previousElementSibling.children[0];
+
+  mainSpan.replaceWith(btnSpanClone);
 
   btnAction.parentElement.classList.toggle("show-drop-content", false);
 
@@ -812,6 +866,7 @@ main.addEventListener("click", (e) => {
         editDialog.showModal();
 
         e.preventDefault();
+        let prevThemeChoice;
 
         editDialog.addEventListener("click", (e) => {
           e.preventDefault();
@@ -819,15 +874,29 @@ main.addEventListener("click", (e) => {
 
           if (btnAction) {
             if (btnAction.dataset.action === "close") {
+              if (prevThemeChoice) {
+                const oldChoice =
+                  btnAction.parentElement.parentElement.querySelector(
+                    `li:has([data-theme="${prevThemeChoice}"])`
+                  );
+                oldChoice.children[0].children[0].children[0].style = "";
+                updateThemeChoice(oldChoice);
+              }
               editDialog.close();
               budgetCard = null;
+            } else if (btnAction.dataset.action === "tag") {
+              if (!prevThemeChoice) {
+                prevThemeChoice =
+                  btnAction.children[0].children[0].dataset.theme;
+              }
             } else if (btnAction.dataset.action === "value") {
               const mainBtnAction =
                 btnAction.parentElement.previousElementSibling.dataset.action;
               if (mainBtnAction === "tag") {
                 updateThemeChoice(btnAction);
               } else if (mainBtnAction === "category") {
-                console.log("category");
+                // console.log("category");
+                updateCategoryChoice(btnAction);
               }
 
               // console.log(mainBtn);
@@ -985,6 +1054,7 @@ main.addEventListener("click", (e) => {
     const newDialog = document.querySelector("#new-budget-dialog");
     newDialog.showModal();
 
+    let prevThemeChoice;
     newDialog.addEventListener("click", (e) => {
       e.preventDefault();
       // console.log(e.target);
@@ -992,11 +1062,29 @@ main.addEventListener("click", (e) => {
 
       if (btnAction) {
         if (btnAction.dataset.action === "close") {
+          if (prevThemeChoice) {
+            const oldChoice =
+              btnAction.parentElement.parentElement.querySelector(
+                `li:has([data-theme="${prevThemeChoice}"])`
+              );
+            oldChoice.children[0].children[0].children[0].style = "";
+            updateThemeChoice(oldChoice);
+          }
           newDialog.close();
           budgetCard = null;
           // dropdownBtn = null;
+        } else if (btnAction.dataset.action === "tag") {
+          if (!prevThemeChoice) {
+            prevThemeChoice = btnAction.children[0].children[0].dataset.theme;
+          }
         } else if (btnAction.dataset.action === "value") {
-          updateThemeChoice(btnAction);
+          const mainBtnAction =
+            btnAction.parentElement.previousElementSibling.dataset.action;
+          if (mainBtnAction === "tag") {
+            updateThemeChoice(btnAction);
+          } else if (mainBtnAction === "category") {
+            updateCategoryChoice(btnAction);
+          }
         } else if (btnAction.dataset.action === "add-budget") {
           const budgetCards = main.querySelector(".budget-cards");
           const totalSpend = main.querySelector(
@@ -1069,7 +1157,7 @@ main.addEventListener("click", (e) => {
       budgetEditBtn.dataset.budgetShow === "true" ? "false" : "true"
     );
   } else if (budgetDialogEditBtn) {
-    console.log(budgetDialogEditBtn);
+    // console.log(budgetDialogEditBtn);
     budgetDialogEditBtn.nextElementSibling.classList.toggle(
       "show-drop-content",
       budgetDialogEditBtn.dataset.budgetDialogShow === "true" ? true : false
