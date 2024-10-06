@@ -189,7 +189,11 @@ const callback = (mutationList, observer) => {
           );
 
           menuItemOne.setAttribute("data-used", "true");
+          menuItemOne.children[0].setAttribute("tabindex", -1);
+          // menuItemOne.setAttribute("tabindex", -1);
           menuItemTwo.setAttribute("data-used", "true");
+          menuItemTwo.children[0].setAttribute("tabindex", -1);
+          // menuItemTwo.setAttribute("tabindex", -1);
         }
         budgetChart.setAttribute(
           "style",

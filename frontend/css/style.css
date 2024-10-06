@@ -624,9 +624,9 @@ dialog.budget-dialogs[open] {
 
     &:not(:last-child) > button {
       border-bottom: 1px solid var(--grey-100);
-      width: 100%;
     }
     & button {
+      width: 100%;
       padding-block: 0.75rem;
     }
     &:hover {
