@@ -307,7 +307,8 @@ button[popovertarget] {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-height: 37.4375rem;
+  /* max-height: 37.4375rem; */
+  max-height: 39rem;
   flex: 0.6;
 
   & .chart-summary {
@@ -631,6 +632,31 @@ dialog.budget-dialogs[open] {
     &:hover {
       cursor: pointer;
       background-color: #ddd;
+    }
+
+    &[data-used="false"] {
+      & .show {
+        display: none;
+      }
+    }
+
+    &[data-used="true"] {
+      & .show {
+        display: flex;
+      }
+      & > button {
+        display: flex;
+        justify-content: space-between;
+        color: color-mix(in srgb, var(--grey-500) 100%, var(--white) 100%);
+
+        /* & [data-theme] {
+          background-color: color-mix(
+            in srgb,
+            var(--green) 100%,
+            var(--white) 100%
+          );
+        } */
+      }
     }
   }
 }

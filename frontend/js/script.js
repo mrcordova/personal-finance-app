@@ -853,6 +853,7 @@ main.addEventListener("click", (e) => {
           budgetCard.dataset.colorTag;
 
         editDialog.showModal();
+
         e.preventDefault();
 
         editDialog.addEventListener("click", (e) => {
@@ -1017,6 +1018,7 @@ main.addEventListener("click", (e) => {
             }
           }
         });
+        // console.log(optionDropdown);
 
         optionDropdown?.nextElementSibling.classList.toggle(
           "show-drop-content",
@@ -1136,7 +1138,7 @@ main.addEventListener("click", (e) => {
       budgetEditBtn.dataset.budgetShow === "true" ? "false" : "true"
     );
   } else if (budgetDialogEditBtn) {
-    // console.log(budgetCard);
+    console.log(budgetDialogEditBtn);
     budgetDialogEditBtn.nextElementSibling.classList.toggle(
       "show-drop-content",
       budgetDialogEditBtn.dataset.budgetDialogShow === "true" ? true : false
