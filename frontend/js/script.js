@@ -348,11 +348,9 @@ const callback = (mutationList, observer) => {
               if (mainBtnAction === "tag") {
                 updateThemeChoice(btnAction);
               } else if (mainBtnAction === "category") {
-                // console.log("category");
                 updateCategoryChoice(btnAction);
               }
             } else if (btnAction.dataset.action === "save-budget") {
-              // e.preventDefault();
               const actions = editDialog.querySelectorAll(
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
@@ -362,10 +360,7 @@ const callback = (mutationList, observer) => {
               const max = parseFloat(actions[1].value).toFixed(2);
               const chart = budgetCard.parentElement.previousElementSibling;
               const budgetChart = chart.children[0];
-              // const spendingCategoryEles = chart.children[1].querySelector(
-              //   ".spending-category-container"
-              // ).children;
-              // const spendingCategoryEles = chart.children[1].children;
+
               const spendingSummary = chart.querySelector(
                 `.chart-category:has([data-theme=${budgetCard.dataset.colorTag}])`
               );
@@ -375,13 +370,11 @@ const callback = (mutationList, observer) => {
                 getSpendingAmountForMonth(category)
               );
 
-              // const spendingObjs = {};
               const newLimit =
                 parseFloat(totalSpend.dataset.totalLimit) -
                 parseFloat(budgetCard.dataset.maxAmount) +
                 parseFloat(max);
 
-              // console.log(totalSpend.dataset);
               const newTotalSpend =
                 parseFloat(totalSpend.dataset.totalSpend) +
                 parseFloat(budgetCard.dataset.spend) +
@@ -433,7 +426,6 @@ const callback = (mutationList, observer) => {
               themes[2].nextElementSibling.children[1].textContent = `$${spendForMonth}`;
               themes[2].setAttribute("data-theme", theme);
 
-              // console.log(max + parseFloat(budgetCard.dataset.spend));
               themes[3].nextElementSibling.children[1].textContent = `$${Math.max(
                 0,
                 parseFloat(max) - parseFloat(spendForMonth)
@@ -441,32 +433,57 @@ const callback = (mutationList, observer) => {
 
               createBudgetChart(budgetChart.nextElementSibling, budgetChart);
 
-              // for (const spendingEle of spendingCategoryEles) {
-              //   spendingObjs[spendingEle.children[1].textContent] = {
-              //     theme: spendingEle.children[0].dataset.theme,
-              //     spending: parseFloat(
-              //       spendingEle.children[2].dataset.spending
-              //     ),
-              //     max: parseFloat(spendingEle.children[2].dataset.total),
-              //   };
-              // }
-
-              // const percentage = createChartPercentageObject(spendingObjs);
-
-              // budgetChart.setAttribute(
-              //   "style",
-              //   `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
-              // );
-
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
               budgetCard.setAttribute("data-color-tag", theme);
               budgetCard.setAttribute("data-spend", spendForMonth * -1);
-              // budgetCard.setAttribute('data-category', category);
 
               editDialog.close();
             }
           }
+        });
+
+        const deleteDialog = document.querySelector("#delete-budget-dialog");
+
+        deleteDialog.addEventListener("click", (e) => {
+          const btn = e.target.closest("button");
+          const optionDropdown = budgetCard.querySelector(
+            "button[data-budget-show]"
+          );
+          const choice = btn.dataset.action;
+          if (choice === "delete") {
+            // console.log(budgetCard);
+            const chartSummary = budgetChart.nextElementSibling.querySelector(
+              `div.chart-category:has(> div[data-theme="${budgetCard.dataset.colorTag}"] )`
+            );
+            const totalSpend = budgetChart.querySelector("[data-total-spend]");
+            // console.log(chartSummary);
+
+            // const spendingObjs = {};
+            const newLimit =
+              parseFloat(totalSpend.dataset.totalLimit) -
+              parseFloat(budgetCard.dataset.maxAmount);
+
+            // console.log(totalSpend.dataset);
+            const newTotalSpend =
+              parseFloat(totalSpend.dataset.totalSpend) +
+              parseFloat(budgetCard.dataset.spend);
+
+            totalSpend.setAttribute("data-total-spend", newTotalSpend);
+            totalSpend.setAttribute("data-total-limit", newLimit);
+            totalSpend.textContent = `$${newTotalSpend}`;
+            totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
+            chartSummary.remove();
+            budgetCard.remove();
+            createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+          }
+          optionDropdown?.nextElementSibling.classList.toggle(
+            "show-drop-content",
+            false
+          );
+
+          optionDropdown?.setAttribute("data-budget-show", "true");
+          deleteDialog.close();
         });
       }
     } else if (mutation.type === "attribures") {
@@ -1108,24 +1125,6 @@ main.addEventListener("click", (e) => {
 
         dialogCateTitle.textContent = budgetCard.dataset.category.trim();
         deleteDialog.showModal();
-
-        deleteDialog.addEventListener("click", (e) => {
-          const btn = e.target.closest("button");
-          const optionDropdown = budgetCard.querySelector(
-            "button[data-budget-show]"
-          );
-          const choice = btn.dataset.action;
-          if (choice === "delete") {
-            budgetCard.remove();
-          }
-          optionDropdown?.nextElementSibling.classList.toggle(
-            "show-drop-content",
-            false
-          );
-
-          optionDropdown?.setAttribute("data-budget-show", "true");
-          deleteDialog.close();
-        });
       } else if (btn && btn.dataset.action === "edit") {
         const editDialog = document.querySelector("#edit-budget-dialog");
         const optionDropdown = budgetCard.querySelector(
@@ -1149,7 +1148,7 @@ main.addEventListener("click", (e) => {
         editDialog.showModal();
 
         e.preventDefault();
-        let prevThemeChoice;
+        // let prevThemeChoice;
 
         // console.log(optionDropdown);
 
