@@ -306,6 +306,9 @@ const callback = (mutationList, observer) => {
                 'li[data-used="false"]'
               );
 
+              // console.log(budgetChart.nextElementSibling);
+              createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+
               prevThemeChoice =
                 availableTheme.children[0].children[0].children[0].dataset
                   .theme;
@@ -790,33 +793,6 @@ function updateThemeChoice(btnAction) {
     "data-budget-dialog-show",
     true
   );
-  // const menu = btnAction.parentElement;
-
-  // const btnSpanClone = btnAction.children[0].children[0].cloneNode(true);
-  // const mainSpan = btnAction.parentElement.previousElementSibling.children[0];
-  // const oldTheme = mainSpan.children[0].dataset.theme;
-  // const newTheme = btnSpanClone.children[0].dataset.theme;
-
-  // mainSpan.replaceWith(btnSpanClone);
-
-  //get old li and make it clickable again
-  // const oldLiChoice = menu.querySelector(`li:has([data-theme="${oldTheme}"])`);
-  // oldLiChoice.setAttribute("data-used", "false");
-  // oldLiChoice.children[0].setAttribute("tabindex", 0);
-
-  // oldLiChoice.children[0].children[0].children[0].style = "";
-
-  // new li and make it unclickable
-  // btnAction.setAttribute("data-used", "true");
-  // btnAction.children[0].setAttribute("tabindex", -1);
-  // btnAction.children[0].children[0].children[0].style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
-
-  // btnAction.parentElement.classList.toggle("show-drop-content", false);
-
-  // btnAction.parentElement.previousElementSibling.setAttribute(
-  //   "data-budget-dialog-show",
-  //   true
-  // );
 }
 function createThemeChoice(btnAction) {
   // const menu = btnAction.parentElement;
@@ -856,6 +832,27 @@ function updateCategoryChoice(btnAction) {
   btnAction.parentElement.previousElementSibling.setAttribute(
     "data-budget-dialog-show",
     true
+  );
+}
+
+function createBudgetChart(chart, budgetChart) {
+  // console.log(chart.children);
+  const spendingCategoryEles = chart.children[1].children;
+  const spendingObjs = {};
+  // console.log(spendingCategoryEles);
+  for (const spendingEle of spendingCategoryEles) {
+    spendingObjs[spendingEle.children[1].textContent] = {
+      theme: spendingEle.children[0].dataset.theme,
+      spending: parseFloat(spendingEle.children[2].dataset.spending),
+      max: parseFloat(spendingEle.children[2].dataset.total),
+    };
+  }
+
+  const percentage = createChartPercentageObject(spendingObjs);
+
+  budgetChart.setAttribute(
+    "style",
+    `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
   );
 }
 // change template when sidebar list item is clikcked
@@ -1032,17 +1029,6 @@ main.addEventListener("click", (e) => {
                 // console.log("category");
                 updateCategoryChoice(btnAction);
               }
-
-              // console.log(mainBtn);
-              // btnAction.parentElement.previousElementSibling.children[0].after(
-              //   dummy
-              // );
-
-              // btnAction.children[0].children[0].after(
-              //   btnAction.parentElement.previousElementSibling.children[0]
-              // );
-
-              // dummy.replaceWith(btnAction.children[0].children[0]);
             } else if (btnAction.dataset.action === "save-budget") {
               // e.preventDefault();
               const themes = budgetCard.querySelectorAll(`[data-theme]`);
@@ -1051,9 +1037,10 @@ main.addEventListener("click", (e) => {
               const max = parseFloat(actions[1].value).toFixed(2);
               const chart = budgetCard.parentElement.previousElementSibling;
               const budgetChart = chart.children[0];
-              const spendingCategoryEles = chart.children[1].querySelector(
-                ".spending-category-container"
-              ).children;
+              // const spendingCategoryEles = chart.children[1].querySelector(
+              //   ".spending-category-container"
+              // ).children;
+              const spendingCategoryEles = chart.children[1].children;
               const spendingSummary = chart.querySelector(
                 `.chart-category:has([data-theme=${budgetCard.dataset.colorTag}])`
               );
@@ -1084,15 +1071,6 @@ main.addEventListener("click", (e) => {
                 "beforeend",
                 createLatestSpending`${latestSpending}`
               );
-
-              // console.log(spendingCategoryEles);
-
-              // console.log(spendingObjs);
-
-              // budgetChart.setAttribute(
-              //   "style",
-              //   `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
-              // );
 
               totalSpend.setAttribute("data-total-spend", newTotalSpend);
               totalSpend.setAttribute("data-total-limit", newLimit);
@@ -1137,12 +1115,6 @@ main.addEventListener("click", (e) => {
               )}`;
 
               for (const spendingEle of spendingCategoryEles) {
-                //  spendingObjs[budget.category] = {
-                //    spending: parseFloat(amountSpendToDisplay),
-                //    max: budget.maximum,
-                //    theme: themes[budget.theme],
-                //  };
-                // console.log(spendingEle.children[1].textContent);
                 spendingObjs[spendingEle.children[1].textContent] = {
                   theme: spendingEle.children[0].dataset.theme,
                   spending: parseFloat(
