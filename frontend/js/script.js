@@ -215,16 +215,9 @@ const callback = (mutationList, observer) => {
 
         const newDialog = document.querySelector("#new-budget-dialog");
 
-        // console.log(availableTheme);
-
-        // newDialog.showModal();
-        // console.log(availableTheme);
         const themeBtn = newDialog.querySelector('[data-action="tag"]');
         const menu = themeBtn.nextElementSibling;
         const availableTheme = menu.querySelector('li[data-used="false"]');
-        // createThemeChoice(availableTheme);
-
-        // console.log(availableTheme);
 
         let prevThemeChoice =
           availableTheme.children[0].children[0].children[0].dataset.theme;
@@ -233,53 +226,29 @@ const callback = (mutationList, observer) => {
           e.preventDefault();
 
           const btnAction = e.target.closest("[data-action]");
-          // console.log(btnAction);
 
           if (btnAction) {
             if (btnAction.dataset.action === "close") {
-              // if (prevThemeChoice) {
               const oldChoice =
                 btnAction.parentElement.parentElement.querySelector(
                   `li:has([data-theme="${prevThemeChoice}"])`
                 );
-              // console.log(oldChoice);
               updateThemeChoice(oldChoice);
               oldChoice.setAttribute("data-used", false);
               oldChoice.children[0].setAttribute("tabindex", 0);
               oldChoice.children[0].children[0].children[0].style = "";
 
-              // createThemeChoice(oldChoice);
-
-              // }
-              // e.stopImmediatePropagation();
               newDialog.close();
-              // newDialog.removeEventListeners();
-              // console.log(newDialog);
-
-              // controller.abort();
-              // console.log(budgetCard);
-              // budgetCard = null;
-              // dropdownBtn = null;
             } else if (btnAction.dataset.action === "tag") {
-              // if (!prevThemeChoice) {
-              // prevThemeChoice =
-              //   btnAction.children[0].children[0].dataset.theme;
-              // }
             } else if (btnAction.dataset.action === "value") {
               const mainBtnAction =
                 btnAction.parentElement.previousElementSibling.dataset.action;
               if (mainBtnAction === "tag") {
-                // prevThemeChoice =
-                //   btnAction.children[0].children[0].children[0].dataset.theme;
-                // console.log(btnAction.children[0].children[0]);
-                // console.log(prevThemeChoice);
                 updateThemeChoice(btnAction);
               } else if (mainBtnAction === "category") {
                 updateCategoryChoice(btnAction);
               }
             } else if (btnAction.dataset.action === "add-budget") {
-              // console.log("here");
-
               const budgetCards = main.querySelector(".budget-cards");
               const totalSpend = main.querySelector(
                 ".chart-card [data-total-spend]"
@@ -288,7 +257,6 @@ const callback = (mutationList, observer) => {
                 ".chart-card .spending-category-container"
               );
 
-              // console.log(spendingSummary);
               const actions = newDialog.querySelectorAll(
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
@@ -337,7 +305,6 @@ const callback = (mutationList, observer) => {
               const availableTheme = menu.querySelector(
                 'li[data-used="false"]'
               );
-              // createThemeChoice(availableTheme);
 
               prevThemeChoice =
                 availableTheme.children[0].children[0].children[0].dataset
@@ -1035,6 +1002,7 @@ main.addEventListener("click", (e) => {
         let prevThemeChoice;
 
         editDialog.addEventListener("click", (e) => {
+          console.log("here edit dialog");
           e.preventDefault();
           const btnAction = e.target.closest("[data-action]");
 
