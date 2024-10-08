@@ -338,6 +338,8 @@ const callback = (mutationList, observer) => {
               } else if (mainBtnAction === "category") {
                 updateCategoryChoice(btnAction);
               }
+            } else if (btnAction.dataset.action === "max-spending") {
+              console.log("here");
             } else if (btnAction.dataset.action === "add-budget") {
               const budgetCards = main.querySelector(".budget-cards");
               const totalSpend = main.querySelector(
@@ -1367,20 +1369,23 @@ main.addEventListener("click", async (e) => {
           `li:has([data-theme="${newTheme}"])`
         );
 
-        const oldValues = main.querySelectorAll(
-          `li:has([data-theme="${dropdownBtn.children[0].children[0].dataset.theme}"])`
-        );
+        // const oldValues = main.querySelectorAll(
+        //   `li:has([data-theme="${dropdownBtn.children[0].children[0].dataset.theme}"])`
+        // );
 
         // console.log(dropdownBtn.children[0].children[0].dataset.theme);
-        for (const menuValue of oldValues) {
-          const theme = menuValue.querySelector("[data-theme]");
+        // for (const menuValue of oldValues) {
+        //   const theme = menuValue.querySelector("[data-theme]");
 
-          menuValue.setAttribute("data-used", "false");
-          menuValue.children[0].setAttribute("tabindex", 0);
-          theme.style = "";
-        }
+        //   menuValue.setAttribute("data-used", "false");
+        //   menuValue.children[0].setAttribute("tabindex", 0);
+        //   theme.style = "";
+        // }
 
         // console.log(oldValues[0]);
+        menuValues[0].setAttribute("data-used", "false");
+        menuValues[0].children[0].setAttribute("tabindex", 0);
+        menuValues[0].children[0].children[0].children[0].style = ``;
         const btnSpanClone =
           menuValues[0].children[0].children[0].cloneNode(true);
         // console.log(btnSpanClone);
