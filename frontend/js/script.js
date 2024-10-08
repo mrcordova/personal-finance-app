@@ -224,15 +224,21 @@ const callback = (mutationList, observer) => {
         // console.log(prevThemeChoice);
         newDialog.addEventListener("click", (e) => {
           e.preventDefault();
+          e.stopImmediatePropagation();
 
           // console.log("start of new dialog", prevThemeChoice);
           const btnAction = e.target.closest("[data-action]");
 
+          // console.log(e.target);
+          // console.log(btnAction);
           if (btnAction) {
+            // console.log("============end===============");
             if (btnAction.dataset.action === "close") {
+              // console.log(e.target);
               const menuValues = main.querySelectorAll(
                 `li:has([data-theme="${prevThemeChoice}"])`
               );
+              // console.log(prevThemeChoice);
 
               for (const menuValue of menuValues) {
                 const theme = menuValue.querySelector("[data-theme]");
@@ -242,6 +248,42 @@ const callback = (mutationList, observer) => {
                 theme.style = "";
               }
               newDialog.close();
+            } else if (btnAction.dataset.action === "tag") {
+              // console.log(btnAction.children[0].children[0]);
+              prevThemeChoice = btnAction.children[0].children[0].dataset.theme;
+              btnAction.nextElementSibling.classList.toggle(
+                "show-drop-content",
+                btnAction.dataset.budgetDialogShow === "true" ? true : false
+              );
+
+              btnAction.setAttribute(
+                "data-budget-dialog-show",
+                btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
+              );
+
+              // budgetDialogEditBtn.nextElementSibling.classList.toggle(
+              //   "show-drop-content",
+              //   budgetDialogEditBtn.dataset.budgetDialogShow === "true"
+              //     ? true
+              //     : false
+              // );
+
+              // budgetDialogEditBtn.setAttribute(
+              //   "data-budget-dialog-show",
+              //   budgetDialogEditBtn.dataset.budgetDialogShow === "true"
+              //     ? "false"
+              //     : "true"
+              // );
+            } else if (btnAction.dataset.action === "category") {
+              btnAction.nextElementSibling.classList.toggle(
+                "show-drop-content",
+                btnAction.dataset.budgetDialogShow === "true" ? true : false
+              );
+
+              btnAction.setAttribute(
+                "data-budget-dialog-show",
+                btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
+              );
             } else if (btnAction.dataset.action === "value") {
               const mainBtnAction =
                 btnAction.parentElement.previousElementSibling.dataset.action;
@@ -263,16 +305,13 @@ const callback = (mutationList, observer) => {
                   `li:has([data-theme="${oldTheme}"])`
                 );
                 for (const menuValue of oldValues) {
-                  // console.log(menuValue);
                   const theme = menuValue.querySelector("[data-theme]");
 
                   menuValue.setAttribute("data-used", "false");
                   menuValue.children[0].setAttribute("tabindex", 0);
                   theme.style = "";
                 }
-                // console.log(
-                //   btnAction.children[0].children[0].children[0].dataset.theme
-                // );
+
                 const btnSpanClone =
                   btnAction.children[0].children[0].cloneNode(true);
                 const mainSpan = dropdownBtn.children[0];
@@ -287,6 +326,7 @@ const callback = (mutationList, observer) => {
                   theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
                 }
                 prevThemeChoice = newTheme;
+                console.log("value clicked");
                 btnAction.parentElement.classList.toggle(
                   "show-drop-content",
                   false
@@ -351,56 +391,59 @@ const callback = (mutationList, observer) => {
                 createCategoryElements("", categorySummartObj)
               );
 
-              // const chosenTheme =
-              //   actions[2].children[0].children[0].dataset.theme;
-              // const menuValues = main.querySelectorAll(
-              //   '[data-parameter="editBudget"]:has([data-theme])'
-              // );
-
-              // const menuItemOne = menuValues[0].querySelector(
-              //   `li:has([data-theme="${chosenTheme}"])`
-              // );
-              // const themeOne = menuItemOne.querySelector("[data-theme]");
-
-              // const menuItemTwo = menuValues[1].querySelector(
-              //   `li:has([data-theme="${chosenTheme}"])`
-              // );
-              // const themeTwo = menuItemTwo.querySelector("[data-theme]");
-
-              // menuItemOne.setAttribute("data-used", "true");
-              // menuItemOne.children[0].setAttribute("tabindex", -1);
-
-              // menuItemTwo.setAttribute("data-used", "true");
-              // menuItemTwo.children[0].setAttribute("tabindex", -1);
-              // themeOne.setAttribute(
-              //   "style",
-              //   `background-color: color-mix( in srgb, var(--${themeOne.dataset.theme}) 100%, var(--white) 100%)`
-              // );
-              // themeTwo.setAttribute(
-              //   "style",
-              //   `background-color: color-mix( in srgb, var(--${themeTwo.dataset.theme}) 100%, var(--white) 100%)`
-              // );
-
               createBudgetChart(budgetChart.nextElementSibling, budgetChart);
 
-              // const themeBtn = newDialog.querySelector('[data-action="tag"]');
-              // const menu = themeBtn.nextElementSibling;
-              // const availableTheme = menu.querySelector(
-              //   'li[data-used="false"]'
+              // const menuValues = main.querySelectorAll(
+              //   `li:has([data-theme="${prevThemeChoice}"])`
               // );
 
-              // const cloneSpan =
-              //   availableTheme.children[0].children[0].children[0].cloneNode(
-              //     true
-              //   );
+              // for (const menuValue of menuValues) {
+              //   const theme = menuValue.querySelector("[data-theme]");
 
-              // themeBtn.children[0].replaceWith(cloneSpan);
+              //   menuValue.setAttribute("data-used", "true");
+              //   menuValue.children[0].setAttribute("tabindex");
+              //   theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
+              // }
+
+              // prevThemeChoice =
+              //   actions[2].children[0].children[0].dataset.theme;
+              const themeBtn = newDialog.querySelector('[data-action="tag"]');
+              const menu = themeBtn.nextElementSibling;
+              const availableTheme = menu.querySelector(
+                'li[data-used="false"]'
+              );
 
               prevThemeChoice =
                 availableTheme.children[0].children[0].children[0].dataset
                   .theme;
+              // console.log(prevThemeChoice);
               newDialog.close();
             }
+          } else {
+            const themeBtn = newDialog.querySelector('[data-action="tag"]');
+            const menu = themeBtn.nextElementSibling;
+            // const availableTheme = menu.querySelector('li[data-used="false"]');
+            // const prevThemeChoice =
+            //   availableTheme.children[0].children[0].children[0].dataset.theme;
+            // const theme = themeBtn.children[0].children[0].dataset.theme;
+            // console.log(prevThemeChoice);
+            // const menuValues = main.querySelectorAll(
+            //   `li:has([data-theme="${prevThemeChoice}"])`
+            // );
+            // const replaceTagValue =
+            //   menuValues[0].children[0].children[0].cloneNode(true);
+
+            // for (const menuValue of menuValues) {
+            //   const theme = menuValue.querySelector("[data-theme]");
+
+            //   menuValue.setAttribute("data-used", "true");
+            //   menuValue.children[0].setAttribute("tabindex", -1);
+            //   theme.setAttribute(
+            //     "style",
+            //     `background-color: color-mix( in srgb, var(--${theme.dataset.theme}) 100%, var(--white) 100%)`
+            //   );
+            // }
+            // themeBtn.children[0].replaceWith(replaceTagValue);
           }
         });
 
@@ -1133,7 +1176,7 @@ minimizeMenu.addEventListener("click", (e) => {
   }
 });
 
-main.addEventListener("click", (e) => {
+main.addEventListener("click", async (e) => {
   const pageButton = e.target.closest("button[data-nav]");
   const filterParameter = e.target.closest("menu");
   const newBudgetBtn = e.target.closest("button[data-action='new']");
@@ -1141,6 +1184,8 @@ main.addEventListener("click", (e) => {
   const budgetDialogEditBtn = e.target.closest(
     "button[data-budget-dialog-show]"
   );
+
+  console.log(e.target);
 
   if (pageButton) {
     currentTransactionsPage =
@@ -1243,8 +1288,11 @@ main.addEventListener("click", (e) => {
       }
     }
   } else if (newBudgetBtn) {
+    e.preventDefault();
     const newDialog = document.querySelector("#new-budget-dialog");
     newDialog.showModal();
+
+    // console.log("test");
 
     const themeBtn = newDialog.querySelector('[data-action="tag"]');
     const menu = themeBtn.nextElementSibling;
@@ -1268,6 +1316,8 @@ main.addEventListener("click", (e) => {
       );
     }
     themeBtn.children[0].replaceWith(replaceTagValue);
+
+    console.log("here");
   } else if (budgetEditBtn) {
     budgetCard = budgetEditBtn.closest("[data-category]");
     // console.log(budgetCard);
@@ -1282,7 +1332,7 @@ main.addEventListener("click", (e) => {
       budgetEditBtn.dataset.budgetShow === "true" ? "false" : "true"
     );
   } else if (budgetDialogEditBtn) {
-    // console.log(budgetDialogEditBtn);
+    console.log(budgetDialogEditBtn);
     budgetDialogEditBtn.nextElementSibling.classList.toggle(
       "show-drop-content",
       budgetDialogEditBtn.dataset.budgetDialogShow === "true" ? true : false
