@@ -226,6 +226,7 @@ const callback = (mutationList, observer) => {
           e.preventDefault();
           e.stopImmediatePropagation();
 
+          // console.log(prevThemeChoice);
           // console.log("start of new dialog", prevThemeChoice);
           const btnAction = e.target.closest("[data-action]");
 
@@ -515,8 +516,7 @@ const callback = (mutationList, observer) => {
                   menuValue.children[0].setAttribute("tabindex", -1);
                   theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
                 }
-                // prevThemeChoice = newTheme;
-                // console.log("value clicked");
+
                 btnAction.parentElement.classList.toggle(
                   "show-drop-content",
                   false
@@ -617,6 +617,15 @@ const callback = (mutationList, observer) => {
               budgetCard.setAttribute("data-color-tag", theme);
               budgetCard.setAttribute("data-spend", spendForMonth * -1);
 
+              const themeBtn = newDialog.querySelector('[data-action="tag"]');
+              const menu = themeBtn.nextElementSibling;
+              const availableTheme = menu.querySelector(
+                'li[data-used="false"]'
+              );
+
+              prevThemeChoice =
+                availableTheme.children[0].children[0].children[0].dataset
+                  .theme;
               editDialog.close();
             }
           }
@@ -625,32 +634,72 @@ const callback = (mutationList, observer) => {
         const deleteDialog = document.querySelector("#delete-budget-dialog");
 
         deleteDialog.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
           const btn = e.target.closest("button");
           const optionDropdown = budgetCard.querySelector(
             "button[data-budget-show]"
           );
-          const choice = btn.dataset.action;
-          if (choice === "delete") {
-            const chartSummary = budgetChart.nextElementSibling.querySelector(
-              `div.chart-category:has(> div[data-theme="${budgetCard.dataset.colorTag}"] )`
-            );
-            const totalSpend = budgetChart.querySelector("[data-total-spend]");
+          if (btn) {
+            const choice = btn.dataset.action;
+            // console.log(btn);
+            if (choice && choice === "delete") {
+              const chartSummary = budgetChart.nextElementSibling.querySelector(
+                `div.chart-category:has(> div[data-theme="${budgetCard.dataset.colorTag}"] )`
+              );
+              const totalSpend =
+                budgetChart.querySelector("[data-total-spend]");
 
-            const newLimit =
-              parseFloat(totalSpend.dataset.totalLimit) -
-              parseFloat(budgetCard.dataset.maxAmount);
+              const newLimit =
+                parseFloat(totalSpend.dataset.totalLimit) -
+                parseFloat(budgetCard.dataset.maxAmount);
 
-            const newTotalSpend =
-              parseFloat(totalSpend.dataset.totalSpend) +
-              parseFloat(budgetCard.dataset.spend);
+              const newTotalSpend =
+                parseFloat(totalSpend.dataset.totalSpend) +
+                parseFloat(budgetCard.dataset.spend);
 
-            totalSpend.setAttribute("data-total-spend", newTotalSpend);
-            totalSpend.setAttribute("data-total-limit", newLimit);
-            totalSpend.textContent = `$${newTotalSpend}`;
-            totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
-            chartSummary.remove();
-            budgetCard.remove();
-            createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+              totalSpend.setAttribute("data-total-spend", newTotalSpend);
+              totalSpend.setAttribute("data-total-limit", newLimit);
+              totalSpend.textContent = `$${newTotalSpend}`;
+              totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
+              chartSummary.remove();
+              budgetCard.remove();
+              createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+              // release theme choices
+
+              const oldChoices = main.querySelectorAll(
+                `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
+              );
+
+              // const tagBtn = editDialog.querySelector("[data-action='tag']");
+              // const menuValues = main.querySelectorAll(
+              //   `li:has([data-theme="${tagBtn.children[0].children[0].dataset.theme}"])`
+              // );
+
+              // console.log(menuValues);
+              // for (const menuValue of menuValues) {
+              //   const theme = menuValue.querySelector("[data-theme]");
+
+              //   menuValue.setAttribute("data-used", "false");
+              //   menuValue.children[0].setAttribute("tabindex", 0);
+              //   theme.style = "";
+              // }
+              // const btnSpanClone =
+              //   oldChoices[0].children[0].children[0].cloneNode(true);
+              // const mainSpan = tagBtn.children[0];
+
+              // console.log(btnSpanClone);
+              // mainSpan.replaceWith(btnSpanClone);
+
+              for (const menuValue of oldChoices) {
+                const theme = menuValue.querySelector("[data-theme]");
+
+                menuValue.setAttribute("data-used", "false");
+                menuValue.children[0].setAttribute("tabindex", 0);
+                theme.style = ``;
+              }
+            }
+            deleteDialog.close();
           }
           optionDropdown?.nextElementSibling.classList.toggle(
             "show-drop-content",
@@ -658,7 +707,6 @@ const callback = (mutationList, observer) => {
           );
 
           optionDropdown?.setAttribute("data-budget-show", "true");
-          deleteDialog.close();
         });
       }
     } else if (mutation.type === "attribures") {
@@ -1293,6 +1341,7 @@ main.addEventListener("click", async (e) => {
         const dialogCateTitle = deleteDialog.querySelector("[data-category]");
 
         dialogCateTitle.textContent = budgetCard.dataset.category.trim();
+        // console.log("here");
         deleteDialog.showModal();
       } else if (btn && btn.dataset.action === "edit") {
         const editDialog = document.querySelector("#edit-budget-dialog");
