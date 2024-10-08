@@ -288,8 +288,6 @@ const callback = (mutationList, observer) => {
               const mainBtnAction =
                 btnAction.parentElement.previousElementSibling.dataset.action;
               if (mainBtnAction === "tag") {
-                // console.log("clicked tag", prevThemeChoice);
-                // updateThemeChoice(btnAction);
                 const newTheme =
                   btnAction.children[0].children[0].children[0].dataset.theme;
                 const dropdownBtn = newDialog.querySelector(
@@ -426,23 +424,108 @@ const callback = (mutationList, observer) => {
 
         editDialog.addEventListener("click", (e) => {
           e.preventDefault();
+          e.stopImmediatePropagation();
           const btnAction = e.target.closest("[data-action]");
 
           if (btnAction) {
             if (btnAction.dataset.action === "close") {
-              const oldChoice =
-                btnAction.parentElement.parentElement.querySelector(
-                  `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
-                );
+              const oldChoices = main.querySelectorAll(
+                `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
+              );
+
+              const tagBtn = editDialog.querySelector("[data-action='tag']");
+              const menuValues = main.querySelectorAll(
+                `li:has([data-theme="${tagBtn.children[0].children[0].dataset.theme}"])`
+              );
+
+              // console.log(menuValues);
+              for (const menuValue of menuValues) {
+                const theme = menuValue.querySelector("[data-theme]");
+
+                menuValue.setAttribute("data-used", "false");
+                menuValue.children[0].setAttribute("tabindex", 0);
+                theme.style = "";
+              }
+              const btnSpanClone =
+                oldChoices[0].children[0].children[0].cloneNode(true);
+              const mainSpan = tagBtn.children[0];
+
+              // console.log(btnSpanClone);
+              mainSpan.replaceWith(btnSpanClone);
+
+              for (const menuValue of oldChoices) {
+                const theme = menuValue.querySelector("[data-theme]");
+
+                menuValue.setAttribute("data-used", "true");
+                menuValue.children[0].setAttribute("tabindex", -1);
+                theme.style = `background-color: color-mix( in srgb, var(--${budgetCard.dataset.colorTag}) 100%, var(--white) 100%)`;
+              }
 
               editDialog.close();
               budgetCard = null;
             } else if (btnAction.dataset.action === "tag") {
+              // possibly set prevThemeChoice here
+              btnAction.nextElementSibling.classList.toggle(
+                "show-drop-content",
+                btnAction.dataset.budgetDialogShow === "true" ? true : false
+              );
+
+              btnAction.setAttribute(
+                "data-budget-dialog-show",
+                btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
+              );
             } else if (btnAction.dataset.action === "value") {
               const mainBtnAction =
                 btnAction.parentElement.previousElementSibling.dataset.action;
               if (mainBtnAction === "tag") {
-                updateThemeChoice(btnAction);
+                // updateThemeChoice(btnAction);
+                const newTheme =
+                  btnAction.children[0].children[0].children[0].dataset.theme;
+
+                const dropdownBtn = editDialog.querySelector(
+                  `[data-action="${btnAction.parentElement.previousElementSibling.dataset.action}"]`
+                );
+                const oldTheme =
+                  dropdownBtn.children[0].children[0].dataset.theme;
+                const menuValues = main.querySelectorAll(
+                  `li:has([data-theme="${newTheme}"])`
+                );
+
+                const oldValues = main.querySelectorAll(
+                  `li:has([data-theme="${oldTheme}"])`
+                );
+                for (const menuValue of oldValues) {
+                  const theme = menuValue.querySelector("[data-theme]");
+
+                  menuValue.setAttribute("data-used", "false");
+                  menuValue.children[0].setAttribute("tabindex", 0);
+                  theme.style = "";
+                }
+
+                const btnSpanClone =
+                  btnAction.children[0].children[0].cloneNode(true);
+                const mainSpan = dropdownBtn.children[0];
+                mainSpan.replaceWith(btnSpanClone);
+
+                for (const menuValue of menuValues) {
+                  // console.log(menuValue);
+                  const theme = menuValue.querySelector("[data-theme]");
+
+                  menuValue.setAttribute("data-used", "true");
+                  menuValue.children[0].setAttribute("tabindex", -1);
+                  theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
+                }
+                // prevThemeChoice = newTheme;
+                // console.log("value clicked");
+                btnAction.parentElement.classList.toggle(
+                  "show-drop-content",
+                  false
+                );
+
+                btnAction.parentElement.previousElementSibling.setAttribute(
+                  "data-budget-dialog-show",
+                  true
+                );
               } else if (mainBtnAction === "category") {
                 updateCategoryChoice(btnAction);
               }
@@ -1229,7 +1312,7 @@ main.addEventListener("click", async (e) => {
 
         const dropdownBtn = actions[2];
 
-        console.log(actions[2]);
+        // console.log(actions[2]);
         const newTheme = budgetCard.dataset.colorTag;
         const menuValues = main.querySelectorAll(
           `li:has([data-theme="${newTheme}"])`
@@ -1251,6 +1334,7 @@ main.addEventListener("click", async (e) => {
         // console.log(oldValues[0]);
         const btnSpanClone =
           menuValues[0].children[0].children[0].cloneNode(true);
+        // console.log(btnSpanClone);
         const mainSpan = dropdownBtn.children[0];
         mainSpan.replaceWith(btnSpanClone);
 
