@@ -215,12 +215,18 @@ const callback = (mutationList, observer) => {
         const newDialog = document.querySelector("#new-budget-dialog");
 
         const themeBtn = newDialog.querySelector('[data-action="tag"]');
+        const maxAmountInput = newDialog.querySelector(
+          '[data-action="max-spending"]'
+        );
         const menu = themeBtn.nextElementSibling;
         const availableTheme = menu.querySelector('li[data-used="false"]');
 
         let prevThemeChoice =
           availableTheme.children[0].children[0].children[0].dataset.theme;
 
+        maxAmountInput.addEventListener("input", (e) => {
+          console.log(e.target.value);
+        });
         // console.log(prevThemeChoice);
         newDialog.addEventListener("click", (e) => {
           e.preventDefault();
