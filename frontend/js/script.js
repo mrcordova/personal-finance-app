@@ -18,6 +18,7 @@ const config = { attributes: true, childList: true, subtree: true };
 const itemsPerPage = 10;
 let currentTransactionsPage = 0;
 let transactionItems;
+let budgetCardItems;
 const searchOption = {
   category: "all transactions",
   sortBy: "",
@@ -154,12 +155,16 @@ const callback = (mutationList, observer) => {
           const amountSpend = getSpendingAmountForMonth(budget.category);
           const amountSpendToDisplay = Math.abs(amountSpend);
 
-          spendingObjs[budget.category] = {
+          spendingObjs[themes[budget.theme]] = {
             spending: parseFloat(amountSpendToDisplay),
             max: budget.maximum,
+            category: budget.category,
             theme: themes[budget.theme],
           };
         }
+        // budgetCardItems = budgetCards;
+
+        // console.log(budgetCardItems);
 
         const totalSpend = accumalateAmount`${spendingObjs}`;
         const totalLimit = accumalateAmount`limit${spendingObjs}`;
@@ -408,10 +413,13 @@ const callback = (mutationList, observer) => {
               };
               const categorySummartObj = {};
 
-              categorySummartObj[`${budgetCardObj.category}`] = {
+              budgets.push(budgetCardObj);
+
+              categorySummartObj[`${themes[budgetCardObj.theme]}`] = {
                 theme: themes[budgetCardObj.theme],
                 max: budgetCardObj.maximum,
                 spending: spendForMonth,
+                category: budgetCardObj.category,
               };
 
               createBudgetCard(budgetCards, budgetCardObj);
@@ -422,20 +430,6 @@ const callback = (mutationList, observer) => {
 
               createBudgetChart(budgetChart.nextElementSibling, budgetChart);
 
-              // const menuValues = main.querySelectorAll(
-              //   `li:has([data-theme="${prevThemeChoice}"])`
-              // );
-
-              // for (const menuValue of menuValues) {
-              //   const theme = menuValue.querySelector("[data-theme]");
-
-              //   menuValue.setAttribute("data-used", "true");
-              //   menuValue.children[0].setAttribute("tabindex");
-              //   theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
-              // }
-
-              // prevThemeChoice =
-              //   actions[2].children[0].children[0].dataset.theme;
               const themeBtn = newDialog.querySelector('[data-action="tag"]');
               const menu = themeBtn.nextElementSibling;
               const availableTheme = menu.querySelector(
@@ -445,7 +439,6 @@ const callback = (mutationList, observer) => {
               prevThemeChoice =
                 availableTheme.children[0].children[0].children[0].dataset
                   .theme;
-              // console.log(prevThemeChoice);
               newDialog.close();
             }
           }
@@ -901,7 +894,7 @@ function createCategoryElements(strings, obj) {
   let finalStr = "";
 
   for (const [key, value] of Object.entries(obj)) {
-    const title = key;
+    const title = value.category;
     // console.log(title);
     const { theme, max, spending } = value;
     finalStr += `
