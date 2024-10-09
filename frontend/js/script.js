@@ -668,7 +668,7 @@ const callback = (mutationList, observer) => {
                   budget.theme = getKeyByValue(themes, theme);
                 }
               });
-              console.log(budgets);
+              // console.log(budgets);
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
@@ -715,6 +715,10 @@ const callback = (mutationList, observer) => {
               const newTotalSpend =
                 parseFloat(totalSpend.dataset.totalSpend) +
                 parseFloat(budgetCard.dataset.spend);
+              const oldTheme = getKeyByValue(
+                themes,
+                budgetCard.dataset.colorTag
+              );
 
               totalSpend.setAttribute("data-total-spend", newTotalSpend);
               totalSpend.setAttribute("data-total-limit", newLimit);
@@ -725,29 +729,17 @@ const callback = (mutationList, observer) => {
               createBudgetChart(budgetChart.nextElementSibling, budgetChart);
               // release theme choices
 
+              const idxOfBudgetCard = budgets
+                .map((budget) => budget.theme)
+                .indexOf(`${oldTheme}`);
+
+              budgets.splice(idxOfBudgetCard, 1);
+
+              console.log(budgets);
+
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
               );
-
-              // const tagBtn = editDialog.querySelector("[data-action='tag']");
-              // const menuValues = main.querySelectorAll(
-              //   `li:has([data-theme="${tagBtn.children[0].children[0].dataset.theme}"])`
-              // );
-
-              // console.log(menuValues);
-              // for (const menuValue of menuValues) {
-              //   const theme = menuValue.querySelector("[data-theme]");
-
-              //   menuValue.setAttribute("data-used", "false");
-              //   menuValue.children[0].setAttribute("tabindex", 0);
-              //   theme.style = "";
-              // }
-              // const btnSpanClone =
-              //   oldChoices[0].children[0].children[0].cloneNode(true);
-              // const mainSpan = tagBtn.children[0];
-
-              // console.log(btnSpanClone);
-              // mainSpan.replaceWith(btnSpanClone);
 
               for (const menuValue of oldChoices) {
                 const theme = menuValue.querySelector("[data-theme]");
