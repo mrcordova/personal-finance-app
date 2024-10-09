@@ -228,7 +228,8 @@ const callback = (mutationList, observer) => {
           availableTheme.children[0].children[0].children[0].dataset.theme;
 
         maxAmountInput.addEventListener("input", (e) => {
-          console.log(isNum(e.target.value));
+          // console.log(isNum(e.target.value) && e.target.value != "");
+          e.target.classList.toggle("input-error", !isNum(e.target.value));
         });
         // console.log(prevThemeChoice);
         newDialog.addEventListener("click", (e) => {
@@ -244,6 +245,11 @@ const callback = (mutationList, observer) => {
           if (btnAction) {
             // console.log("============end===============");
             if (btnAction.dataset.action === "close") {
+              const maxInput = newDialog.querySelector(
+                '[data-action="max-spending"]'
+              );
+              maxInput.classList.toggle("input-error", false);
+              maxInput.value = "";
               // console.log(e.target);
               const menuValues = main.querySelectorAll(
                 `li:has([data-theme="${prevThemeChoice}"])`
