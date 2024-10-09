@@ -498,6 +498,16 @@ const callback = (mutationList, observer) => {
                 "data-budget-dialog-show",
                 btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
               );
+            } else if (btnAction.dataset.action === "category") {
+              btnAction.nextElementSibling.classList.toggle(
+                "show-drop-content",
+                btnAction.dataset.budgetDialogShow === "true" ? true : false
+              );
+
+              btnAction.setAttribute(
+                "data-budget-dialog-show",
+                btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
+              );
             } else if (btnAction.dataset.action === "value") {
               const mainBtnAction =
                 btnAction.parentElement.previousElementSibling.dataset.action;
@@ -557,7 +567,7 @@ const callback = (mutationList, observer) => {
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
 
-              const themes = budgetCard.querySelectorAll(`[data-theme]`);
+              const themesEle = budgetCard.querySelectorAll(`[data-theme]`);
               const theme = actions[2].children[0].children[0].dataset.theme;
               const category = actions[0].children[0].textContent;
               const max = parseFloat(actions[1].value).toFixed(2);
@@ -615,31 +625,50 @@ const callback = (mutationList, observer) => {
               )}`;
               spendingSummary.children[2].childNodes[2].textContent = `\xa0 of $${max}`;
 
-              themes[0].setAttribute("data-theme", theme);
-              themes[0].nextSibling.nodeValue = category;
-              themes[1].previousElementSibling.children[0].textContent = `$${max}`;
-              themes[1].previousElementSibling.setAttribute(
+              themesEle[0].setAttribute("data-theme", theme);
+              themesEle[0].nextSibling.nodeValue = category;
+              themesEle[1].previousElementSibling.children[0].textContent = `$${max}`;
+              themesEle[1].previousElementSibling.setAttribute(
                 "for",
                 `${category}-progress`
               );
-              themes[1].setAttribute("id", `${category}-progress`);
-              themes[1].setAttribute("data-theme", theme);
-              themes[1].setAttribute("max", max);
-              themes[1].setAttribute("value", spendForMonth);
-              themes[1].setAttribute(
+              themesEle[1].setAttribute("id", `${category}-progress`);
+              themesEle[1].setAttribute("data-theme", theme);
+              themesEle[1].setAttribute("max", max);
+              themesEle[1].setAttribute("value", spendForMonth);
+              themesEle[1].setAttribute(
                 "style",
                 `--progress-value: var(--${theme})`
               );
 
-              themes[2].nextElementSibling.children[1].textContent = `$${spendForMonth}`;
-              themes[2].setAttribute("data-theme", theme);
+              themesEle[2].nextElementSibling.children[1].textContent = `$${spendForMonth}`;
+              themesEle[2].setAttribute("data-theme", theme);
 
-              themes[3].nextElementSibling.children[1].textContent = `$${Math.max(
+              themesEle[3].nextElementSibling.children[1].textContent = `$${Math.max(
                 0,
                 parseFloat(max) - parseFloat(spendForMonth)
               )}`;
 
               createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+
+              const oldTheme = getKeyByValue(
+                themes,
+                budgetCard.dataset.colorTag
+              );
+
+              // console.log(budgetCard.dataset.colorTag);
+              // console.log(themes);
+              // console.log(
+              // Object.keys(themes).find((key) => themes[key] === "green")
+              // );
+              budgets.forEach((budget) => {
+                if (budget.theme === oldTheme) {
+                  budget.category = category;
+                  budget.maximum = parseFloat(max);
+                  budget.theme = getKeyByValue(themes, theme);
+                }
+              });
+              console.log(budgets);
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
