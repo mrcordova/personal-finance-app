@@ -24,6 +24,9 @@ const searchOption = {
   previousCategory: "all transactions",
   search: "",
 };
+// const isnum = (val) => /^\d+$/.test(val);
+const isNum = (val) => /^\d+[.]*\d*$/.test(val);
+// console.log(parseFloat("5"));
 
 const themes = {
   "#82C9D7": "cyan",
@@ -225,7 +228,7 @@ const callback = (mutationList, observer) => {
           availableTheme.children[0].children[0].children[0].dataset.theme;
 
         maxAmountInput.addEventListener("input", (e) => {
-          console.log(e.target.value);
+          console.log(isNum(e.target.value));
         });
         // console.log(prevThemeChoice);
         newDialog.addEventListener("click", (e) => {
@@ -359,6 +362,13 @@ const callback = (mutationList, observer) => {
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
 
+              if (!isNum(actions[1].value)) {
+                console.log("error");
+                actions[1].classList.toggle("input-error", true);
+                return;
+              }
+              const max = parseFloat(actions[1].value);
+
               const category = actions[0].children[0].textContent;
               const spendForMonth = Math.abs(
                 getSpendingAmountForMonth(category)
@@ -366,7 +376,7 @@ const callback = (mutationList, observer) => {
 
               const newTotalSpend =
                 parseFloat(totalSpend.dataset.totalSpend) + spendForMonth;
-              const max = parseFloat(actions[1].value);
+
               const newLimit =
                 parseFloat(totalSpend.dataset.totalLimit) + parseFloat(max);
 

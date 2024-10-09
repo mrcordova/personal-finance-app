@@ -497,6 +497,7 @@ dialog.budget-dialogs[open] {
         align-items: center;
         text-transform: capitalize;
 
+        border: 1px solid transparent;
         &.input-container {
           position: relative;
 
@@ -513,6 +514,10 @@ dialog.budget-dialogs[open] {
             height: 1.3125rem;
           }
         }
+
+        &:has(.input-error) {
+          border: 0;
+        }
       }
 
       & input {
@@ -527,6 +532,10 @@ dialog.budget-dialogs[open] {
         font-size: 0.875rem;
         line-height: 1.5;
         text-indent: 1.375rem;
+
+        &.input-error {
+          border: 2px solid var(--red);
+        }
       }
     }
   }
