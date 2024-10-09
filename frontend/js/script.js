@@ -72,6 +72,11 @@ const options = {
 function createDate(date) {
   return new Date(date).toLocaleDateString("en-AU", options);
 }
+
+function checkMaxInput(e) {
+  // console.log(isNum(e.target.value) && e.target.value != "");
+  e.target.classList.toggle("input-error", !isNum(e.target.value));
+}
 // Parse the text
 // const doc = parser.parseFromString(html, "text/html");
 
@@ -218,7 +223,7 @@ const callback = (mutationList, observer) => {
         const newDialog = document.querySelector("#new-budget-dialog");
 
         const themeBtn = newDialog.querySelector('[data-action="tag"]');
-        const maxAmountInput = newDialog.querySelector(
+        const maxAmountInputs = main.querySelectorAll(
           '[data-action="max-spending"]'
         );
         const menu = themeBtn.nextElementSibling;
@@ -227,10 +232,9 @@ const callback = (mutationList, observer) => {
         let prevThemeChoice =
           availableTheme.children[0].children[0].children[0].dataset.theme;
 
-        maxAmountInput.addEventListener("input", (e) => {
-          // console.log(isNum(e.target.value) && e.target.value != "");
-          e.target.classList.toggle("input-error", !isNum(e.target.value));
-        });
+        for (const maxAmountInput of maxAmountInputs) {
+          maxAmountInput.addEventListener("input", checkMaxInput);
+        }
         // console.log(prevThemeChoice);
         newDialog.addEventListener("click", (e) => {
           e.preventDefault();
@@ -557,6 +561,7 @@ const callback = (mutationList, observer) => {
               const actions = editDialog.querySelectorAll(
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
+
               const themes = budgetCard.querySelectorAll(`[data-theme]`);
               const theme = actions[2].children[0].children[0].dataset.theme;
               const category = actions[0].children[0].textContent;
@@ -567,6 +572,11 @@ const callback = (mutationList, observer) => {
               const spendingSummary = chart.querySelector(
                 `.chart-category:has([data-theme=${budgetCard.dataset.colorTag}])`
               );
+
+              if (!isNum(actions[1].value)) {
+                actions[1].classList.toggle("input-error", true);
+                return;
+              }
 
               const totalSpend = chart.querySelector("[data-total-spend]");
               const spendForMonth = Math.abs(
@@ -1380,6 +1390,7 @@ main.addEventListener("click", async (e) => {
         actions[0].children[0].textContent = budgetCard.dataset.category;
         actions[1].value = budgetCard.dataset.maxAmount;
 
+        actions[1].classList.toggle("input-error", false);
         // const oldTheme =
         //   btnAction.children[0].children[0].children[0].dataset.theme;
 
