@@ -97,6 +97,8 @@ const callback = (mutationList, observer) => {
       if (mainTransaction) {
         observer.disconnect();
         transactionsUpdate();
+        // console.log(transactionItems);
+        updateDisplay();
         const searchInput = main.querySelector("#search-transaction");
         searchInput.addEventListener("input", (e) => {
           const val = e.target.value.toLowerCase();
@@ -358,7 +360,7 @@ const callback = (mutationList, observer) => {
                 updateCategoryChoice(btnAction);
               }
             } else if (btnAction.dataset.action === "max-spending") {
-              console.log("here");
+              // console.log("here");
             } else if (btnAction.dataset.action === "add-budget") {
               const budgetCards = main.querySelector(".budget-cards");
               const totalSpend = main.querySelector(
@@ -853,7 +855,7 @@ function createBudgetCard(budgetCards, budget) {
         <div class="latest-spending-container">
           <div class="latest-spending-header">
             <h3 class="public-sans-bold">Latest Spending</h3>
-            <button>
+            <button data-action="see-all">
               <span>See All</span>
               <img
                 src="./assets/images/icon-caret-right.svg"
@@ -986,6 +988,7 @@ function transactionsUpdate() {
   }
   // recieve transaction rows
   transactionItems = Array.from(transactionsTable.getElementsByTagName("tr"));
+
   // console.log(mutation);
   createPageButtons();
   updateActiveButtonState();
@@ -1081,6 +1084,7 @@ function getLatestSpending(category) {
 }
 
 function updateDisplay() {
+  // console.log(transactionItems);
   const filteredData = filterData(transactionItems);
   // console.log(
   //   searchOption.category.toLowerCase() ===
@@ -1325,7 +1329,8 @@ main.addEventListener("click", async (e) => {
     "button[data-budget-dialog-show]"
   );
 
-  // console.log(e.target);
+  const seeAllBtn = e.target.closest("button[data-action='see-all'");
+  // console.log(seeAllBtn);
 
   if (pageButton) {
     currentTransactionsPage =
@@ -1499,5 +1504,19 @@ main.addEventListener("click", async (e) => {
       "data-budget-dialog-show",
       budgetDialogEditBtn.dataset.budgetDialogShow === "true" ? "false" : "true"
     );
+  } else if (seeAllBtn) {
+    const category = seeAllBtn.closest("div[data-category]").dataset.category;
+    const liEle = document.querySelector("[data-menu='transactions']");
+    const currentActiveLiEle = document.querySelector("li[data-menu].checked");
+    currentActiveLiEle.classList.remove("checked");
+    liEle.classList.add("checked");
+    searchOption.category = category;
+    observer.observe(main, config);
+    const clone = templates[`${liEle.dataset.menu}`].content.cloneNode(true);
+    main.replaceChildren(clone);
+
+    // updateDisplay();
+    console.log(searchOption.category);
+    // console.log(category);
   }
 });
