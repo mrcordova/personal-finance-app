@@ -5,6 +5,121 @@
   </div>
 
   <div class="main-pots">
+    <dialog class="budget-dialogs" id="add-pot-dialog">
+      <div class="dialog-title">
+        <p class="public-sans-bold">Add New Pot</p>
+        <button data-action="close">
+          <img src="./assets/images/icon-close-modal.svg" alt="close" />
+        </button>
+      </div>
+      <p class="public-sans-regular">
+        Add money to your pot to keep it separate from your main balance. As
+        soon as you add this money, it will be deducted from your current
+        balance.
+      </p>
+      <div class="pot-progress-container">
+        <label for="${pot.name}-progress">
+          New Amount
+          <span class="public-sans-bold pot-total">$${pot.total}</span>
+        </label>
+        <div class="pot-progress-info-container">
+          <progress
+            data-theme="${theme}"
+            max="${pot.target}"
+            value="${pot.total}"
+            id="${pot.name}-progress"
+            style="--progress-value: var(--${theme})">
+            ${pot.target}
+          </progress>
+
+          <div class="pot-numbers-container">
+            <p class="pot-numbers public-sans-bold">
+              ${( (pot.total / pot.target) * 100 ).toFixed(2)}%
+            </p>
+            <p class="pot-numbers">
+              Target of
+              <span>$${pot.target}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="max-spend">Amount to Add</label>
+        <span class="public-sans-regular input-container">
+          <input
+            data-action="max-spending"
+            type="text"
+            id="max-spend"
+            placeholder=""
+            class="public-sans-regular" />
+        </span>
+      </div>
+
+      <button
+        class="public-sans-bold dialog-btns"
+        data-action="confirm-addition">
+        Confirm Addition
+      </button>
+    </dialog>
+    <dialog class="budget-dialogs" id="withdraw-pot-dialog">
+      <div class="dialog-title">
+        <p class="public-sans-bold">
+          Withdraw from &OpenCurlyQuote;
+          <span data-category></span>
+          &CloseCurlyQuote;
+        </p>
+        <button data-action="close">
+          <img src="./assets/images/icon-close-modal.svg" alt="close" />
+        </button>
+      </div>
+      <p class="public-sans-regular">
+        Withdraw from your pot to put money back in your main balance. This will
+        reduce the amount you have in this pot.
+      </p>
+      <div class="pot-progress-container">
+        <label for="${pot.name}-progress">
+          New Amount
+          <span class="public-sans-bold pot-total">$${pot.total}</span>
+        </label>
+        <div class="pot-progress-info-container">
+          <progress
+            data-theme="${theme}"
+            max="${pot.target}"
+            value="${pot.total}"
+            id="${pot.name}-progress"
+            style="--progress-value: var(--${theme})">
+            ${pot.target}
+          </progress>
+
+          <div class="pot-numbers-container">
+            <p class="pot-numbers public-sans-bold">
+              ${( (pot.total / pot.target) * 100 ).toFixed(2)}%
+            </p>
+            <p class="pot-numbers">
+              Target of
+              <span>$${pot.target}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="max-spend">Amount to Withdraw</label>
+        <span class="public-sans-regular input-container">
+          <input
+            data-action="max-spending"
+            type="text"
+            id="max-spend"
+            placeholder=""
+            class="public-sans-regular" />
+        </span>
+      </div>
+
+      <button
+        class="public-sans-bold dialog-btns"
+        data-action="confirm-addition">
+        Confirm Withdraw
+      </button>
+    </dialog>
     <dialog class="budget-dialogs" id="delete-budget-dialog">
       <div class="dialog-title">
         <p class="public-sans-bold">
@@ -17,7 +132,7 @@
         </button>
       </div>
       <p class="public-sans-regular">
-        Are you sure you want to delete this budget? This action cannot be
+        Are you sure you want to delete this pot? This action cannot be
         reversed, and all the data inside it will be removed forever.
       </p>
       <button data-action="delete" class="yes-btn public-sans-bold">
@@ -29,60 +144,19 @@
     </dialog>
     <dialog class="budget-dialogs" id="edit-budget-dialog">
       <div class="public-sans-bold dialog-title">
-        <p>Edit Budget</p>
+        <p>Edit Pot</p>
         <button data-action="close">
           <img src="./assets/images/icon-close-modal.svg" alt="close" />
         </button>
       </div>
       <p class="public-sans-regular">
-        As your budgets change, feel free to update your spending limits.
+        If your saving targets change, feel free to update your pots.
       </p>
       <form>
-        <div class="dropdown public-sans-regular">
-          <label for="budget-cate-btn">Budget Category</label>
-
-          <button
-            data-action="category"
-            id="budget-cate-btn"
-            data-budget-dialog-show="true">
-            <span>Entertainment</span>
-            <img
-              src="./assets/images/icon-caret-down.svg"
-              alt="drop down caret" />
-          </button>
-          <menu
-            data-parameter="editBudget"
-            class="public-sans-regular dropdown-content">
-            <li data-action="value">
-              <button><span>Entertainment</span></button>
-            </li>
-            <li data-action="value">
-              <button>
-                <span>Bills</span>
-              </button>
-            </li>
-            <li data-action="value">
-              <button><span>Groceries</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Dining Out</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Personal Care</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Education</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Lifestyle</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Shopping</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>General</span></button>
-            </li>
-          </menu>
+        <div>
+          <label for="pot-name">Pot Name</label>
+          <input data-action="max-spending" type="text" id="pot-name" />
+          <span>30 of 30 characters left</span>
         </div>
         <div>
           <label for="max-spend">Maximum Spending</label>
@@ -93,7 +167,7 @@
           </span>
         </div>
         <div class="public-sans-regular dropdown">
-          <label for="theme" class="public-sans-bold">Color Tag</label>
+          <label for="theme" class="public-sans-bold">Theme</label>
           <button data-action="tag" id="theme" data-budget-dialog-show="true">
             <span>
               <span data-theme="green" class="theme-circle"></span>
@@ -257,76 +331,41 @@
     </dialog>
     <dialog class="budget-dialogs" id="new-budget-dialog">
       <div class="public-sans-bold dialog-title">
-        <p>Add New Budget</p>
+        <p>Add New Pot</p>
         <button data-action="close">
           <img src="./assets/images/icon-close-modal.svg" alt="close" />
         </button>
       </div>
       <p class="public-sans-regular">
-        Choose a category to set a spending budget. These categories can help
-        you monitor spending.
+        Create a pot to set savings targets. These can help keep you on track as
+        you save for special purchases.
       </p>
       <form novalidate>
-        <div class="public-sans-regular dropdown">
-          <label for="budget-cate-btn" class="public-sans-bold">
-            Budget Category
-          </label>
-          <button
-            data-action="category"
-            id="budget-cate-btn"
-            data-budget-dialog-show="true">
-            <span>Entertainment</span>
-            <img
-              src="./assets/images/icon-caret-down.svg"
-              alt="drop down caret" />
-          </button>
-          <menu
-            data-parameter="editBudget"
-            class="public-sans-regular dropdown-content">
-            <li data-action="value">
-              <button><span>Entertainment</span></button>
-            </li>
-            <li data-action="value">
-              <button>
-                <span>Bills</span>
-              </button>
-            </li>
-            <li data-action="value">
-              <button><span>Groceries</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Dining Out</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Personal Care</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Education</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Lifestyle</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>Shopping</span></button>
-            </li>
-            <li data-action="value">
-              <button><span>General</span></button>
-            </li>
-          </menu>
+        <div>
+          <label for="pot-name">Pot Name</label>
+
+          <input
+            data-action="name-check"
+            type="text"
+            id="pot-name"
+            placeholder=""
+            class="public-sans-regular" />
+
+          <span>30 characters left</span>
         </div>
         <div>
-          <label for="max-spend">Maximum Spending</label>
+          <label for="max-spend">Target</label>
           <span class="public-sans-regular input-container">
             <input
               data-action="max-spending"
               type="text"
               id="max-spend"
-              placeholder="e.g. 2000"
+              placeholder=""
               class="public-sans-regular" />
           </span>
         </div>
         <div class="public-sans-regular dropdown">
-          <label for="theme" class="public-sans-bold">Color Tag</label>
+          <label for="theme" class="public-sans-bold">Theme</label>
           <button data-action="tag" id="theme" data-budget-dialog-show="true">
             <span>
               <span data-theme="green" class="theme-circle"></span>
@@ -485,7 +524,7 @@
         </div>
       </form>
       <button class="public-sans-bold dialog-btns" data-action="add-budget">
-        Add Budget
+        Add Pot
       </button>
     </dialog>
 
@@ -613,11 +652,10 @@
 
     <!-- Add/Edit pot start -->
 
-    Add New Pot Create a pot to set savings targets. These can help keep you on
-    track as you save for special purchases. Edit Pot If your saving targets
-    change, feel free to update your pots. Pot Name Target Theme Green Yellow
-    Cyan Navy Red Purple Turquoise Brown Magenta Blue Navy Grey Army Green Pink
-    Gold Orange Add Pot / Save Changes
+    Add New Pot Edit Pot If your saving targets change, feel free to update your
+    pots. Pot Name Target Theme Green Yellow Cyan Navy Red Purple Turquoise
+    Brown Magenta Blue Navy Grey Army Green Pink Gold Orange Add Pot / Save
+    Changes
 
     <!-- Add/Edit budget end -->
 
