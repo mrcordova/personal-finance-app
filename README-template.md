@@ -117,6 +117,10 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient
 https://stackoverflow.com/questions/9732624/how-to-swap-dom-child-nodes-in-javascript
 https://stackoverflow.com/questions/24369197/how-to-add-static-text-inside-an-input-form
 
+https://stackoverflow.com/questions/72393049/how-to-add-a-element-in-between-array-using-const-array-in-javascript
+https://stackoverflow.com/questions/1779013/check-if-string-contains-only-digits
+https://stackoverflow.com/questions/7176908/how-can-i-get-the-index-of-an-object-by-its-property-in-javascript
+
 - [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
 - [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
 

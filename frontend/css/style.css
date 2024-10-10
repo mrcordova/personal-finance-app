@@ -1057,7 +1057,7 @@ thead {
     padding-block-start: clamp(0rem, 1.0714rem + -1.1905vw, 0.5rem);
 
     & li {
-      max-width: clamp(6.5rem, -5.7857rem + 25.5952vw, 17.25rem);
+      /* max-width: clamp(6.5rem, -5.7857rem + 25.5952vw, 17.25rem); */
       min-width: min-content;
     }
     & button {

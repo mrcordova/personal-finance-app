@@ -1410,8 +1410,6 @@ main.addEventListener("click", async (e) => {
         actions[1].value = budgetCard.dataset.maxAmount;
 
         actions[1].classList.toggle("input-error", false);
-        // const oldTheme =
-        //   btnAction.children[0].children[0].children[0].dataset.theme;
 
         const dropdownBtn = actions[2];
 
@@ -1421,20 +1419,6 @@ main.addEventListener("click", async (e) => {
           `li:has([data-theme="${newTheme}"])`
         );
 
-        // const oldValues = main.querySelectorAll(
-        //   `li:has([data-theme="${dropdownBtn.children[0].children[0].dataset.theme}"])`
-        // );
-
-        // console.log(dropdownBtn.children[0].children[0].dataset.theme);
-        // for (const menuValue of oldValues) {
-        //   const theme = menuValue.querySelector("[data-theme]");
-
-        //   menuValue.setAttribute("data-used", "false");
-        //   menuValue.children[0].setAttribute("tabindex", 0);
-        //   theme.style = "";
-        // }
-
-        // console.log(oldValues[0]);
         menuValues[0].setAttribute("data-used", "false");
         menuValues[0].children[0].setAttribute("tabindex", 0);
         menuValues[0].children[0].children[0].children[0].style = ``;
@@ -1467,8 +1451,6 @@ main.addEventListener("click", async (e) => {
     e.preventDefault();
     const newDialog = document.querySelector("#new-budget-dialog");
     newDialog.showModal();
-
-    // console.log("test");
 
     const themeBtn = newDialog.querySelector('[data-action="tag"]');
     const menu = themeBtn.nextElementSibling;
