@@ -821,11 +821,11 @@ main {
   }
 }
 
-.pots {
+.main-pots {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  justify-content: center;
+  /* justify-content: center; */
   /* align-items: center; */
 }
 

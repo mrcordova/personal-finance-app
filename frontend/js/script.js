@@ -57,6 +57,7 @@ const sortByFuncs = {
 };
 const transactions = data["transactions"];
 const budgets = data["budgets"];
+const pots = data["pots"];
 const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
 // console.log(currentMonth);
 let budgetCard;
@@ -95,6 +96,8 @@ const callback = (mutationList, observer) => {
     if (mutation.type === "childList") {
       const mainTransaction = document.querySelector(".main-transactions");
       const mainBudgets = document.querySelector(".main-budgets");
+      const mainPots = document.querySelector(".main-pots");
+      // console.log(mainPots);
       if (mainTransaction) {
         observer.disconnect();
         transactionsUpdate();
@@ -171,23 +174,23 @@ const callback = (mutationList, observer) => {
         chartCard.insertAdjacentHTML(
           "afterbegin",
           `
-      <div class="budget-chart">
+        <div class="budget-chart">
         <div>
           <p class="public-sans-regular">
             <span data-total-spend="${totalSpend}" data-total-limit="${totalLimit}" class="public-sans-bold">$${totalSpend}</span>
             of $${totalLimit} limit
           </p>
         </div>
-      </div>
-      <div class="chart-summary">
+        </div>
+        <div class="chart-summary">
         <h3 class="public-sans-bold">Spending Summary</h3>
 
         <div class="spending-category-container public-sans-regular">
         ${createCategoryElements`${spendingObjs}`}
        
         </div>
-      </div>
-    `
+        </div>
+        `
         );
         const budgetChart = chartCard.querySelector(".budget-chart");
         const percentage = createChartPercentageObject(spendingObjs);
@@ -758,6 +761,76 @@ const callback = (mutationList, observer) => {
 
           optionDropdown?.setAttribute("data-budget-show", "true");
         });
+      } else if (mainPots) {
+        // console.log(mainPots);
+        observer.disconnect();
+        for (const pot of pots) {
+          const theme = themes[pot.theme];
+          mainPots.insertAdjacentHTML(
+            "beforeend",
+            `   <div
+        data-category="${pot.name}"
+        data-spend="${pot.total}"
+        data-max-amount="${pot.target}"
+        data-color-tag="${theme}"
+        class="pot-card category-card public-sans-regular">
+        <div class="theme-container">
+          <div class="theme-title public-sans-bold">
+            <div data-theme="${theme}" class="theme-circle"></div>
+           ${pot.name}
+          </div>
+          <div class="dropdown">
+            <button data-budget-show="true">
+              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+            </button>
+
+            <menu data-parameter="editBudget" class="dropdown-content">
+              <li><button data-action="edit">Edit Pot</button></li>
+              <li><button data-action="delete">Delete Pot</button></li>
+            </menu>
+          </div>
+        </div>
+        <div class="pot-progress-container">
+          <label for="${pot.name}-progress">
+            Total Saved
+            <span class="public-sans-bold pot-total">$${pot.total}</span>
+          </label>
+          <div class="pot-progress-info-container">
+            <progress
+              data-theme="${theme}"
+              max="${pot.target}"
+              value="${pot.total}"
+              id="${pot.name}-progress"
+              style="--progress-value: var(--${theme})">
+              ${pot.target}
+            </progress>
+
+            <div class="pot-numbers-container">
+              <p class="pot-numbers public-sans-bold">${(
+                (pot.total / pot.target) *
+                100
+              ).toFixed(2)}%</p>
+
+              <p class="pot-numbers">
+                Target of
+                <span>$${pot.target}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="money-btns-container">
+          <button class="latest-spending-container public-sans-bold">
+            + Add Money
+          </button>
+
+          <button class="latest-spending-container public-sans-bold">
+            Withdraw
+          </button>
+        </div>
+      </div>`
+          );
+        }
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
