@@ -265,9 +265,18 @@ button[popovertarget] {
       }
 
       &::-webkit-progress-value {
-        background-color: var(--progress-value);
+        /* background-color: var(--progress-value); */
 
-        /* background-color: red; */
+        /* use for adding and withdrawing from pot */
+        /* background: linear-gradient(
+          to right,
+          var(--progress-value) 7.95%,
+          var(--white) 7.95%,
+          var(--white) 9.95%,
+          var(--green) 9.95%,
+          var(--green) 27.95%
+        ); */
+
         max-height: 0.5rem;
         border-radius: 0.25rem;
       }
