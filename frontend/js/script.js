@@ -784,7 +784,7 @@ const callback = (mutationList, observer) => {
               <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
             </button>
 
-            <menu data-parameter="editBudget" class="dropdown-content">
+            <menu data-parameter="editPot" class="dropdown-content">
               <li><button data-action="edit">Edit Pot</button></li>
               <li><button data-action="delete">Delete Pot</button></li>
             </menu>
@@ -828,9 +828,16 @@ const callback = (mutationList, observer) => {
             Withdraw
           </button>
         </div>
-      </div>`
+       </div>`
           );
         }
+        // Pots eventlisteners
+        const newDialog = document.querySelector("#new-budget-dialog");
+        newDialog.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          console.log(e.target);
+        });
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
@@ -1480,6 +1487,64 @@ main.addEventListener("click", async (e) => {
         );
 
         actions[0].children[0].textContent = budgetCard.dataset.category;
+        actions[1].value = budgetCard.dataset.maxAmount;
+
+        actions[1].classList.toggle("input-error", false);
+
+        const dropdownBtn = actions[2];
+
+        // console.log(actions[2]);
+        const newTheme = budgetCard.dataset.colorTag;
+        const menuValues = main.querySelectorAll(
+          `li:has([data-theme="${newTheme}"])`
+        );
+
+        menuValues[0].setAttribute("data-used", "false");
+        menuValues[0].children[0].setAttribute("tabindex", 0);
+        menuValues[0].children[0].children[0].children[0].style = ``;
+        const btnSpanClone =
+          menuValues[0].children[0].children[0].cloneNode(true);
+        // console.log(btnSpanClone);
+        const mainSpan = dropdownBtn.children[0];
+        mainSpan.replaceWith(btnSpanClone);
+
+        for (const menuValue of menuValues) {
+          const theme = menuValue.querySelector("[data-theme]");
+
+          menuValue.setAttribute("data-used", "true");
+          menuValue.children[0].setAttribute("tabindex", -1);
+          theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
+        }
+        editDialog.showModal();
+
+        e.preventDefault();
+
+        optionDropdown?.nextElementSibling.classList.toggle(
+          "show-drop-content",
+          false
+        );
+
+        optionDropdown?.setAttribute("data-budget-show", "true");
+      }
+    } else if (filterParameter.dataset.parameter === "editPot") {
+      if (btn && btn.dataset.action === "delete") {
+        const deleteDialog = document.querySelector("#delete-budget-dialog");
+        const dialogCateTitle = deleteDialog.querySelector("[data-category]");
+
+        dialogCateTitle.textContent = budgetCard.dataset.category.trim();
+        // console.log("here");
+        deleteDialog.showModal();
+      } else if (btn && btn.dataset.action === "edit") {
+        const editDialog = document.querySelector("#edit-pot-dialog");
+        const optionDropdown = budgetCard.querySelector(
+          "button[data-budget-show]"
+        );
+
+        const actions = editDialog.querySelectorAll(
+          '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
+        );
+
+        actions[0].children[0].value = budgetCard.dataset.category;
         actions[1].value = budgetCard.dataset.maxAmount;
 
         actions[1].classList.toggle("input-error", false);

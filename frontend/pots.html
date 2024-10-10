@@ -146,7 +146,7 @@
         No, I want to Back
       </button>
     </dialog>
-    <dialog class="budget-dialogs" id="edit-budget-dialog">
+    <dialog class="budget-dialogs" id="edit-pot-dialog">
       <div class="public-sans-bold dialog-title">
         <p>Edit Pot</p>
         <button data-action="close">
@@ -159,7 +159,9 @@
       <form>
         <div>
           <label for="pot-name">Pot Name</label>
-          <input data-action="max-spending" type="text" id="pot-name" />
+          <span data-action="category">
+            <input type="text" id="pot-name" />
+          </span>
           <span>30 of 30 characters left</span>
         </div>
         <div>
