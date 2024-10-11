@@ -833,6 +833,14 @@ const callback = (mutationList, observer) => {
         }
         // Pots eventlisteners
         const newDialog = document.querySelector("#new-budget-dialog");
+        const themeBtn = newDialog.querySelector('[data-action="tag"]');
+        const maxAmountInputs = main.querySelectorAll(
+          '[data-action="max-spending"]'
+        );
+        const menu = themeBtn.nextElementSibling;
+        const availableTheme = menu.querySelector('li[data-used="false"]');
+        let prevThemeChoice =
+          availableTheme.children[0].children[0].children[0].dataset.theme;
         newDialog.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
@@ -842,7 +850,244 @@ const callback = (mutationList, observer) => {
         editDialog.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
-          console.log(e.target);
+          const btnAction = e.target.closest("[data-action]");
+
+          if (btnAction) {
+            if (btnAction.dataset.action === "close") {
+              const oldChoices = main.querySelectorAll(
+                `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
+              );
+
+              const tagBtn = editDialog.querySelector("[data-action='tag']");
+              const menuValues = main.querySelectorAll(
+                `li:has([data-theme="${tagBtn.children[0].children[0].dataset.theme}"])`
+              );
+
+              // console.log(menuValues);
+              for (const menuValue of menuValues) {
+                const theme = menuValue.querySelector("[data-theme]");
+
+                menuValue.setAttribute("data-used", "false");
+                menuValue.children[0].setAttribute("tabindex", 0);
+                theme.style = "";
+              }
+              const btnSpanClone =
+                oldChoices[0].children[0].children[0].cloneNode(true);
+              const mainSpan = tagBtn.children[0];
+
+              // console.log(btnSpanClone);
+              mainSpan.replaceWith(btnSpanClone);
+
+              for (const menuValue of oldChoices) {
+                const theme = menuValue.querySelector("[data-theme]");
+
+                menuValue.setAttribute("data-used", "true");
+                menuValue.children[0].setAttribute("tabindex", -1);
+                theme.style = `background-color: color-mix( in srgb, var(--${budgetCard.dataset.colorTag}) 100%, var(--white) 100%)`;
+              }
+
+              editDialog.close();
+              budgetCard = null;
+            } else if (btnAction.dataset.action === "tag") {
+              // possibly set prevThemeChoice here
+              btnAction.nextElementSibling.classList.toggle(
+                "show-drop-content",
+                btnAction.dataset.budgetDialogShow === "true" ? true : false
+              );
+
+              btnAction.setAttribute(
+                "data-budget-dialog-show",
+                btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
+              );
+            } else if (btnAction.dataset.action === "category") {
+              btnAction.nextElementSibling.classList.toggle(
+                "show-drop-content",
+                btnAction.dataset.budgetDialogShow === "true" ? true : false
+              );
+
+              btnAction.setAttribute(
+                "data-budget-dialog-show",
+                btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
+              );
+            } else if (btnAction.dataset.action === "value") {
+              const mainBtnAction =
+                btnAction.parentElement.previousElementSibling.dataset.action;
+              if (mainBtnAction === "tag") {
+                // updateThemeChoice(btnAction);
+                const newTheme =
+                  btnAction.children[0].children[0].children[0].dataset.theme;
+
+                const dropdownBtn = editDialog.querySelector(
+                  `[data-action="${btnAction.parentElement.previousElementSibling.dataset.action}"]`
+                );
+                const oldTheme =
+                  dropdownBtn.children[0].children[0].dataset.theme;
+                const menuValues = main.querySelectorAll(
+                  `li:has([data-theme="${newTheme}"])`
+                );
+
+                const oldValues = main.querySelectorAll(
+                  `li:has([data-theme="${oldTheme}"])`
+                );
+                for (const menuValue of oldValues) {
+                  const theme = menuValue.querySelector("[data-theme]");
+
+                  menuValue.setAttribute("data-used", "false");
+                  menuValue.children[0].setAttribute("tabindex", 0);
+                  theme.style = "";
+                }
+
+                const btnSpanClone =
+                  btnAction.children[0].children[0].cloneNode(true);
+                const mainSpan = dropdownBtn.children[0];
+                mainSpan.replaceWith(btnSpanClone);
+
+                for (const menuValue of menuValues) {
+                  // console.log(menuValue);
+                  const theme = menuValue.querySelector("[data-theme]");
+
+                  menuValue.setAttribute("data-used", "true");
+                  menuValue.children[0].setAttribute("tabindex", -1);
+                  theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
+                }
+
+                btnAction.parentElement.classList.toggle(
+                  "show-drop-content",
+                  false
+                );
+
+                btnAction.parentElement.previousElementSibling.setAttribute(
+                  "data-budget-dialog-show",
+                  true
+                );
+              } else if (mainBtnAction === "category") {
+                updateCategoryChoice(btnAction);
+              }
+            } else if (btnAction.dataset.action === "save-pot") {
+              const actions = editDialog.querySelectorAll(
+                '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
+              );
+
+              console.log(actions);
+              const themesEle = budgetCard.querySelectorAll(`[data-theme]`);
+              const theme = actions[2].children[0].children[0].dataset.theme;
+              const category = actions[0].children[0].textContent;
+              const max = parseFloat(actions[1].value).toFixed(2);
+              // const chart = budgetCard.parentElement.previousElementSibling;
+              // const budgetChart = chart.children[0];
+
+              // const spendingSummary = chart.querySelector(
+              //   `.chart-category:has([data-theme=${budgetCard.dataset.colorTag}])`
+              // );
+
+              if (!isNum(actions[1].value)) {
+                actions[1].classList.toggle("input-error", true);
+                return;
+              }
+
+              // const totalSpend = chart.querySelector("[data-total-spend]");
+              // const spendForMonth = Math.abs(
+              //   getSpendingAmountForMonth(category)
+              // );
+
+              // const newLimit =
+              //   parseFloat(totalSpend.dataset.totalLimit) -
+              //   parseFloat(budgetCard.dataset.maxAmount) +
+              //   parseFloat(max);
+
+              // const newTotalSpend =
+              //   parseFloat(totalSpend.dataset.totalSpend) +
+              //   parseFloat(budgetCard.dataset.spend) +
+              //   spendForMonth;
+              // const latestSpending = getLatestSpending(category);
+              // const tbodySpending = budgetCard.querySelector(
+              //   ".latest-spending-table > tbody"
+              // );
+
+              // tbodySpending.replaceChildren();
+              // tbodySpending.insertAdjacentHTML(
+              //   "beforeend",
+              //   createLatestSpending`${latestSpending}`
+              // );
+
+              // totalSpend.setAttribute("data-total-spend", newTotalSpend);
+              // totalSpend.setAttribute("data-total-limit", newLimit);
+              // totalSpend.textContent = `$${newTotalSpend}`;
+              // totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
+
+              // spendingSummary.children[0].setAttribute("data-theme", theme);
+              // spendingSummary.children[1].textContent = category;
+              // spendingSummary.children[2].setAttribute(
+              //   "data-spending",
+              //   spendForMonth.toFixed(2)
+              // );
+              // spendingSummary.children[2].setAttribute("data-total", max);
+              // spendingSummary.children[2].childNodes[1].textContent = `$${spendForMonth.toFixed(
+              //   2
+              // )}`;
+              // spendingSummary.children[2].childNodes[2].textContent = `\xa0 of $${max}`;
+
+              // console.log(
+              //   themesEle[1].parentElement.previousElementSibling.children[0]
+              // );
+              themesEle[0].setAttribute("data-theme", theme);
+              themesEle[0].nextSibling.nodeValue = category;
+
+              themesEle[1].parentElement.previousElementSibling.setAttribute(
+                "for",
+                `${category}-progress`
+              );
+              themesEle[1].parentElement.nextElementSibling.children[0].textContent = `$${max}`;
+              themesEle[1].parentElement.nextElementSibling.children[0].textContent = `$${max}`;
+              themesEle[1].setAttribute("id", `${category}-progress`);
+              themesEle[1].setAttribute("data-theme", theme);
+              themesEle[1].setAttribute("max", max);
+              // themesEle[1].setAttribute("value", spendForMonth);
+              themesEle[1].setAttribute(
+                "style",
+                `--progress-value: var(--${theme})`
+              );
+
+              // themesEle[2].nextElementSibling.children[1].textContent = `$${spendForMonth}`;
+              themesEle[2].setAttribute("data-theme", theme);
+
+              // themesEle[3].nextElementSibling.children[1].textContent = `$${Math.max(
+              //   0,
+              //   parseFloat(max) - parseFloat(spendForMonth)
+              // )}`;
+
+              // createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+
+              const oldTheme = getKeyByValue(
+                themes,
+                budgetCard.dataset.colorTag
+              );
+
+              pots.forEach((pot) => {
+                if (pot.theme === oldTheme) {
+                  pot.category = category;
+                  pot.maximum = parseFloat(max);
+                  pot.theme = getKeyByValue(themes, theme);
+                }
+              });
+
+              budgetCard.setAttribute("data-category", category);
+              budgetCard.setAttribute("data-max-amount", max);
+              budgetCard.setAttribute("data-color-tag", theme);
+              budgetCard.setAttribute("data-spend", spendForMonth * -1);
+
+              const themeBtn = editDialog.querySelector('[data-action="tag"]');
+              const menu = themeBtn.nextElementSibling;
+              const availableTheme = menu.querySelector(
+                'li[data-used="false"]'
+              );
+
+              prevThemeChoice =
+                availableTheme.children[0].children[0].children[0].dataset
+                  .theme;
+              editDialog.close();
+            }
+          }
         });
       }
     } else if (mutation.type === "attribures") {
