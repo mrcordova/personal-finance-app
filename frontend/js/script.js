@@ -195,36 +195,7 @@ const callback = (mutationList, observer) => {
         const budgetChart = chartCard.querySelector(".budget-chart");
         const percentage = createChartPercentageObject(spendingObjs);
 
-        const menuValues = main.querySelectorAll(
-          '[data-parameter="editBudget"]:has([data-theme])'
-        );
-        // console.log(menuValues);
-        for (const [key, value] of Object.entries(spendingObjs)) {
-          const menuItemOne = menuValues[0].querySelector(
-            `li:has([data-theme="${value.theme}"])`
-          );
-          const themeOne = menuItemOne.querySelector("[data-theme]");
-          const menuItemTwo = menuValues[1].querySelector(
-            `li:has([data-theme="${value.theme}"])`
-          );
-          const themeTwo = menuItemTwo.querySelector("[data-theme]");
-
-          menuItemOne.setAttribute("data-used", "true");
-          menuItemOne.children[0].setAttribute("tabindex", -1);
-
-          // console.log(themeOne);
-          themeOne.setAttribute(
-            "style",
-            `background-color: color-mix( in srgb, var(--${themeOne.dataset.theme}) 100%, var(--white) 100%)`
-          );
-          themeTwo.setAttribute(
-            "style",
-            `background-color: color-mix( in srgb, var(--${themeOne.dataset.theme}) 100%, var(--white) 100%)`
-          );
-
-          menuItemTwo.setAttribute("data-used", "true");
-          menuItemTwo.children[0].setAttribute("tabindex", -1);
-        }
+        setUpMenuValues(spendingObjs);
         budgetChart.setAttribute(
           "style",
           `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
@@ -755,73 +726,18 @@ const callback = (mutationList, observer) => {
       } else if (mainPots) {
         // console.log(mainPots);
         observer.disconnect();
+        const potsObjs = {};
         for (const pot of pots) {
-          const theme = themes[pot.theme];
-          mainPots.insertAdjacentHTML(
-            "beforeend",
-            `   <div
-        data-category="${pot.name}"
-        data-spend="${pot.total}"
-        data-max-amount="${pot.target}"
-        data-color-tag="${theme}"
-        class="pot-card category-card public-sans-regular">
-        <div class="theme-container">
-          <div class="theme-title public-sans-bold">
-            <div data-theme="${theme}" class="theme-circle"></div>
-           ${pot.name}
-          </div>
-          <div class="dropdown">
-            <button data-budget-show="true">
-              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
-            </button>
-
-            <menu data-parameter="editPot" class="dropdown-content">
-              <li><button data-action="edit">Edit Pot</button></li>
-              <li><button data-action="delete">Delete Pot</button></li>
-            </menu>
-          </div>
-        </div>
-        <div class="pot-progress-container">
-          <label for="${pot.name}-progress">
-            Total Saved
-            <span class="public-sans-bold pot-total">$${pot.total}</span>
-          </label>
-          <div class="pot-progress-info-container">
-            <progress
-              data-theme="${theme}"
-              max="${pot.target}"
-              value="${pot.total}"
-              id="${pot.name}-progress"
-              style="--progress-value: var(--${theme})">
-              ${pot.target}
-            </progress>
-
-            <div class="pot-numbers-container">
-              <p class="pot-numbers public-sans-bold">${(
-                (pot.total / pot.target) *
-                100
-              ).toFixed(2)}%</p>
-
-              <p class="pot-numbers">
-                Target of
-                <span>$${pot.target}</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="money-btns-container">
-          <button class="latest-spending-container public-sans-bold">
-            + Add Money
-          </button>
-
-          <button class="latest-spending-container public-sans-bold">
-            Withdraw
-          </button>
-        </div>
-       </div>`
-          );
+          createPotCard(mainPots, pot);
+          potsObjs[themes[pot.theme]] = {
+            target: pot.target,
+            name: pot.name,
+            theme: themes[pot.theme],
+            total: pot.total,
+          };
         }
+
+        setUpMenuValues(potsObjs);
         // Pots eventlisteners
         const newDialog = document.querySelector("#new-budget-dialog");
         const themeBtn = newDialog.querySelector('[data-action="tag"]');
@@ -930,41 +846,45 @@ const callback = (mutationList, observer) => {
               }
             } else if (btnAction.dataset.action === "max-spending") {
             } else if (btnAction.dataset.action === "add-budget") {
-              const budgetCards = main.querySelector(".main-pots");
+              // const potCards = main.querySelector(".main-pots");
 
               const actions = newDialog.querySelectorAll(
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
 
-              if (!isNum(actions[1].value)) {
-                console.log("error");
-                actions[1].classList.toggle("input-error", true);
+              console.log(actions[0].children[0].value.length);
+              const validatePotName =
+                actions[0].children[0].value.length <= 0 ||
+                actions[0].children[0].value.length > 30;
+              const validateTarget = !isNum(actions[1].value);
+              actions[0].children[0].classList.toggle(
+                "input-error",
+                validatePotName
+              );
+              actions[1].classList.toggle("input-error", validateTarget);
+              if (validateTarget || validateTarget) {
                 return;
               }
+
               const max = parseFloat(actions[1].value);
 
-              const category = actions[0].children[0].textContent;
+              const category = actions[0].children[0].value;
 
-              const budgetCardObj = {
+              console.log(category);
+
+              const potCardObj = {
                 name: category,
                 theme: getKeyByValue(
                   themes,
                   actions[2].children[0].children[0].dataset.theme
                 ),
                 target: max,
-              };
-              const categorySummartObj = {};
-
-              pots.push(budgetCardObj);
-
-              categorySummartObj[`${themes[budgetCardObj.theme]}`] = {
-                theme: themes[budgetCardObj.theme],
-                max: budgetCardObj.maximum,
-                // spending: spendForMonth,
-                name: budgetCardObj.category,
+                total: 0,
               };
 
-              createBudgetCard(budgetCards, budgetCardObj);
+              pots.push(potCardObj);
+
+              createPotCard(mainPots, potCardObj);
 
               const themeBtn = newDialog.querySelector('[data-action="tag"]');
               const menu = themeBtn.nextElementSibling;
@@ -1297,7 +1217,73 @@ function createBudgetCard(budgetCards, budget) {
       </div>`
   );
 }
+function createPotCard(mainPots, pot) {
+  const theme = themes[pot.theme];
+  mainPots.insertAdjacentHTML(
+    "beforeend",
+    `   <div
+        data-category="${pot.name}"
+        data-spend="${pot.total}"
+        data-max-amount="${pot.target}"
+        data-color-tag="${theme}"
+        class="pot-card category-card public-sans-regular">
+        <div class="theme-container">
+          <div class="theme-title public-sans-bold">
+            <div data-theme="${theme}" class="theme-circle"></div>
+           ${pot.name}
+          </div>
+          <div class="dropdown">
+            <button data-budget-show="true">
+              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+            </button>
 
+            <menu data-parameter="editPot" class="dropdown-content">
+              <li><button data-action="edit">Edit Pot</button></li>
+              <li><button data-action="delete">Delete Pot</button></li>
+            </menu>
+          </div>
+        </div>
+        <div class="pot-progress-container">
+          <label for="${pot.name}-progress">
+            Total Saved
+            <span class="public-sans-bold pot-total">$${pot.total}</span>
+          </label>
+          <div class="pot-progress-info-container">
+            <progress
+              data-theme="${theme}"
+              max="${pot.target}"
+              value="${pot.total}"
+              id="${pot.name}-progress"
+              style="--progress-value: var(--${theme})">
+              ${pot.target}
+            </progress>
+
+            <div class="pot-numbers-container">
+              <p class="pot-numbers public-sans-bold">${(
+                (pot.total / pot.target) *
+                100
+              ).toFixed(2)}%</p>
+
+              <p class="pot-numbers">
+                Target of
+                <span>$${pot.target}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="money-btns-container">
+          <button class="latest-spending-container public-sans-bold">
+            + Add Money
+          </button>
+
+          <button class="latest-spending-container public-sans-bold">
+            Withdraw
+          </button>
+        </div>
+       </div>`
+  );
+}
 function createLatestSpending(strings, latestSpendingArray) {
   let finalStr = "";
   for (const latestSpending of latestSpendingArray) {
@@ -1507,7 +1493,38 @@ function getLatestSpending(category) {
   // console.log(lastThreeTransactions);
   return lastThreeTransactions.slice(0, 3);
 }
+function setUpMenuValues(spendingObjs) {
+  const menuValues = main.querySelectorAll(
+    '[data-parameter="editBudget"]:has([data-theme])'
+  );
 
+  for (const [key, value] of Object.entries(spendingObjs)) {
+    const menuItemOne = menuValues[0].querySelector(
+      `li:has([data-theme="${value.theme}"])`
+    );
+    const themeOne = menuItemOne.querySelector("[data-theme]");
+    const menuItemTwo = menuValues[1].querySelector(
+      `li:has([data-theme="${value.theme}"])`
+    );
+    const themeTwo = menuItemTwo.querySelector("[data-theme]");
+
+    menuItemOne.setAttribute("data-used", "true");
+    menuItemOne.children[0].setAttribute("tabindex", -1);
+
+    // console.log(themeOne);
+    themeOne.setAttribute(
+      "style",
+      `background-color: color-mix( in srgb, var(--${themeOne.dataset.theme}) 100%, var(--white) 100%)`
+    );
+    themeTwo.setAttribute(
+      "style",
+      `background-color: color-mix( in srgb, var(--${themeOne.dataset.theme}) 100%, var(--white) 100%)`
+    );
+
+    menuItemTwo.setAttribute("data-used", "true");
+    menuItemTwo.children[0].setAttribute("tabindex", -1);
+  }
+}
 function updateDisplay() {
   // console.log(transactionItems);
   const filteredData = filterData(transactionItems);
@@ -1929,6 +1946,7 @@ main.addEventListener("click", async (e) => {
     const menuValues = main.querySelectorAll(
       `li:has([data-theme="${prevThemeChoice}"])`
     );
+
     const replaceTagValue =
       menuValues[0].children[0].children[0].cloneNode(true);
 
