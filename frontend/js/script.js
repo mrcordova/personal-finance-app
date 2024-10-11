@@ -838,6 +838,12 @@ const callback = (mutationList, observer) => {
           e.stopImmediatePropagation();
           console.log(e.target);
         });
+        const editDialog = document.querySelector("#edit-pot-dialog");
+        editDialog.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          console.log(e.target);
+        });
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
