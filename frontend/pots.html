@@ -170,7 +170,7 @@
           </span>
         </div>
         <div>
-          <label for="max-spend">Maximum Spending</label>
+          <label for="max-spend">Target</label>
           <span
             data-action="amount"
             class="public-sans-regular input-container">
@@ -351,18 +351,19 @@
         Create a pot to set savings targets. These can help keep you on track as
         you save for special purchases.
       </p>
-      <form novalidate>
+      <form>
         <div>
           <label for="pot-name">Pot Name</label>
 
-          <input
-            data-action="name-check"
-            type="text"
-            id="pot-name"
-            placeholder=""
-            class="public-sans-regular" />
-
-          <span>30 characters left</span>
+          <span data-action="category">
+            <input
+              class="public-sans-regular pot-name"
+              type="text"
+              id="pot-name" />
+          </span>
+          <span class="characters-span public-sans-regular">
+            0 of 30 characters left
+          </span>
         </div>
         <div>
           <label for="max-spend">Target</label>
@@ -371,7 +372,7 @@
               data-action="max-spending"
               type="text"
               id="max-spend"
-              placeholder=""
+              placeholder="e.g. 2000"
               class="public-sans-regular" />
           </span>
         </div>

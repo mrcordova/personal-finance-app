@@ -250,12 +250,8 @@ const callback = (mutationList, observer) => {
           e.preventDefault();
           e.stopImmediatePropagation();
 
-          // console.log(prevThemeChoice);
-          // console.log("start of new dialog", prevThemeChoice);
           const btnAction = e.target.closest("[data-action]");
 
-          // console.log(e.target);
-          // console.log(btnAction);
           if (btnAction) {
             // console.log("============end===============");
             if (btnAction.dataset.action === "close") {
@@ -659,11 +655,6 @@ const callback = (mutationList, observer) => {
                 budgetCard.dataset.colorTag
               );
 
-              // console.log(budgetCard.dataset.colorTag);
-              // console.log(themes);
-              // console.log(
-              // Object.keys(themes).find((key) => themes[key] === "green")
-              // );
               budgets.forEach((budget) => {
                 if (budget.theme === oldTheme) {
                   budget.category = category;
@@ -844,7 +835,149 @@ const callback = (mutationList, observer) => {
         newDialog.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
-          console.log(e.target);
+          const btnAction = e.target.closest("[data-action]");
+
+          if (btnAction) {
+            if (btnAction.dataset.action === "close") {
+              const maxInput = newDialog.querySelector(
+                '[data-action="max-spending"]'
+              );
+              maxInput.classList.toggle("input-error", false);
+              maxInput.value = "";
+              const menuValues = main.querySelectorAll(
+                `li:has([data-theme="${prevThemeChoice}"])`
+              );
+              for (const menuValue of menuValues) {
+                const theme = menuValue.querySelector("[data-theme]");
+
+                menuValue.setAttribute("data-used", "false");
+                menuValue.children[0].setAttribute("tabindex", 0);
+                theme.style = "";
+              }
+              newDialog.close();
+            } else if (btnAction.dataset.action === "tag") {
+              prevThemeChoice = btnAction.children[0].children[0].dataset.theme;
+              btnAction.nextElementSibling.classList.toggle(
+                "show-drop-content",
+                btnAction.dataset.budgetDialogShow === "true" ? true : false
+              );
+
+              btnAction.setAttribute(
+                "data-budget-dialog-show",
+                btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
+              );
+            } else if (btnAction.dataset.action === "category") {
+              btnAction.nextElementSibling.classList.toggle(
+                "show-drop-content",
+                btnAction.dataset.budgetDialogShow === "true" ? true : false
+              );
+
+              btnAction.setAttribute(
+                "data-budget-dialog-show",
+                btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
+              );
+            } else if (btnAction.dataset.action === "value") {
+              const mainBtnAction =
+                btnAction.parentElement.previousElementSibling.dataset.action;
+              if (mainBtnAction === "tag") {
+                const newTheme =
+                  btnAction.children[0].children[0].children[0].dataset.theme;
+                const dropdownBtn = newDialog.querySelector(
+                  `[data-action="${btnAction.parentElement.previousElementSibling.dataset.action}"]`
+                );
+                const oldTheme =
+                  dropdownBtn.children[0].children[0].dataset.theme;
+                const menuValues = main.querySelectorAll(
+                  `li:has([data-theme="${newTheme}"])`
+                );
+
+                const oldValues = main.querySelectorAll(
+                  `li:has([data-theme="${oldTheme}"])`
+                );
+                for (const menuValue of oldValues) {
+                  const theme = menuValue.querySelector("[data-theme]");
+
+                  menuValue.setAttribute("data-used", "false");
+                  menuValue.children[0].setAttribute("tabindex", 0);
+                  theme.style = "";
+                }
+
+                const btnSpanClone =
+                  btnAction.children[0].children[0].cloneNode(true);
+                const mainSpan = dropdownBtn.children[0];
+                mainSpan.replaceWith(btnSpanClone);
+
+                for (const menuValue of menuValues) {
+                  const theme = menuValue.querySelector("[data-theme]");
+
+                  menuValue.setAttribute("data-used", "true");
+                  menuValue.children[0].setAttribute("tabindex", -1);
+                  theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
+                }
+                prevThemeChoice = newTheme;
+                // console.log("value clicked");
+                btnAction.parentElement.classList.toggle(
+                  "show-drop-content",
+                  false
+                );
+
+                btnAction.parentElement.previousElementSibling.setAttribute(
+                  "data-budget-dialog-show",
+                  true
+                );
+              } else if (mainBtnAction === "category") {
+                updateCategoryChoice(btnAction);
+              }
+            } else if (btnAction.dataset.action === "max-spending") {
+            } else if (btnAction.dataset.action === "add-budget") {
+              const budgetCards = main.querySelector(".main-pots");
+
+              const actions = newDialog.querySelectorAll(
+                '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
+              );
+
+              if (!isNum(actions[1].value)) {
+                console.log("error");
+                actions[1].classList.toggle("input-error", true);
+                return;
+              }
+              const max = parseFloat(actions[1].value);
+
+              const category = actions[0].children[0].textContent;
+
+              const budgetCardObj = {
+                name: category,
+                theme: getKeyByValue(
+                  themes,
+                  actions[2].children[0].children[0].dataset.theme
+                ),
+                target: max,
+              };
+              const categorySummartObj = {};
+
+              pots.push(budgetCardObj);
+
+              categorySummartObj[`${themes[budgetCardObj.theme]}`] = {
+                theme: themes[budgetCardObj.theme],
+                max: budgetCardObj.maximum,
+                // spending: spendForMonth,
+                name: budgetCardObj.category,
+              };
+
+              createBudgetCard(budgetCards, budgetCardObj);
+
+              const themeBtn = newDialog.querySelector('[data-action="tag"]');
+              const menu = themeBtn.nextElementSibling;
+              const availableTheme = menu.querySelector(
+                'li[data-used="false"]'
+              );
+
+              prevThemeChoice =
+                availableTheme.children[0].children[0].children[0].dataset
+                  .theme;
+              newDialog.close();
+            }
+          }
         });
         const editDialog = document.querySelector("#edit-pot-dialog");
         editDialog.addEventListener("click", (e) => {
