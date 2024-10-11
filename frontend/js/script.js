@@ -968,68 +968,21 @@ const callback = (mutationList, observer) => {
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
 
-              console.log(actions);
+              // console.log(actions);
               const themesEle = budgetCard.querySelectorAll(`[data-theme]`);
               const theme = actions[2].children[0].children[0].dataset.theme;
-              const category = actions[0].children[0].textContent;
+              const category = actions[0].children[0].value;
               const max = parseFloat(actions[1].value).toFixed(2);
-              // const chart = budgetCard.parentElement.previousElementSibling;
-              // const budgetChart = chart.children[0];
+              const percentage =
+                (parseFloat(budgetCard.dataset.spend) / max) * 100;
 
-              // const spendingSummary = chart.querySelector(
-              //   `.chart-category:has([data-theme=${budgetCard.dataset.colorTag}])`
-              // );
-
+              // console.log(actions[0].children[0]);
               if (!isNum(actions[1].value)) {
                 actions[1].classList.toggle("input-error", true);
                 return;
               }
 
-              // const totalSpend = chart.querySelector("[data-total-spend]");
-              // const spendForMonth = Math.abs(
-              //   getSpendingAmountForMonth(category)
-              // );
-
-              // const newLimit =
-              //   parseFloat(totalSpend.dataset.totalLimit) -
-              //   parseFloat(budgetCard.dataset.maxAmount) +
-              //   parseFloat(max);
-
-              // const newTotalSpend =
-              //   parseFloat(totalSpend.dataset.totalSpend) +
-              //   parseFloat(budgetCard.dataset.spend) +
-              //   spendForMonth;
-              // const latestSpending = getLatestSpending(category);
-              // const tbodySpending = budgetCard.querySelector(
-              //   ".latest-spending-table > tbody"
-              // );
-
-              // tbodySpending.replaceChildren();
-              // tbodySpending.insertAdjacentHTML(
-              //   "beforeend",
-              //   createLatestSpending`${latestSpending}`
-              // );
-
-              // totalSpend.setAttribute("data-total-spend", newTotalSpend);
-              // totalSpend.setAttribute("data-total-limit", newLimit);
-              // totalSpend.textContent = `$${newTotalSpend}`;
-              // totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
-
-              // spendingSummary.children[0].setAttribute("data-theme", theme);
-              // spendingSummary.children[1].textContent = category;
-              // spendingSummary.children[2].setAttribute(
-              //   "data-spending",
-              //   spendForMonth.toFixed(2)
-              // );
-              // spendingSummary.children[2].setAttribute("data-total", max);
-              // spendingSummary.children[2].childNodes[1].textContent = `$${spendForMonth.toFixed(
-              //   2
-              // )}`;
-              // spendingSummary.children[2].childNodes[2].textContent = `\xa0 of $${max}`;
-
-              // console.log(
-              //   themesEle[1].parentElement.previousElementSibling.children[0]
-              // );
+              // console.log(category);
               themesEle[0].setAttribute("data-theme", theme);
               themesEle[0].nextSibling.nodeValue = category;
 
@@ -1037,44 +990,38 @@ const callback = (mutationList, observer) => {
                 "for",
                 `${category}-progress`
               );
-              themesEle[1].parentElement.nextElementSibling.children[0].textContent = `$${max}`;
-              themesEle[1].parentElement.nextElementSibling.children[0].textContent = `$${max}`;
+
+              themesEle[1].nextElementSibling.children[0].textContent = `${percentage.toFixed(
+                2
+              )}%`;
+              themesEle[1].nextElementSibling.children[1].children[0].textContent = `$${max}`;
               themesEle[1].setAttribute("id", `${category}-progress`);
               themesEle[1].setAttribute("data-theme", theme);
               themesEle[1].setAttribute("max", max);
-              // themesEle[1].setAttribute("value", spendForMonth);
               themesEle[1].setAttribute(
                 "style",
                 `--progress-value: var(--${theme})`
               );
-
-              // themesEle[2].nextElementSibling.children[1].textContent = `$${spendForMonth}`;
-              themesEle[2].setAttribute("data-theme", theme);
-
-              // themesEle[3].nextElementSibling.children[1].textContent = `$${Math.max(
-              //   0,
-              //   parseFloat(max) - parseFloat(spendForMonth)
-              // )}`;
-
-              // createBudgetChart(budgetChart.nextElementSibling, budgetChart);
 
               const oldTheme = getKeyByValue(
                 themes,
                 budgetCard.dataset.colorTag
               );
 
+              console.log(pots);
               pots.forEach((pot) => {
                 if (pot.theme === oldTheme) {
-                  pot.category = category;
-                  pot.maximum = parseFloat(max);
+                  pot.name = category;
+                  pot.target = parseFloat(max);
                   pot.theme = getKeyByValue(themes, theme);
                 }
               });
+              // console.log(pots);
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
               budgetCard.setAttribute("data-color-tag", theme);
-              budgetCard.setAttribute("data-spend", spendForMonth * -1);
+              // budgetCard.setAttribute("data-spend", spendForMonth * -1);
 
               const themeBtn = editDialog.querySelector('[data-action="tag"]');
               const menu = themeBtn.nextElementSibling;
