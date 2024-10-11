@@ -238,6 +238,7 @@ button[popovertarget] {
       gap: 0.8125rem;
       flex-direction: column;
     }
+
     & label {
       display: flex;
       justify-content: space-between;
@@ -618,6 +619,17 @@ dialog.budget-dialogs[open] {
           border: 2px solid blue;
         } */
       }
+    }
+
+    & .pot-name {
+      text-indent: 0;
+    }
+
+    & .characters-span {
+      justify-content: end;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: var(--grey-500);
     }
   }
   & .dialog-btns {
