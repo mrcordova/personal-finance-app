@@ -205,6 +205,10 @@ const callback = (mutationList, observer) => {
 
         const themeBtn = newDialog.querySelector('[data-action="tag"]');
 
+        const maxAmountInputs = main.querySelectorAll(
+          '[data-action="max-spending"]'
+        );
+
         const menu = themeBtn.nextElementSibling;
         const availableTheme = menu.querySelector('li[data-used="false"]');
 
@@ -752,7 +756,7 @@ const callback = (mutationList, observer) => {
           nameInput.addEventListener("input", (e) => {
             nameInput.classList.toggle(
               "input-error",
-              e.target.value.length > 30
+              e.target.value.length > 30 || e.target.value.length === 0
             );
             // console.log(charactersEle.textContent);
             charactersEle.textContent = `${
@@ -1117,6 +1121,76 @@ const callback = (mutationList, observer) => {
               editDialog.close();
             }
           }
+        });
+
+        const deleteDialog = document.querySelector("#delete-budget-dialog");
+
+        deleteDialog.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          const btn = e.target.closest("button");
+          const optionDropdown = budgetCard.querySelector(
+            "button[data-budget-show]"
+          );
+          if (btn) {
+            const choice = btn.dataset.action;
+            // console.log(btn);
+            if (choice && choice === "delete") {
+              // const chartSummary = budgetChart.nextElementSibling.querySelector(
+              //   `div.chart-category:has(> div[data-theme="${budgetCard.dataset.colorTag}"] )`
+              // );
+              // const totalSpend =
+              //   budgetChart.querySelector("[data-total-spend]");
+
+              // const newLimit =
+              //   parseFloat(totalSpend.dataset.totalLimit) -
+              //   parseFloat(budgetCard.dataset.maxAmount);
+
+              // const newTotalSpend =
+              //   parseFloat(totalSpend.dataset.totalSpend) +
+              //   parseFloat(budgetCard.dataset.spend);
+              const oldTheme = getKeyByValue(
+                themes,
+                budgetCard.dataset.colorTag
+              );
+
+              // totalSpend.setAttribute("data-total-spend", newTotalSpend);
+              // totalSpend.setAttribute("data-total-limit", newLimit);
+              // totalSpend.textContent = `$${newTotalSpend}`;
+              // totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
+              // chartSummary.remove();
+              budgetCard.remove();
+              // createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+              // release theme choices
+
+              const idxOfPotCard = pots
+                .map((pot) => pot.theme)
+                .indexOf(`${oldTheme}`);
+
+              pots.splice(idxOfPotCard, 1);
+
+              console.log(pots);
+
+              const oldChoices = main.querySelectorAll(
+                `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
+              );
+
+              for (const menuValue of oldChoices) {
+                const theme = menuValue.querySelector("[data-theme]");
+
+                menuValue.setAttribute("data-used", "false");
+                menuValue.children[0].setAttribute("tabindex", 0);
+                theme.style = ``;
+              }
+            }
+            deleteDialog.close();
+          }
+          optionDropdown?.nextElementSibling.classList.toggle(
+            "show-drop-content",
+            false
+          );
+
+          optionDropdown?.setAttribute("data-budget-show", "true");
         });
       }
     } else if (mutation.type === "attribures") {
@@ -1818,7 +1892,12 @@ main.addEventListener("click", async (e) => {
   } else if (filterParameter) {
     const btn = e.target.closest("li")?.children[0];
 
-    if (btn && filterParameter.dataset.parameter !== "editBudget") {
+    if (
+      btn &&
+      filterParameter.dataset.parameter !== "editBudget" &&
+      filterParameter.dataset.parameter !== "editPot"
+    ) {
+      console.log("here");
       const previousChoice = filterParameter.querySelector(".public-sans-bold");
 
       previousChoice?.classList.remove("public-sans-bold");
