@@ -1376,11 +1376,11 @@ function createPotCard(mainPots, pot) {
         </div>
 
         <div class="money-btns-container">
-          <button class="latest-spending-container public-sans-bold">
+          <button data-action="add-to" class="latest-spending-container public-sans-bold">
             + Add Money
           </button>
 
-          <button class="latest-spending-container public-sans-bold">
+          <button data-action="withdrew" class="latest-spending-container public-sans-bold">
             Withdraw
           </button>
         </div>
@@ -1873,6 +1873,8 @@ main.addEventListener("click", async (e) => {
   const budgetDialogEditBtn = e.target.closest(
     "button[data-budget-dialog-show]"
   );
+  const addToBtn = e.target.closest('button[data-action="add-to"]');
+  const withdrawBtn = e.target.closest('button[data-action="withdraw"]');
 
   const seeAllBtn = e.target.closest("button[data-action='see-all'");
   // console.log(seeAllBtn);
@@ -1897,7 +1899,6 @@ main.addEventListener("click", async (e) => {
       filterParameter.dataset.parameter !== "editBudget" &&
       filterParameter.dataset.parameter !== "editPot"
     ) {
-      console.log("here");
       const previousChoice = filterParameter.querySelector(".public-sans-bold");
 
       previousChoice?.classList.remove("public-sans-bold");
@@ -1933,6 +1934,7 @@ main.addEventListener("click", async (e) => {
         // console.log("here");
         deleteDialog.showModal();
       } else if (btn && btn.dataset.action === "edit") {
+        e.preventDefault();
         const editDialog = document.querySelector("#edit-budget-dialog");
         const optionDropdown = budgetCard.querySelector(
           "button[data-budget-show]"
@@ -1972,8 +1974,6 @@ main.addEventListener("click", async (e) => {
           theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
         }
         editDialog.showModal();
-
-        e.preventDefault();
 
         optionDropdown?.nextElementSibling.classList.toggle(
           "show-drop-content",
@@ -2112,5 +2112,22 @@ main.addEventListener("click", async (e) => {
     // updateDisplay();
     console.log(searchOption.category);
     // console.log(category);
+  } else if (addToBtn) {
+    e.preventDefault();
+    const addToDialog = document.querySelector("#add-to-pot-dialog");
+    addToDialog.showModal();
+
+    const potCard = addToBtn.closest("[data-category]");
+
+    const potTitle = addToDialog.querySelector("[data-category]");
+    console.log(potTitle);
+
+    potTitle.textContent = potCard.dataset.category;
+
+    console.log(potCard);
+  } else if (withdrawBtn) {
+    e.preventDefault();
+    const withdrawDialog = document.querySelector("#withdraw-pot-dialog");
+    withdrawDialog.showModal();
   }
 });

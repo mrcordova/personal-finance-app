@@ -21,43 +21,45 @@
         soon as you add this money, it will be deducted from your current
         balance.
       </p>
-      <div class="pot-progress-container">
-        <label for="${pot.name}-progress">
-          New Amount
-          <span class="public-sans-bold pot-total">$${pot.total}</span>
-        </label>
-        <div class="pot-progress-info-container">
-          <progress
-            data-theme="${theme}"
-            max="${pot.target}"
-            value="${pot.total}"
-            id="${pot.name}-progress"
-            style="--progress-value: var(--${theme})">
-            ${pot.target}
-          </progress>
+      <form>
+        <div class="pot-progress-container">
+          <label for="${pot.name}-progress">
+            <span class="public-sans-bold pot-total">$${pot.total}</span>
+          </label>
+          <div class="pot-progress-info-container">
+            <progress
+              data-theme="${theme}"
+              max="${pot.target}"
+              value="${pot.total}"
+              id="${pot.name}-progress"
+              style="--progress-value: var(--${theme})">
+              ${pot.target}
+            </progress>
 
-          <div class="pot-numbers-container">
-            <p class="pot-numbers public-sans-bold">
-              ${( (pot.total / pot.target) * 100 ).toFixed(2)}%
-            </p>
-            <p class="pot-numbers">
-              Target of
-              <span>$${pot.target}</span>
-            </p>
+            <div class="pot-numbers-container">
+              <p class="pot-numbers public-sans-bold">
+                ${( (pot.total / pot.target) * 100 ).toFixed(2)}%
+              </p>
+              <p class="pot-numbers">
+                Target of
+                <span>$${pot.target}</span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <label for="max-spend">Amount to Add</label>
-        <span class="public-sans-regular input-container">
-          <input
-            data-action="max-spending"
-            type="text"
-            id="max-spend"
-            placeholder=""
-            class="public-sans-regular" />
-        </span>
-      </div>
+        <div>
+          <label for="max-spend">Amount to Add</label>
+          <span
+            data-action="amount"
+            class="public-sans-regular input-container">
+            <input
+              data-action="max-spending"
+              type="text"
+              id="max-spend"
+              placeholder="e.g. 2000" />
+          </span>
+        </div>
+      </form>
 
       <button
         class="public-sans-bold dialog-btns"
