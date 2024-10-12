@@ -204,9 +204,7 @@ const callback = (mutationList, observer) => {
         const newDialog = document.querySelector("#new-budget-dialog");
 
         const themeBtn = newDialog.querySelector('[data-action="tag"]');
-        const maxAmountInputs = main.querySelectorAll(
-          '[data-action="max-spending"]'
-        );
+
         const menu = themeBtn.nextElementSibling;
         const availableTheme = menu.querySelector('li[data-used="false"]');
 
@@ -744,6 +742,24 @@ const callback = (mutationList, observer) => {
         const maxAmountInputs = main.querySelectorAll(
           '[data-action="max-spending"]'
         );
+        const nameInputs = main.querySelectorAll('[data-action="name"]');
+
+        for (const maxAmountInput of maxAmountInputs) {
+          maxAmountInput.addEventListener("input", checkMaxInput);
+        }
+        for (const nameInput of nameInputs) {
+          const charactersEle = nameInput.parentElement.nextElementSibling;
+          nameInput.addEventListener("input", (e) => {
+            nameInput.classList.toggle(
+              "input-error",
+              e.target.value.length > 30
+            );
+            // console.log(charactersEle.textContent);
+            charactersEle.textContent = `${
+              30 - parseInt(e.target.value.length)
+            } of 30 characters left`;
+          });
+        }
         const menu = themeBtn.nextElementSibling;
         const availableTheme = menu.querySelector('li[data-used="false"]');
         let prevThemeChoice =
@@ -852,7 +868,7 @@ const callback = (mutationList, observer) => {
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
 
-              console.log(actions[0].children[0].value.length);
+              // console.log(actions[0].children[0].value.length);
               const validatePotName =
                 actions[0].children[0].value.length <= 0 ||
                 actions[0].children[0].value.length > 30;
@@ -1030,8 +1046,21 @@ const callback = (mutationList, observer) => {
                 (parseFloat(budgetCard.dataset.spend) / max) * 100;
 
               // console.log(actions[0].children[0]);
-              if (!isNum(actions[1].value)) {
-                actions[1].classList.toggle("input-error", true);
+              // if (!isNum(actions[1].value)) {
+              //   actions[1].classList.toggle("input-error", true);
+              //   return;
+              // }
+
+              const validatePotName =
+                actions[0].children[0].value.length <= 0 ||
+                actions[0].children[0].value.length > 30;
+              const validateTarget = !isNum(actions[1].value);
+              actions[0].children[0].classList.toggle(
+                "input-error",
+                validatePotName
+              );
+              actions[1].classList.toggle("input-error", validateTarget);
+              if (validateTarget || validateTarget) {
                 return;
               }
 
@@ -1061,7 +1090,7 @@ const callback = (mutationList, observer) => {
                 budgetCard.dataset.colorTag
               );
 
-              console.log(pots);
+              // console.log(pots);
               pots.forEach((pot) => {
                 if (pot.theme === oldTheme) {
                   pot.name = category;
@@ -1893,6 +1922,9 @@ main.addEventListener("click", async (e) => {
         );
 
         actions[0].children[0].value = budgetCard.dataset.category;
+        actions[0].nextElementSibling.textContent = `${
+          30 - actions[0].children[0].value.length
+        } of 30 left`;
         actions[1].value = budgetCard.dataset.maxAmount;
 
         actions[1].classList.toggle("input-error", false);
