@@ -549,6 +549,67 @@ dialog.budget-dialogs[open] {
       display: grid;
       gap: 0.25rem;
 
+      &.pot-progress-container {
+        & .pot-progress-info-container {
+          display: flex;
+          gap: 0.8125rem;
+          flex-direction: column;
+        }
+
+        & label {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .pot-total {
+            color: var(--grey-900);
+            font-size: 2rem;
+            line-height: 1.2;
+          }
+        }
+
+        & .pot-numbers-container {
+          display: flex;
+          justify-content: space-between;
+          color: var(--grey-500);
+
+          font-size: 0.75rem;
+          line-height: 1.5;
+          & .pot-number {
+          }
+        }
+      }
+      & progress {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 0.5rem;
+        border-radius: 0.25rem;
+        background-color: transparent;
+
+        &::-webkit-progress-bar {
+          background-color: var(--beige-100);
+          border-radius: 0.25rem;
+
+          padding: 0rem;
+        }
+
+        &::-webkit-progress-value {
+          background-color: var(--progress-value);
+
+          /* use for adding and withdrawing from pot */
+          /* background: linear-gradient(
+          to right,
+          var(--progress-value) 7.95%,
+          var(--white) 7.95%,
+          var(--white) 9.95%,
+          var(--green) 9.95%,
+          var(--green) 27.95%
+        ); */
+
+          max-height: 0.5rem;
+          border-radius: 0.25rem;
+        }
+      }
       & label {
         display: block;
         font-size: 0.75rem;

@@ -2114,17 +2114,38 @@ main.addEventListener("click", async (e) => {
     // console.log(category);
   } else if (addToBtn) {
     e.preventDefault();
+
+    budgetCard = addToBtn.closest("[data-category]");
     const addToDialog = document.querySelector("#add-to-pot-dialog");
     addToDialog.showModal();
 
-    const potCard = addToBtn.closest("[data-category]");
+    // const potCard = addToBtn.closest("[data-category]");
 
     const potTitle = addToDialog.querySelector("[data-category]");
-    console.log(potTitle);
+    const potProgressCont = addToDialog.querySelector(
+      ".pot-progress-container"
+    );
 
-    potTitle.textContent = potCard.dataset.category;
+    potProgressCont.children[0].children[0].textContent = `$${budgetCard.dataset.spend}`;
+    const progress = potProgressCont.children[1].children[0];
+    progress.setAttribute("data-theme", budgetCard.dataset.colorTag);
+    progress.setAttribute("max", budgetCard.dataset.maxAmount);
+    progress.setAttribute("value", budgetCard.dataset.spend);
+    progress.setAttribute(
+      "style",
+      `--progress-value: var(--${budgetCard.dataset.colorTag})`
+    );
 
-    console.log(potCard);
+    const potNums = potProgressCont.children[1].children[1];
+    // console.log(potNums);
+
+    // console.log(progress);
+    // console.log(potProgressInfoCont);
+    // console.log(potTitle);
+
+    potTitle.textContent = budgetCard.dataset.category;
+
+    // console.log(potCard);
   } else if (withdrawBtn) {
     e.preventDefault();
     const withdrawDialog = document.querySelector("#withdraw-pot-dialog");
