@@ -290,8 +290,6 @@ button[popovertarget] {
 
       font-size: 0.75rem;
       line-height: 1.5;
-      & .pot-number {
-      }
     }
   }
 
@@ -568,16 +566,14 @@ dialog.budget-dialogs[open] {
           }
         }
 
-        & .pot-numbers-container {
+        /* & .pot-numbers-container {
           display: flex;
           justify-content: space-between;
           color: var(--grey-500);
 
           font-size: 0.75rem;
           line-height: 1.5;
-          & .pot-number {
-          }
-        }
+        } */
       }
       & progress {
         -webkit-appearance: none;
@@ -608,6 +604,19 @@ dialog.budget-dialogs[open] {
 
           max-height: 0.5rem;
           border-radius: 0.25rem;
+        }
+      }
+
+      & .pot-numbers-container {
+        display: flex;
+        justify-content: space-between;
+        color: var(--grey-500);
+
+        font-size: 0.75rem;
+        line-height: 1.5;
+        & p {
+          font-size: inherit;
+          line-height: inherit;
         }
       }
       & label {
