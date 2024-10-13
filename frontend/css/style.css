@@ -1141,6 +1141,7 @@ thead {
   padding-inline: 1.25rem;
   border-radius: 0.75rem;
 
+  flex: 1;
   & .total-bills-info {
     display: flex;
     flex-direction: column;
@@ -1155,6 +1156,29 @@ thead {
         font-size: 2rem;
         line-height: 1.2;
       }
+    }
+  }
+}
+.recurring-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.recurring-summary {
+  background-color: var(--white);
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  flex: 1;
+
+  & tr {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    & > td:nth-child(2) {
+      text-align: end;
+      color: var(--grey-900);
+    }
+    & > td.due-soon {
+      color: var(--red);
     }
   }
 }
@@ -1251,11 +1275,16 @@ thead {
   .pot-card {
     min-width: 43rem;
   }
+  .recurring-info {
+    flex-direction: row;
+  }
 
   .total-bills-container {
     flex-direction: column;
+    gap: 2rem;
     /* justify-content: start; */
     align-items: flex-start;
+    justify-content: center;
   }
   .search-input {
     inline-size: clamp(10.0625rem, -1.2946rem + 23.6607vw, 20rem);
@@ -1358,7 +1387,9 @@ thead {
   .main-budgets {
     flex-direction: row;
   }
-
+  .recurring-info {
+    flex-direction: column;
+  }
   .sidebar-logo {
     display: block;
     padding-inline: 2rem;
