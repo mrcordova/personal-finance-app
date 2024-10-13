@@ -2082,7 +2082,7 @@ main.addEventListener("click", async (e) => {
   const withdrawBtn = e.target.closest('button[data-action="withdraw"]');
 
   const seeAllBtn = e.target.closest("button[data-action='see-all'");
-  // console.log(seeAllBtn);
+  console.log(budgetEditBtn);
 
   if (pageButton) {
     currentTransactionsPage =
@@ -2193,7 +2193,7 @@ main.addEventListener("click", async (e) => {
         const dialogCateTitle = deleteDialog.querySelector("[data-category]");
 
         dialogCateTitle.textContent = budgetCard.dataset.category.trim();
-        // console.log("here");
+
         deleteDialog.showModal();
       } else if (btn && btn.dataset.action === "edit") {
         const editDialog = document.querySelector("#edit-pot-dialog");

@@ -905,6 +905,10 @@ main {
   padding-block: clamp(1.5rem, 1.0229rem + 2.0356vw, 2rem);
 
   gap: 1.5rem;
+
+  & .show-drop-content {
+    display: block;
+  }
 }
 .main-budgets {
   flex: 1;
@@ -1248,6 +1252,10 @@ thead {
   padding-block: 1.5rem;
   padding-inline: 1.25rem;
   border-radius: 0.75rem;
+
+  & .show-drop-content {
+    display: block;
+  }
 }
 
 .sender-desktop {
