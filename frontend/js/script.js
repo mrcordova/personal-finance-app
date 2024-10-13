@@ -1268,13 +1268,7 @@ const callback = (mutationList, observer) => {
                 amountToAddInput.classList.toggle("input-error", true);
                 return;
               }
-              // console.log("here");
-              // update budgetCard info
-              // budgetCard.setAttribute(
-              //   "data-spend",
-              //   parseFloat(amountToAddInput.current)
-              // );
-              // console.log(addToDialog);
+
               amountToAddInput.value = "";
               const potTotal = addToDialog
                 .querySelector("progress")
@@ -1300,6 +1294,60 @@ const callback = (mutationList, observer) => {
             }
           }
         });
+
+        const withdrawDialog = document.querySelector("#withdraw-pot-dialog");
+        const amountToWithdrawInput = withdrawDialog.querySelector(
+          '[data-action="max-spending"]'
+        );
+
+        const potProgressWithdrawCont = withdrawDialog.querySelector(
+          ".pot-progress-container"
+        );
+        amountToWithdrawInput.addEventListener("input", (e) => {
+          const inputVal = e.target.value || 0;
+          if (isNum(inputVal)) {
+            const newVal = Math.max(
+              parseFloat(budgetCard.dataset.spend) - parseFloat(inputVal),
+              0
+            );
+            console.log(newVal);
+            const currentPercentage = (
+              (budgetCard.dataset.spend / budgetCard.dataset.maxAmount) *
+              100
+            ).toFixed(2);
+            const newPercentage = (
+              (newVal / budgetCard.dataset.maxAmount) *
+              100
+            ).toFixed(2);
+            potProgressWithdrawCont.children[0].children[0].textContent = `$${parseFloat(
+              newVal
+            ).toFixed(2)}`;
+            const progress = potProgressWithdrawCont.children[1].children[0];
+            progress.setAttribute("data-theme", budgetCard.dataset.colorTag);
+            progress.setAttribute("max", budgetCard.dataset.maxAmount);
+
+            progress.classList.add("withdraw");
+            progress.setAttribute(
+              "style",
+              `--end-old-percentage: ${
+                (newVal / budgetCard.dataset.spend) * 100
+              }%; --start-old-percentage: 0%; --end-white-percentage: ${
+                (newVal / budgetCard.dataset.spend) * 100 + 2
+              }%; --start-new-percentage: ${currentPercentage}%; --end-new-percentage: ${newPercentage}%;`
+            );
+
+            const potNums = potProgressWithdrawCont.children[1].children[1];
+
+            const percentagePara = potNums.children[0];
+            percentagePara.textContent = `${newPercentage}%`;
+            percentagePara.setAttribute(
+              "style",
+              `color: ${inputVal > 0 ? "var(--red)" : "inherit"};`
+            );
+          }
+        });
+
+        withdrawDialog.addEventListener("click", (e) => {});
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
@@ -1490,7 +1538,7 @@ function createPotCard(mainPots, pot) {
             + Add Money
           </button>
 
-          <button data-action="withdrew" class="latest-spending-container public-sans-bold">
+          <button data-action="withdraw" class="latest-spending-container public-sans-bold">
             Withdraw
           </button>
         </div>
@@ -2225,15 +2273,9 @@ main.addEventListener("click", async (e) => {
   } else if (addToBtn) {
     e.preventDefault();
 
-    console.log("here");
-
-    budgetCard = addToBtn.closest("[data-category]");
     const addToDialog = document.querySelector("#add-to-pot-dialog");
     addToDialog.showModal();
-
-    // console.log(budgetCard.dataset.spend);
-
-    // const potCard = addToBtn.closest("[data-category]");
+    budgetCard = addToBtn.closest("[data-category]");
 
     const potTitle = addToDialog.querySelector("[data-category]");
     const potProgressCont = addToDialog.querySelector(
@@ -2273,5 +2315,40 @@ main.addEventListener("click", async (e) => {
     e.preventDefault();
     const withdrawDialog = document.querySelector("#withdraw-pot-dialog");
     withdrawDialog.showModal();
+    budgetCard = withdrawBtn.closest("[data-category]");
+    const potTitle = withdrawDialog.querySelector("[data-category]");
+    const potProgressCont = withdrawDialog.querySelector(
+      ".pot-progress-container"
+    );
+
+    potProgressCont.children[0].children[0].textContent = `$${parseFloat(
+      budgetCard.dataset.spend
+    ).toFixed(2)}`;
+    const progress = potProgressCont.children[1].children[0];
+    const currentPercentage = (
+      (budgetCard.dataset.spend / budgetCard.dataset.maxAmount) *
+      100
+    ).toFixed(2);
+    progress.setAttribute("data-theme", budgetCard.dataset.colorTag);
+    progress.setAttribute("max", budgetCard.dataset.maxAmount);
+    progress.setAttribute("value", budgetCard.dataset.spend);
+    progress.setAttribute(
+      "style",
+      `--end-old-percentage: ${100}%; --start-old-percentage: 0%; --end-white-percentage: ${100}%; --start-new-percentage: ${100}%; --end-new-percentage: ${100}%;`
+    );
+
+    const potNums = potProgressCont.children[1].children[1];
+
+    const percentagePara = potNums.children[0];
+    percentagePara.textContent = `${(
+      (budgetCard.dataset.spend / budgetCard.dataset.maxAmount) *
+      100
+    ).toFixed(2)}%`;
+    const targetPara = potNums.children[1];
+    targetPara.textContent = `Target of $${parseFloat(
+      budgetCard.dataset.maxAmount
+    ).toLocaleString("en")}`;
+
+    potTitle.textContent = budgetCard.dataset.category;
   }
 });
