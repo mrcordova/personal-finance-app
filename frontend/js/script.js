@@ -1259,6 +1259,7 @@ const callback = (mutationList, observer) => {
               addToDialog.close();
               amountToAddInput.value = "";
               addToDialog.querySelector(".pot-numbers").style = "";
+              amountToAddInput.classList.toggle("input-error", false);
             } else if (btnAction.dataset.action === "confirm-addition") {
               // console.log("here");
               if (
@@ -1357,6 +1358,7 @@ const callback = (mutationList, observer) => {
               withdrawDialog.close();
               amountToWithdrawInput.value = "";
               withdrawDialog.querySelector(".pot-numbers").style = "";
+              amountToWithdrawInput.classList.toggle("input-error", false);
             } else if (btnAction.dataset.action === "confirm-addition") {
               // console.log("here");
               if (
