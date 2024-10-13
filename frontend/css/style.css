@@ -590,18 +590,34 @@ dialog.budget-dialogs[open] {
         }
 
         &::-webkit-progress-value {
-          background-color: var(--progress-value);
+          /* background-color: var(--progress-value); */
 
           /* use for adding and withdrawing from pot */
+          /* --progress-value: var(--green); */
+          /* --end-old-percentage: 0%;
+          --end-white-percentage: 0%;
+          --start-new-percentage: 0%;
+          --start-old-percentage: 0%;
+          --end-new-percentage: 0%; */
           /* background: linear-gradient(
-          to right,
-          var(--progress-value) 7.95%,
-          var(--white) 7.95%,
-          var(--white) 9.95%,
-          var(--green) 9.95%,
-          var(--green) 27.95%
-        ); */
+            to right,
+            var(--grey-900) var(--end-white-percentage),
+            var(--grey-900) var(--end-new-percentage),
+            var(--white) var(--end-old-percentage),
+            var(--white) var(--end-white-percentage),
+            var(--progress-value) 0%,
+            var(--progress-value) var(--end-old-percentage)
+          ); */
 
+          background: linear-gradient(
+            to right,
+            var(--grey-900) 0%,
+            var(--grey-900) var(--end-old-percentage),
+            var(--white) var(--end-old-percentage),
+            var(--white) var(--end-white-percentage),
+            var(--green) var(--end-white-percentage),
+            var(--green) var(--end-new-percentage)
+          );
           max-height: 0.5rem;
           border-radius: 0.25rem;
         }

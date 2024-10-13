@@ -1192,6 +1192,82 @@ const callback = (mutationList, observer) => {
 
           optionDropdown?.setAttribute("data-budget-show", "true");
         });
+
+        const addToDialog = document.querySelector("#add-to-pot-dialog");
+
+        const amountToAddInput = addToDialog.querySelector(
+          '[data-action="max-spending"]'
+        );
+
+        const potProgressCont = addToDialog.querySelector(
+          ".pot-progress-container"
+        );
+        amountToAddInput.addEventListener("input", (e) => {
+          // console.log(potProgressCont);
+          const inputVal = e.target.value || 0;
+          if (isNum(inputVal)) {
+            const newVal = Math.min(
+              parseFloat(budgetCard.dataset.spend) + parseFloat(inputVal),
+              budgetCard.dataset.maxAmount
+            );
+            // console.log(newVal);
+            const currentPercentage = (
+              (budgetCard.dataset.spend / budgetCard.dataset.maxAmount) *
+              100
+            ).toFixed(2);
+            const newPercentage = (
+              (newVal / budgetCard.dataset.maxAmount) *
+              100
+            ).toFixed(2);
+            potProgressCont.children[0].children[0].textContent = `$${parseFloat(
+              newVal
+            ).toFixed(2)}`;
+            const progress = potProgressCont.children[1].children[0];
+            progress.setAttribute("data-theme", budgetCard.dataset.colorTag);
+            progress.setAttribute("max", budgetCard.dataset.maxAmount);
+            progress.setAttribute("value", newVal);
+            progress.setAttribute(
+              "style",
+              `--end-old-percentage: ${
+                (budgetCard.dataset.spend / newVal) * 100
+              }%; --start-old-percentage: 0%; --end-white-percentage: ${
+                parseFloat(budgetCard.dataset.spend / newVal) * 100 + 2
+              }%; --start-new-percentage: ${currentPercentage}%; --end-new-percentage: ${newPercentage}%;`
+            );
+
+            const potNums = potProgressCont.children[1].children[1];
+
+            const percentagePara = potNums.children[0];
+            percentagePara.textContent = `${newPercentage}%`;
+            percentagePara.setAttribute(
+              "style",
+              `color: ${inputVal > 0 ? "var(--green)" : "inherit"};`
+            );
+          }
+        });
+        addToDialog.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          const btnAction = e.target.closest("[data-action]");
+
+          if (btnAction) {
+            if (btnAction.dataset.action === "close") {
+              addToDialog.close();
+              amountToAddInput.value = "";
+              addToDialog.querySelector(".pot-numbers").style = "";
+            } else if (btnAction.dataset.action === "confirm-addition") {
+              // console.log("here");
+              if (
+                amountToAddInput.value.length == 0 ||
+                !isNum(amountToAddInput.value)
+              ) {
+                amountToAddInput.classList.toggle("input-error", true);
+                return;
+              }
+              console.log("here");
+            }
+          }
+        });
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
@@ -1349,7 +1425,9 @@ function createPotCard(mainPots, pot) {
         <div class="pot-progress-container">
           <label for="${pot.name}-progress">
             Total Saved
-            <span class="public-sans-bold pot-total">$${pot.total}</span>
+            <span class="public-sans-bold pot-total">$${pot.total.toFixed(
+              2
+            )}</span>
           </label>
           <div class="pot-progress-info-container">
             <progress
@@ -2126,26 +2204,35 @@ main.addEventListener("click", async (e) => {
       ".pot-progress-container"
     );
 
-    potProgressCont.children[0].children[0].textContent = `$${budgetCard.dataset.spend}`;
+    potProgressCont.children[0].children[0].textContent = `$${parseFloat(
+      budgetCard.dataset.spend
+    ).toFixed(2)}`;
     const progress = potProgressCont.children[1].children[0];
+    const currentPercentage = (
+      (budgetCard.dataset.spend / budgetCard.dataset.maxAmount) *
+      100
+    ).toFixed(2);
     progress.setAttribute("data-theme", budgetCard.dataset.colorTag);
     progress.setAttribute("max", budgetCard.dataset.maxAmount);
     progress.setAttribute("value", budgetCard.dataset.spend);
     progress.setAttribute(
       "style",
-      `--progress-value: var(--${budgetCard.dataset.colorTag})`
+      `--end-old-percentage: ${100}%; --start-old-percentage: 0%; --end-white-percentage: ${100}%; --start-new-percentage: ${100}%; --end-new-percentage: ${100}%;`
     );
 
     const potNums = potProgressCont.children[1].children[1];
-    // console.log(potNums);
 
-    // console.log(progress);
-    // console.log(potProgressInfoCont);
-    // console.log(potTitle);
+    const percentagePara = potNums.children[0];
+    percentagePara.textContent = `${(
+      (budgetCard.dataset.spend / budgetCard.dataset.maxAmount) *
+      100
+    ).toFixed(2)}%`;
+    const targetPara = potNums.children[1];
+    targetPara.textContent = `Target of $${parseFloat(
+      budgetCard.dataset.maxAmount
+    ).toLocaleString("en")}`;
 
     potTitle.textContent = budgetCard.dataset.category;
-
-    // console.log(potCard);
   } else if (withdrawBtn) {
     e.preventDefault();
     const withdrawDialog = document.querySelector("#withdraw-pot-dialog");
