@@ -1253,6 +1253,7 @@ thead {
   padding-inline: 1.25rem;
   border-radius: 0.75rem;
 
+  flex: 1;
   & .show-drop-content {
     display: block;
   }
@@ -1352,6 +1353,7 @@ thead {
   }
   .recurring-info {
     flex-direction: row;
+    flex: 0.56;
   }
 
   .total-bills-container {
