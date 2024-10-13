@@ -1269,6 +1269,29 @@ const callback = (mutationList, observer) => {
                 return;
               }
               // console.log("here");
+              // update budgetCard info
+              // budgetCard.setAttribute(
+              //   "data-spend",
+              //   parseFloat(amountToAddInput.current)
+              // );
+              // console.log(addToDialog);
+              amountToAddInput.value = "";
+              const potTotal = addToDialog
+                .querySelector("progress")
+                .getAttribute("value");
+              const percentageValue = addToDialog.querySelector(".pot-numbers");
+              percentageValue.style = "";
+              budgetCard.setAttribute("data-spend", potTotal);
+              budgetCard
+                .querySelector("progress")
+                .setAttribute("value", potTotal);
+              budgetCard.querySelector(".pot-numbers").textContent =
+                percentageValue.textContent;
+              budgetCard.querySelector(
+                ".pot-total"
+              ).textContent = `$${parseFloat(potTotal).toFixed(2)}`;
+              // console.log(potTotal);
+              // console.log(value);
               data["balance"].current -= Math.min(
                 parseFloat(amountToAddInput.value),
                 data["balance"].current
@@ -2202,9 +2225,13 @@ main.addEventListener("click", async (e) => {
   } else if (addToBtn) {
     e.preventDefault();
 
+    console.log("here");
+
     budgetCard = addToBtn.closest("[data-category]");
     const addToDialog = document.querySelector("#add-to-pot-dialog");
     addToDialog.showModal();
+
+    // console.log(budgetCard.dataset.spend);
 
     // const potCard = addToBtn.closest("[data-category]");
 

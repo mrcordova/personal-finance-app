@@ -615,7 +615,7 @@ dialog.budget-dialogs[open] {
             var(--grey-900) var(--end-old-percentage),
             var(--white) var(--end-old-percentage),
             var(--white) var(--end-white-percentage),
-            var(--green) var(--end-white-percentage),
+            var(--green) var(--start-new-percentage),
             var(--green) var(--end-new-percentage)
           );
           max-height: 0.5rem;
