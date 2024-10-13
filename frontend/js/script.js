@@ -1287,7 +1287,7 @@ const callback = (mutationList, observer) => {
               // console.log(potTotal);
               // console.log(value);
               data["balance"].current -= Math.min(
-                parseFloat(amountToAddInput.value),
+                parseFloat(potTotal),
                 data["balance"].current
               );
               addToDialog.close();
@@ -1310,7 +1310,7 @@ const callback = (mutationList, observer) => {
               parseFloat(budgetCard.dataset.spend) - parseFloat(inputVal),
               0
             );
-            console.log(newVal);
+            // console.log(newVal);
             const currentPercentage = (
               (budgetCard.dataset.spend / budgetCard.dataset.maxAmount) *
               100
@@ -1333,7 +1333,7 @@ const callback = (mutationList, observer) => {
                 (newVal / budgetCard.dataset.spend) * 100
               }%; --start-old-percentage: 0%; --end-white-percentage: ${
                 (newVal / budgetCard.dataset.spend) * 100 + 2
-              }%; --start-new-percentage: ${currentPercentage}%; --end-new-percentage: ${newPercentage}%;`
+              }%; --start-new-percentage: ${newPercentage}%; --end-new-percentage: ${currentPercentage}%;`
             );
 
             const potNums = potProgressWithdrawCont.children[1].children[1];
@@ -1347,7 +1347,52 @@ const callback = (mutationList, observer) => {
           }
         });
 
-        withdrawDialog.addEventListener("click", (e) => {});
+        withdrawDialog.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          const btnAction = e.target.closest("[data-action]");
+
+          if (btnAction) {
+            if (btnAction.dataset.action === "close") {
+              withdrawDialog.close();
+              amountToWithdrawInput.value = "";
+              withdrawDialog.querySelector(".pot-numbers").style = "";
+            } else if (btnAction.dataset.action === "confirm-addition") {
+              // console.log("here");
+              if (
+                amountToWithdrawInput.value.length == 0 ||
+                !isNum(amountToWithdrawInput.value)
+              ) {
+                amountToWithdrawInput.classList.toggle("input-error", true);
+                return;
+              }
+
+              amountToWithdrawInput.value = "";
+              const potTotal = withdrawDialog
+                .querySelector(".pot-total")
+                .textContent.slice(1);
+              const percentageValue =
+                withdrawDialog.querySelector(".pot-numbers");
+              percentageValue.style = "";
+              budgetCard.setAttribute("data-spend", potTotal);
+              budgetCard
+                .querySelector("progress")
+                .setAttribute("value", potTotal);
+              budgetCard.querySelector(".pot-numbers").textContent =
+                percentageValue.textContent;
+              budgetCard.querySelector(
+                ".pot-total"
+              ).textContent = `$${parseFloat(potTotal).toFixed(2)}`;
+              // console.log(potTotal);
+              // console.log(value);
+              data["balance"].current += Math.min(
+                parseFloat(potTotal),
+                data["balance"].current
+              );
+              withdrawDialog.close();
+            }
+          }
+        });
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
