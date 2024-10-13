@@ -1,43 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<template id="recurring-template">
+  <div class="header-container public-sans-bold">
+    <h1>Recurring Bills</h1>
+  </div>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Personal finance app - Recurring bills</title>
-</head>
-<body>
-
-  Overview
-  Transactions
-  Budgets
-  Pots
-  Recurring Bills
-
-  Minimize Menu
-
-  Recurring Bills
-
-  Total Bills
-
-  Summary
-  Paid Bills
-  Total Upcoming
-  Due Soon
-
-  Search bills
-  
-  Sort by
-  Latest
-  Oldest
-  A to Z
-  Z to A
-  Highest
-  Lowest
-
-  <!-- Add bills data -->
-
-</body>
-</html>
+  <div class="main-recurring">
+    <div>
+      <div class="total-bills-container">
+        <div>
+          <img
+            src="./assets/images/icon-recurring-bills.svg"
+            alt="recurring bills" />
+        </div>
+        <div class="total-bills-info">
+          <p class="public-sans-regular">Total bills</p>
+          <p>$384.98</p>
+        </div>
+      </div>
+      <div>
+        <p>Summary</p>
+        <table>
+          <tbody>
+            <tr>
+              <td>Paid Bills</td>
+              <td>4($190.00)</td>
+            </tr>
+            <tr>
+              <td>Paid Bills</td>
+              <td>4($190.00)</td>
+            </tr>
+            <tr>
+              <td>Paid Bills</td>
+              <td>4($190.00)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="search-container">
+        <div class="search-input public-sans-regular">
+          <input
+            type="text"
+            name="search-transaction"
+            id="search-transaction"
+            placeholder="Search transactions" />
+          <img src="./assets/images/icon-search.svg" alt="search" />
+        </div>
+        <div class="dropdown public-sans-regular" aria-label="sort by">
+          <label for="sort-by-btn">Sort by</label>
+          <div>
+            <button id="sort-by-btn">
+              Latest
+              <img
+                src="./assets/images/icon-caret-down.svg"
+                alt="drop down caret" />
+            </button>
+            <menu class="dropdown-content" data-parameter="sortBy">
+              <li class="public-sans-bold">
+                <button>Latest</button>
+              </li>
+              <li>
+                <button>Oldest</button>
+              </li>
+              <li>
+                <button>A to Z</button>
+              </li>
+              <li>
+                <button>Z to A</button>
+              </li>
+              <li>
+                <button>Highest</button>
+              </li>
+              <li>
+                <button>Lowest</button>
+              </li>
+            </menu>
+          </div>
+          <button popovertarget="sortByDialog">
+            <img
+              data-dropdown=""
+              src="./assets/images/icon-sort-mobile.svg"
+              alt="sort by" />
+          </button>
+          <!-- <dialog > -->
+          <menu
+            id="sortByDialog"
+            popover
+            class="dropdown-content popover"
+            data-parameter="sortBy">
+            <li class="public-sans-bold">
+              <button>Latest</button>
+            </li>
+            <li>
+              <button>Oldest</button>
+            </li>
+            <li>
+              <button>A to Z</button>
+            </li>
+            <li>
+              <button>Z to A</button>
+            </li>
+            <li>
+              <button>Highest</button>
+            </li>
+            <li>
+              <button>Lowest</button>
+            </li>
+          </menu>
+          <!-- </dialog> -->
+        </div>
+      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

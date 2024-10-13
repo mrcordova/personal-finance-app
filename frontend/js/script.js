@@ -702,7 +702,7 @@ const callback = (mutationList, observer) => {
 
               budgets.splice(idxOfBudgetCard, 1);
 
-              console.log(budgets);
+              // console.log(budgets);
 
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`

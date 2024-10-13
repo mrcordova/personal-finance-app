@@ -1131,6 +1131,34 @@ thead {
   line-height: 1.5;
 }
 
+.total-bills-container {
+  background-color: var(--grey-900);
+  color: var(--white);
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  padding-block: 1.5rem;
+  padding-inline: 1.25rem;
+  border-radius: 0.75rem;
+
+  & .total-bills-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6875rem;
+
+    & p {
+      &:first-child {
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+      &:nth-child(2) {
+        font-size: 2rem;
+        line-height: 1.2;
+      }
+    }
+  }
+}
+
 .sender-desktop {
   display: none;
 }
@@ -1212,14 +1240,6 @@ thead {
     }
   }
 
-  /* .dropdown:hover .dropdown-content {
-    display: block;
-  }
-
-  .dropdown:hover .popover {
-    display: none;
-  } */
-
   :popover-open {
     display: none;
   }
@@ -1230,6 +1250,12 @@ thead {
 
   .pot-card {
     min-width: 43rem;
+  }
+
+  .total-bills-container {
+    flex-direction: column;
+    /* justify-content: start; */
+    align-items: flex-start;
   }
   .search-input {
     inline-size: clamp(10.0625rem, -1.2946rem + 23.6607vw, 20rem);
