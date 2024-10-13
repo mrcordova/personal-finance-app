@@ -1159,7 +1159,7 @@ const callback = (mutationList, observer) => {
               // totalSpend.textContent = `$${newTotalSpend}`;
               // totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
               // chartSummary.remove();
-              budgetCard.remove();
+
               // createBudgetChart(budgetChart.nextElementSibling, budgetChart);
               // release theme choices
 
@@ -1169,7 +1169,7 @@ const callback = (mutationList, observer) => {
 
               pots.splice(idxOfPotCard, 1);
 
-              console.log(pots);
+              // console.log(pots);
 
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
@@ -1182,6 +1182,10 @@ const callback = (mutationList, observer) => {
                 menuValue.children[0].setAttribute("tabindex", 0);
                 theme.style = ``;
               }
+
+              data["balance"].current += parseFloat(budgetCard.dataset.spend);
+
+              budgetCard.remove();
             }
             deleteDialog.close();
           }
@@ -1264,7 +1268,12 @@ const callback = (mutationList, observer) => {
                 amountToAddInput.classList.toggle("input-error", true);
                 return;
               }
-              console.log("here");
+              // console.log("here");
+              data["balance"].current -= Math.min(
+                parseFloat(amountToAddInput.value),
+                data["balance"].current
+              );
+              addToDialog.close();
             }
           }
         });
