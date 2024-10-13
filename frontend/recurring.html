@@ -36,7 +36,7 @@
         </table>
       </div>
     </div>
-    <div>
+    <div class="recurring-table-container">
       <div class="search-container">
         <div class="search-input public-sans-regular">
           <input
@@ -110,10 +110,98 @@
           <!-- </dialog> -->
         </div>
       </div>
-      <table>
+      <table class="responsive">
+        <colgroup>
+          <col span="2" />
+          <col span="2" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="public-sans-regular" scope="col">Bill Title</th>
+            <th></th>
+            <th class="public-sans-regular" scope="col">Due Date</th>
+            <th class="public-sans-regular" scope="col">Amount</th>
+          </tr>
+        </thead>
         <tbody>
           <tr>
-            <td></td>
+            <td colspan="2">
+              <span class="vendor-name">
+                <img
+                  src="./assets/images/avatars/elevate-education.jpg"
+                  alt="elevate-education" />
+                <p>Elevate Education</p>
+              </span>
+            </td>
+            <td colspan="2">
+              <span class="vendor">
+                <!-- <div class="vendor-name">
+                  <img
+                    src="./assets/images/avatars/elevate-education.jpg"
+                    alt="elevate-education" />
+                  <p>Elevate Education</p>
+                </div> -->
+                <div class="public-sans-regular monthly-amount paid">
+                  <p>Monthly - 1st</p>
+                  <img
+                    src="./assets/images/icon-bill-paid.svg"
+                    alt="bill paid" />
+                </div>
+                <p class="amount">$250.00</p>
+              </span>
+            </td>
+            <!-- <td colspan="1">
+            </td> -->
+          </tr>
+          <tr>
+            <td colspan="2">
+              <span class="vendor-name">
+                <img
+                  src="./assets/images/avatars/serenity-spa-and-wellness.jpg"
+                  alt="elevate-education" />
+                <p>Bravo Zen Spa</p>
+              </span>
+            </td>
+            <td colspan="2">
+              <span class="vendor">
+                <!-- <div class="vendor-name">
+                  <img
+                    src="./assets/images/avatars/elevate-education.jpg"
+                    alt="elevate-education" />
+                  <p>Elevate Education</p>
+                </div> -->
+                <div class="public-sans-regular monthly-amount paid">
+                  <p>Monthly - 3rd</p>
+                  <img
+                    src="./assets/images/icon-bill-paid.svg"
+                    alt="bill paid" />
+                </div>
+                <p class="amount">$70.00</p>
+              </span>
+            </td>
+            <!-- <td colspan="1">
+            </td> -->
+          </tr>
+          <tr>
+            <td colspan="2">
+              <span class="vendor-name">
+                <img
+                  src="./assets/images/avatars/spark-electric-solutions.jpg"
+                  alt="charlie electric company" />
+                <p>Charlie Electric Company</p>
+              </span>
+            </td>
+            <td colspan="2">
+              <span class="vendor">
+                <div class="public-sans-regular monthly-amount paid">
+                  <p>Monthly - 5th</p>
+                  <img src="./assets/images/icon-bill-due.svg" alt="bill due" />
+                </div>
+                <p class="amount due-soon">$10.00</p>
+              </span>
+            </td>
+            <!-- <td colspan="1">
+            </td> -->
           </tr>
         </tbody>
       </table>

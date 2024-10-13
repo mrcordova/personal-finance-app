@@ -912,6 +912,11 @@ main {
   flex-direction: column;
   gap: 1.5rem;
 }
+.main-recurring {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 #mini-menu {
   display: none;
   align-items: center;
@@ -1182,6 +1187,68 @@ thead {
     }
   }
 }
+.responsive {
+  /* & td > .vendor-name {
+    display: none;
+  } */
+  & .vendor-name {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--grey-900);
+    & img {
+      width: 2rem;
+      border-radius: 50%;
+    }
+  }
+
+  & .monthly-amount {
+    display: flex;
+    gap: 0.5rem;
+  }
+  & .paid {
+    color: var(--green);
+  }
+
+  & .amount {
+    text-align: end;
+    /* padding-inline-end: 1rem; */
+    color: var(--grey-900);
+  }
+  & .due-soon {
+    color: var(--red);
+  }
+  & .vendor {
+    /* display: block; */
+    display: flex;
+    justify-content: space-between;
+  }
+  & td:has(span.vendor-name) {
+    border: 0;
+  }
+  tbody th,
+  tbody td {
+    display: block;
+    padding-inline: 0;
+
+    &:first-child {
+      padding-block-end: 0;
+    }
+  }
+  [colspan="1"],
+  [scope="col"] {
+    &:is(:last-child) {
+      padding-inline-end: 0;
+    }
+  }
+}
+
+.recurring-table-container {
+  background-color: var(--white);
+  padding-block: 1.5rem;
+  padding-inline: 1.25rem;
+  border-radius: 0.75rem;
+}
 
 .sender-desktop {
   display: none;
@@ -1359,6 +1426,27 @@ thead {
       display: grid;
     }
   }
+
+  .responsive {
+    & td:has(span.vendor-name) {
+      border-bottom: 1px solid var(--grey-100);
+    }
+
+    & td > .vendor-name {
+      display: flex;
+    }
+    tbody th,
+    tbody td {
+      display: table-cell;
+      padding-inline: 1rem 0rem;
+      &:first-child {
+        padding-block-end: 1rem;
+      }
+    }
+    /* & .vendor {
+      display: none;
+    } */
+  }
 }
 @media (min-width: 90rem) {
   body {
@@ -1387,6 +1475,11 @@ thead {
   .main-budgets {
     flex-direction: row;
   }
+
+  .main-recurring {
+    flex-direction: row;
+  }
+
   .recurring-info {
     flex-direction: column;
   }
