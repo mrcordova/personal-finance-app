@@ -97,6 +97,7 @@ const callback = (mutationList, observer) => {
       const mainTransaction = document.querySelector(".main-transactions");
       const mainBudgets = document.querySelector(".main-budgets");
       const mainPots = document.querySelector(".main-pots");
+      const mainRecurring = document.querySelector(".main-recurring");
       // console.log(mainPots);
       if (mainTransaction) {
         observer.disconnect();
@@ -1136,32 +1137,10 @@ const callback = (mutationList, observer) => {
             const choice = btn.dataset.action;
             // console.log(btn);
             if (choice && choice === "delete") {
-              // const chartSummary = budgetChart.nextElementSibling.querySelector(
-              //   `div.chart-category:has(> div[data-theme="${budgetCard.dataset.colorTag}"] )`
-              // );
-              // const totalSpend =
-              //   budgetChart.querySelector("[data-total-spend]");
-
-              // const newLimit =
-              //   parseFloat(totalSpend.dataset.totalLimit) -
-              //   parseFloat(budgetCard.dataset.maxAmount);
-
-              // const newTotalSpend =
-              //   parseFloat(totalSpend.dataset.totalSpend) +
-              //   parseFloat(budgetCard.dataset.spend);
               const oldTheme = getKeyByValue(
                 themes,
                 budgetCard.dataset.colorTag
               );
-
-              // totalSpend.setAttribute("data-total-spend", newTotalSpend);
-              // totalSpend.setAttribute("data-total-limit", newLimit);
-              // totalSpend.textContent = `$${newTotalSpend}`;
-              // totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
-              // chartSummary.remove();
-
-              // createBudgetChart(budgetChart.nextElementSibling, budgetChart);
-              // release theme choices
 
               const idxOfPotCard = pots
                 .map((pot) => pot.theme)
@@ -1395,6 +1374,20 @@ const callback = (mutationList, observer) => {
             }
           }
         });
+      } else if (mainRecurring) {
+        observer.disconnect();
+        // const vendorSet = new Set();
+        const objMap = new Map();
+        for (const transaction of transactions) {
+          const month = new Date(transaction.date).toLocaleDateString("en-AU", {
+            month: "short",
+          });
+
+          if (transaction.recurring) {
+            objMap.set(transaction.name, transaction);
+          }
+        }
+        console.log(objMap);
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
@@ -2082,7 +2075,7 @@ main.addEventListener("click", async (e) => {
   const withdrawBtn = e.target.closest('button[data-action="withdraw"]');
 
   const seeAllBtn = e.target.closest("button[data-action='see-all'");
-  console.log(budgetEditBtn);
+  // console.log(budgetEditBtn);
 
   if (pageButton) {
     currentTransactionsPage =
