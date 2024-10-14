@@ -1379,7 +1379,10 @@ const callback = (mutationList, observer) => {
         observer.disconnect();
         // const vendorSet = new Set();
         let objMap = new Map();
+        let summaryMap = new Map();
         const tbody = mainRecurring.querySelector("tbody[data-vendors]");
+        const summaryTbody = mainRecurring.querySelector("tbody[data-summary]");
+        const totalBills = mainRecurring.querySelector("[data-total-bill]");
         for (const transaction of transactions) {
           if (transaction.recurring) {
             const [day, month] = new Date(transaction.date)
@@ -1397,18 +1400,48 @@ const callback = (mutationList, observer) => {
             return a[1].day - b[1].day;
           })
         );
-        console.log(objMap.entries());
+        // console.log(objMap.entries());
         const currentDay = new Date(
           data["transactions"][0].date
         ).toLocaleDateString("en-Au", {
           day: "numeric",
         });
         for (const [name, info] of objMap) {
-          // console.log(name, info);
-          // console.log(parseInt(info.day) - parseInt(currentDay) <= 5);
           const paidSoon =
             Math.abs(parseInt(info.day) - parseInt(currentDay)) <= 5;
           const paid = parseInt(info.day) < parseInt(currentDay);
+
+          if (paid) {
+            if (!summaryMap.has("Paid Bills")) {
+              summaryMap.set("Paid Bills", { totalNum: 0, amount: 0 });
+            }
+            summaryMap.set("Paid Bills", {
+              totalNum: summaryMap.get("Paid Bills").totalNum + 1,
+              amount:
+                summaryMap.get("Paid Bills").amount + parseFloat(info.amount),
+            });
+          } else if (paidSoon) {
+            if (!summaryMap.has("Due Soon")) {
+              summaryMap.set("Due Soon", { totalNum: 0, amount: 0 });
+            }
+            summaryMap.set("Due Soon", {
+              totalNum: summaryMap.get("Due Soon").totalNum + 1,
+              amount:
+                summaryMap.get("Due Soon").amount + parseFloat(info.amount),
+            });
+          }
+          if (!paid) {
+            if (!summaryMap.has("Total Upcomming")) {
+              summaryMap.set("Total Upcomming", { totalNum: 0, amount: 0 });
+            }
+            summaryMap.set("Total Upcomming", {
+              totalNum: summaryMap.get("Total Upcomming").totalNum + 1,
+              amount:
+                summaryMap.get("Total Upcomming").amount +
+                parseFloat(info.amount),
+            });
+          }
+
           tbody.insertAdjacentHTML(
             "beforeend",
             ` <tr data-date="${info.day}" data-amount="${
@@ -1449,6 +1482,55 @@ const callback = (mutationList, observer) => {
           </tr>`
           );
         }
+
+        summaryTbody.insertAdjacentHTML(
+          "beforeend",
+          `<tr>
+              <td class="public-sans-regular">Paid Bills</td>
+              <td>${summaryMap.get("Paid Bills").totalNum} ($${(
+            summaryMap.get("Paid Bills").amount * -1
+          ).toFixed(2)})</td>
+            </tr>`
+        );
+        summaryTbody.insertAdjacentHTML(
+          "beforeend",
+          `<tr>
+              <td class="public-sans-regular">Total Upcomming</td>
+              <td>${summaryMap.get("Total Upcomming").totalNum} ($${(
+            summaryMap.get("Total Upcomming").amount * -1
+          ).toFixed(2)})</td>
+            </tr>`
+        );
+        summaryTbody.insertAdjacentHTML(
+          "beforeend",
+          `<tr>
+              <td class="public-sans-regular due-soon">Due Soon</td>
+              <td class="due-soon">${summaryMap.get("Due Soon").totalNum} ($${(
+            summaryMap.get("Due Soon").amount * -1
+          ).toFixed(2)})</td>
+            </tr>`
+        );
+        totalBills.setAttribute(
+          "data-total-bil",
+          (summaryMap.get("Paid Bills").amount +
+            summaryMap.get("Total Upcomming").amount) *
+            -1
+        );
+        totalBills.textContent = `$${
+          (summaryMap.get("Paid Bills").amount +
+            summaryMap.get("Total Upcomming").amount) *
+          -1
+        }`;
+        // for (const [name, value] of summaryMap) {
+        //   summaryTbody.insertAdjacentHTML(
+        //     "beforeend",
+        //     `<tr>
+        //       <td class="public-sans-regular">${name}</td>
+        //       <td>6 ($${value.toFixed(2) * -1})</td>
+        //     </tr>
+        //   `
+        //   );
+        // }
         recurringBillItems = Array.from(tbody.getElementsByTagName("tr"));
         // console.log(objMap);
         // console.log(recurringBillItems);
