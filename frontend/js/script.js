@@ -18,6 +18,7 @@ const config = { attributes: true, childList: true, subtree: true };
 const itemsPerPage = 10;
 let currentTransactionsPage = 0;
 let transactionItems;
+let recurringBillItems;
 let budgetCardItems;
 const searchOption = {
   category: "all transactions",
@@ -1410,7 +1411,9 @@ const callback = (mutationList, observer) => {
           const paid = parseInt(info.day) < parseInt(currentDay);
           tbody.insertAdjacentHTML(
             "beforeend",
-            ` <tr>
+            ` <tr data-date="${info.day}" data-amount="${
+              info.amount
+            }" data-name="${name}">
             <td colspan="2">
               <span class="vendor-name">
                 <img
@@ -1446,7 +1449,9 @@ const callback = (mutationList, observer) => {
           </tr>`
           );
         }
+        recurringBillItems = Array.from(tbody.getElementsByTagName("tr"));
         // console.log(objMap);
+        // console.log(recurringBillItems);
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
@@ -1955,6 +1960,10 @@ function sortByHighestAmount(a, b) {
   return b.dataset.amount - a.dataset.amount;
 }
 function sortByLatest(a, b) {
+  // console.log(a.parentElement.dataset.vendors);
+  if (a.parentElement.getAttribute("data-vendors") != undefined) {
+    return a.dataset.date - b.dataset.date;
+  }
   const bDate = b.dataset.date.substring(0, b.dataset.date.indexOf("T"));
   const aDate = a.dataset.date.substring(0, a.dataset.date.indexOf("T"));
 
@@ -1968,6 +1977,9 @@ function sortByLatest(a, b) {
     : 0;
 }
 function sortByOldest(a, b) {
+  if (a.parentElement.getAttribute("data-vendors") != undefined) {
+    return b.dataset.date - a.dataset.date;
+  }
   const bDate = b.dataset.date.substring(0, b.dataset.date.indexOf("T"));
   const aDate = a.dataset.date.substring(0, a.dataset.date.indexOf("T"));
 
@@ -2134,7 +2146,7 @@ main.addEventListener("click", async (e) => {
   const withdrawBtn = e.target.closest('button[data-action="withdraw"]');
 
   const seeAllBtn = e.target.closest("button[data-action='see-all'");
-  // console.log(budgetEditBtn);
+  // console.log(e.target);
 
   if (pageButton) {
     currentTransactionsPage =
@@ -2182,6 +2194,16 @@ main.addEventListener("click", async (e) => {
       searchOption[filterParameter.dataset.parameter] = btn.textContent;
       sortByBtn.childNodes[0].textContent = btn.textContent;
       updateDisplay();
+    } else if (filterParameter.dataset.parameter === "sortByBills") {
+      const recurringBillsTable = main.querySelector(
+        "table > tbody[data-vendors]"
+      );
+      const sortByBtn = main.querySelector("button#sort-by-btn");
+      recurringBillItems.sort(sortByFuncs[btn.textContent.toLowerCase()]);
+      // console.log(recurringBillItems);
+      recurringBillsTable.replaceChildren(...recurringBillItems);
+
+      sortByBtn.childNodes[0].textContent = btn.textContent;
     } else if (filterParameter.dataset.parameter === "editBudget") {
       if (btn && btn.dataset.action === "delete") {
         const deleteDialog = document.querySelector("#delete-budget-dialog");
