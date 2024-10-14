@@ -1377,17 +1377,54 @@ const callback = (mutationList, observer) => {
       } else if (mainRecurring) {
         observer.disconnect();
         // const vendorSet = new Set();
-        const objMap = new Map();
+        let objMap = new Map();
+        const tbody = mainRecurring.querySelector("tbody[data-vendors]");
         for (const transaction of transactions) {
-          const month = new Date(transaction.date).toLocaleDateString("en-AU", {
-            month: "short",
-          });
-
           if (transaction.recurring) {
-            objMap.set(transaction.name, transaction);
+            const [day, month] = new Date(transaction.date)
+              .toLocaleDateString("en-AU", {
+                month: "short",
+                day: "numeric",
+              })
+              .split(" ");
+
+            objMap.set(transaction.name, { ...transaction, day, month });
           }
         }
-        console.log(objMap);
+        objMap = new Map(
+          [...objMap.entries()].sort((a, b) => {
+            return a[1].day - b[1].day;
+          })
+        );
+        console.log(objMap.entries());
+        for (const [name, info] of objMap) {
+          // console.log(name, info);
+          tbody.insertAdjacentHTML(
+            "beforeend",
+            ` <tr>
+            <td colspan="2">
+              <span class="vendor-name">
+                <img
+                  src="${info.avatar}"
+                  alt="${name}" />
+                <p>${name}</p>
+              </span>
+            </td>
+            <td colspan="2">
+              <span class="vendor">
+                <div class="public-sans-regular monthly-amount paid">
+                  <p>Monthly - ${info.day}</p>
+                  <img
+                    src="./assets/images/icon-bill-paid.svg"
+                    alt="bill paid" />
+                </div>
+                <p class="amount">$${(info.amount * -1).toFixed(2)}</p>
+              </span>
+            </td>
+          </tr>`
+          );
+        }
+        // console.log(objMap);
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
