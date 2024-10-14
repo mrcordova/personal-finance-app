@@ -1397,8 +1397,17 @@ const callback = (mutationList, observer) => {
           })
         );
         console.log(objMap.entries());
+        const currentDay = new Date(
+          data["transactions"][0].date
+        ).toLocaleDateString("en-Au", {
+          day: "numeric",
+        });
         for (const [name, info] of objMap) {
           // console.log(name, info);
+          // console.log(parseInt(info.day) - parseInt(currentDay) <= 5);
+          const paidSoon =
+            Math.abs(parseInt(info.day) - parseInt(currentDay)) <= 5;
+          const paid = parseInt(info.day) < parseInt(currentDay);
           tbody.insertAdjacentHTML(
             "beforeend",
             ` <tr>
@@ -1412,13 +1421,26 @@ const callback = (mutationList, observer) => {
             </td>
             <td colspan="2">
               <span class="vendor">
-                <div class="public-sans-regular monthly-amount paid">
+                <div class="public-sans-regular monthly-amount ${
+                  paid ? "paid" : ""
+                }">
                   <p>Monthly - ${info.day}</p>
-                  <img
+                  ${
+                    paid
+                      ? `<img
                     src="./assets/images/icon-bill-paid.svg"
-                    alt="bill paid" />
+                    alt="bill paid" />`
+                      : paidSoon
+                      ? `<img
+                    src="./assets/images/icon-bill-due.svg"
+                    alt="bill due" />`
+                      : ""
+                  }
+                  
                 </div>
-                <p class="amount">$${(info.amount * -1).toFixed(2)}</p>
+                <p class="amount ${paidSoon ? "due-soon" : ""}">$${(
+              info.amount * -1
+            ).toFixed(2)}</p>
               </span>
             </td>
           </tr>`
