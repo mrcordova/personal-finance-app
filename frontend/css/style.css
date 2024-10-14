@@ -942,7 +942,8 @@ main {
     "current"
     "income"
     "expenses"
-    "pots";
+    "pots"
+    "transaction";
 }
 
 .overview-balance-container {
@@ -1040,6 +1041,36 @@ main {
         line-height: 1.5;
       }
     }
+  }
+}
+
+.overview-transactions {
+  grid-area: transaction;
+  background-color: var(--white);
+  padding-block: 1.5rem;
+  padding-inline: 1.25rem;
+  border-radius: 0.75rem;
+  /* overflow: hidden; */
+
+  & tr > th {
+    /* width: 100%; */
+    /* flex: 1; */
+    /* width: 1%; */
+    width: 100%;
+  }
+  & tr > td {
+    /* width: max-content; */
+  }
+
+  & .title {
+    /* text-wrap: nowrap; */
+    /* white-space: nowrap; */
+  }
+
+  & .wide {
+    /* width: min-content;
+     */
+    /* width: 100%; */
   }
 }
 .overview-header {
@@ -1489,7 +1520,8 @@ thead {
   .main-overview {
     grid-template-areas:
       "current income expenses"
-      "pots pots pots";
+      "pots pots pots"
+      "transaction transaction transaction";
   }
 
   .mobile-name {
@@ -1643,8 +1675,9 @@ thead {
 
   .main-overview {
     grid-template-areas:
-      "current income income expenses"
-      "pots pots pots .";
+      "current income  income expenses"
+      "pots pots pots ."
+      "transaction transaction transaction .";
   }
 
   .recurring-info {
