@@ -1383,6 +1383,7 @@ const callback = (mutationList, observer) => {
         const tbody = mainRecurring.querySelector("tbody[data-vendors]");
         const summaryTbody = mainRecurring.querySelector("tbody[data-summary]");
         const totalBills = mainRecurring.querySelector("[data-total-bill]");
+        const searchBills = mainRecurring.querySelector("#search-bills");
         for (const transaction of transactions) {
           if (transaction.recurring) {
             const [day, month] = new Date(transaction.date)
@@ -1521,19 +1522,20 @@ const callback = (mutationList, observer) => {
             summaryMap.get("Total Upcomming").amount) *
           -1
         }`;
-        // for (const [name, value] of summaryMap) {
-        //   summaryTbody.insertAdjacentHTML(
-        //     "beforeend",
-        //     `<tr>
-        //       <td class="public-sans-regular">${name}</td>
-        //       <td>6 ($${value.toFixed(2) * -1})</td>
-        //     </tr>
-        //   `
-        //   );
-        // }
+
         recurringBillItems = Array.from(tbody.getElementsByTagName("tr"));
-        // console.log(objMap);
-        // console.log(recurringBillItems);
+
+        searchBills.addEventListener("input", (e) => {
+          console.log(e.target.value);
+          recurringBillItems.forEach((item, index) => {
+            item.classList.toggle(
+              "hidden",
+              !item.dataset.name
+                .toLowerCase()
+                .startsWith(e.target.value.toLowerCase())
+            );
+          });
+        });
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
