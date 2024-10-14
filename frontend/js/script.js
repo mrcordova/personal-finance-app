@@ -85,13 +85,13 @@ function checkMaxInput(e) {
 
 //  Templates for sidebar list items
 const templates = {
-  index: await extractTemplate("index"),
+  overview: await extractTemplate("overview"),
   transactions: await extractTemplate("transactions"),
   budgets: await extractTemplate("budgets"),
   pots: await extractTemplate("pots"),
   recurring: await extractTemplate("recurring"),
 };
-// console.log(templates);
+
 const callback = (mutationList, observer) => {
   for (const mutation of mutationList) {
     if (mutation.type === "childList") {
@@ -642,7 +642,7 @@ const callback = (mutationList, observer) => {
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
               budgetCard.setAttribute("data-color-tag", theme);
-              budgetCard.setAttribute("data-spend", spendForMonth * -1);
+              budgetCard.setAttribute("data-spend", Math.abs(spendForMonth));
 
               const themeBtn = newDialog.querySelector('[data-action="tag"]');
               const menu = themeBtn.nextElementSibling;
@@ -1488,8 +1488,8 @@ const callback = (mutationList, observer) => {
           "beforeend",
           `<tr>
               <td class="public-sans-regular">Paid Bills</td>
-              <td>${summaryMap.get("Paid Bills").totalNum} ($${(
-            summaryMap.get("Paid Bills").amount * -1
+              <td>${summaryMap.get("Paid Bills").totalNum} ($${Math.abs(
+            summaryMap.get("Paid Bills").amount
           ).toFixed(2)})</td>
             </tr>`
         );
@@ -1497,8 +1497,8 @@ const callback = (mutationList, observer) => {
           "beforeend",
           `<tr>
               <td class="public-sans-regular">Total Upcomming</td>
-              <td>${summaryMap.get("Total Upcomming").totalNum} ($${(
-            summaryMap.get("Total Upcomming").amount * -1
+              <td>${summaryMap.get("Total Upcomming").totalNum} ($${Math.abs(
+            summaryMap.get("Total Upcomming").amount
           ).toFixed(2)})</td>
             </tr>`
         );
@@ -1506,22 +1506,24 @@ const callback = (mutationList, observer) => {
           "beforeend",
           `<tr>
               <td class="public-sans-regular due-soon">Due Soon</td>
-              <td class="due-soon">${summaryMap.get("Due Soon").totalNum} ($${(
-            summaryMap.get("Due Soon").amount * -1
-          ).toFixed(2)})</td>
+              <td class="due-soon">${
+                summaryMap.get("Due Soon").totalNum
+              } ($${Math.abs(summaryMap.get("Due Soon").amount).toFixed(
+            2
+          )})</td>
             </tr>`
         );
         totalBills.setAttribute(
           "data-total-bil",
-          (summaryMap.get("Paid Bills").amount +
-            summaryMap.get("Total Upcomming").amount) *
-            -1
+          Math.abs(
+            summaryMap.get("Paid Bills").amount +
+              summaryMap.get("Total Upcomming").amount
+          )
         );
-        totalBills.textContent = `$${
-          (summaryMap.get("Paid Bills").amount +
-            summaryMap.get("Total Upcomming").amount) *
-          -1
-        }`;
+        totalBills.textContent = `$${Math.abs(
+          summaryMap.get("Paid Bills").amount +
+            summaryMap.get("Total Upcomming").amount
+        )}`;
 
         recurringBillItems = Array.from(tbody.getElementsByTagName("tr"));
 
@@ -1545,6 +1547,15 @@ const callback = (mutationList, observer) => {
 
 const observer = new MutationObserver(callback);
 observer.observe(main, config);
+
+// if (!("hasCodeRunBefore" in localStorage)) {
+const currentActiveLiEle = document.querySelector("li.checked");
+
+const clone =
+  templates[`${currentActiveLiEle.dataset.menu}`].content.cloneNode(true);
+main.replaceChildren(clone);
+localStorage.setItem("hasCodeRunBefore", true);
+// }
 
 // helper function for retrieving templates from html
 async function extractTemplate(id) {

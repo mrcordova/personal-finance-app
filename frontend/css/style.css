@@ -934,8 +934,150 @@ main {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  /* justify-content: center; */
-  /* align-items: center; */
+}
+.main-overview {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-areas:
+    "current"
+    "income"
+    "expenses"
+    "pots";
+}
+
+.overview-balance-container {
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    & p:first-child {
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+    & p:nth-child(2) {
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+  }
+}
+.overview-pots {
+  grid-area: pots;
+  background-color: var(--white);
+  border-radius: 0.75rem;
+  padding-block: 1.5rem;
+  padding-inline: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.overview-pots-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  & .overview-pots-total-cont {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+    background-color: var(--beige-100);
+    align-items: center;
+    justify-content: flex-start;
+    padding-block: 1.25rem;
+    padding-inline: 1rem;
+    border-radius: 0.75rem;
+
+    & img {
+      width: 2.5rem;
+    }
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      & p:first-child {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: var(--grey-500);
+      }
+
+      & p:nth-child(2) {
+        font-size: 2rem;
+        line-height: 1.2;
+      }
+    }
+  }
+
+  & .overview-pots-summary {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    & > div {
+      display: flex;
+      flex: 1;
+    }
+    & .pots-layout {
+      display: flex;
+      gap: 1.25rem;
+      min-width: 8.96rem;
+      flex: 1;
+    }
+
+    & .summary-member {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      & > p:first-child {
+        font-size: 0.75rem;
+        line-height: 1.5;
+        color: var(--grey-500);
+      }
+      & > p:nth-child(2) {
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+    }
+  }
+}
+.overview-header {
+  display: flex;
+  justify-content: space-between;
+
+  & > p {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: var(--grey-900);
+  }
+
+  & > button {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--grey-500);
+    align-items: center;
+    justify-content: center;
+  }
+}
+.balance-current {
+  background-color: var(--grey-900);
+  color: var(--white);
+  grid-area: current;
+}
+
+.balance-income,
+.balance-expenses {
+  background-color: var(--white);
+  color: var(--grey-900);
+}
+.balance-income {
+  grid-area: income;
+}
+.balance-expenses {
+  grid-area: expenses;
 }
 
 .title {
@@ -1168,6 +1310,7 @@ thead {
     }
   }
 }
+
 .recurring-info {
   display: flex;
   flex-direction: column;
@@ -1343,9 +1486,17 @@ thead {
   :popover-open {
     display: none;
   }
+  .main-overview {
+    grid-template-areas:
+      "current income expenses"
+      "pots pots pots";
+  }
 
   .mobile-name {
     display: none;
+  }
+  .overview-pots-info {
+    flex-direction: row;
   }
 
   .pot-card {
@@ -1359,10 +1510,10 @@ thead {
   .total-bills-container {
     flex-direction: column;
     gap: 2rem;
-    /* justify-content: start; */
     align-items: flex-start;
     justify-content: center;
   }
+
   .search-input {
     inline-size: clamp(10.0625rem, -1.2946rem + 23.6607vw, 20rem);
   }
@@ -1488,6 +1639,12 @@ thead {
 
   .main-recurring {
     flex-direction: row;
+  }
+
+  .main-overview {
+    grid-template-areas:
+      "current income income expenses"
+      "pots pots pots .";
   }
 
   .recurring-info {
