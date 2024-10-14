@@ -1445,9 +1445,9 @@ const callback = (mutationList, observer) => {
 
           tbody.insertAdjacentHTML(
             "beforeend",
-            ` <tr data-date="${info.day}" data-amount="${
+            ` <tr data-date="${info.day}" data-amount="${Math.abs(
               info.amount
-            }" data-name="${name}">
+            )}" data-name="${name}">
             <td colspan="2">
               <span class="vendor-name">
                 <img
@@ -1475,8 +1475,8 @@ const callback = (mutationList, observer) => {
                   }
                   
                 </div>
-                <p class="amount ${paidSoon ? "due-soon" : ""}">$${(
-              info.amount * -1
+                <p class="amount ${paidSoon ? "due-soon" : ""}">$${Math.abs(
+              info.amount
             ).toFixed(2)}</p>
               </span>
             </td>
@@ -1526,7 +1526,7 @@ const callback = (mutationList, observer) => {
         recurringBillItems = Array.from(tbody.getElementsByTagName("tr"));
 
         searchBills.addEventListener("input", (e) => {
-          console.log(e.target.value);
+          // console.log(e.target.value);
           recurringBillItems.forEach((item, index) => {
             item.classList.toggle(
               "hidden",
