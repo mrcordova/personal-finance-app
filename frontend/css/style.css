@@ -945,7 +945,12 @@ main {
     "pots"
     "transaction";
 }
-
+.overview-budgets {
+  background-color: var(--white);
+  border-radius: 0.75rem;
+  padding-block: 1.5rem;
+  padding-inline: 1.25rem;
+}
 .overview-balance-container {
   border-radius: 0.75rem;
   padding: 1.5rem;
