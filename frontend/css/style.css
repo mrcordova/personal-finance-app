@@ -937,14 +937,19 @@ main {
 }
 .main-overview {
   display: grid;
-  gap: 0.75rem;
+  gap: 1.5rem;
   grid-template-areas:
-    "current"
-    "income"
-    "expenses"
+    "balance"
     "pots"
     "transaction"
-    "budgets";
+    "budgets"
+    "recurring";
+}
+.overview-balance {
+  grid-area: balance;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 .overview-budgets {
   grid-area: budgets;
@@ -1007,6 +1012,7 @@ main {
   }
 }
 .overview-balance-container {
+  flex: 1;
   border-radius: 0.75rem;
   padding: 1.5rem;
   & > div {
@@ -1117,6 +1123,46 @@ main {
     /* flex: 1; */
     /* width: 1%; */
     width: 100%;
+  }
+}
+.overview-recurring {
+  background-color: var(--white);
+  grid-area: recurring;
+  padding-block: 1.5rem;
+  padding-inline: 1.25rem;
+  gap: 2rem;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+
+  & .overview-recurring-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      background-color: var(--beige-100);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      padding-block: 1.25rem;
+      padding-inline: 1rem;
+      border-radius: 0.5rem;
+      & > p {
+        color: var(--grey-500);
+      }
+
+      &:first-child {
+        border-left: 0.25rem solid var(--green);
+      }
+      &:nth-child(2) {
+        border-left: 0.25rem solid var(--yellow);
+      }
+      &:nth-child(3) {
+        border-left: 0.25rem solid var(--cyan);
+      }
+    }
   }
 }
 .overview-header {
@@ -1565,16 +1611,20 @@ thead {
   }
   .main-overview {
     grid-template-areas:
-      "current income expenses"
+      "balance balance balance"
       "pots pots pots"
       "transaction transaction transaction"
-      "budgets budgets budgets";
+      "budgets budgets budgets"
+      "recurring recurring recurring";
   }
 
   .mobile-name {
     display: none;
   }
   .overview-pots-info {
+    flex-direction: row;
+  }
+  .overview-balance {
     flex-direction: row;
   }
 
@@ -1742,10 +1792,10 @@ thead {
 
   .main-overview {
     grid-template-areas:
-      "current income expenses"
+      "balance balance balance"
       "pots pots budgets"
       "transaction  transaction budgets"
-      "transaction  transaction .";
+      "transaction  transaction recurring";
   }
 
   .recurring-info {
