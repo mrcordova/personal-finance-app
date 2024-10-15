@@ -483,6 +483,14 @@ const callback = (mutationList, observer) => {
               budgetCard = null;
             } else if (btnAction.dataset.action === "tag") {
               // possibly set prevThemeChoice here
+              btnAction.children[1].setAttribute(
+                "style",
+                `${
+                  btnAction.dataset.budgetDialogShow === "true"
+                    ? "transform: rotate(180deg)"
+                    : "transform: rotate(0deg)"
+                }`
+              );
               btnAction.nextElementSibling.classList.toggle(
                 "show-drop-content",
                 btnAction.dataset.budgetDialogShow === "true" ? true : false
@@ -493,6 +501,14 @@ const callback = (mutationList, observer) => {
                 btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
               );
             } else if (btnAction.dataset.action === "category") {
+              btnAction.children[1].setAttribute(
+                "style",
+                `${
+                  btnAction.dataset.budgetDialogShow === "true"
+                    ? "transform: rotate(180deg)"
+                    : "transform: rotate(0deg)"
+                }`
+              );
               btnAction.nextElementSibling.classList.toggle(
                 "show-drop-content",
                 btnAction.dataset.budgetDialogShow === "true" ? true : false
@@ -544,6 +560,14 @@ const callback = (mutationList, observer) => {
                   theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
                 }
 
+                btnAction.parentElement.previousElementSibling.children[1].setAttribute(
+                  "style",
+                  `${
+                    btnAction.dataset.budgetDialogShow === "true"
+                      ? "transform: rotate(180deg)"
+                      : "transform: rotate(0deg)"
+                  }`
+                );
                 btnAction.parentElement.classList.toggle(
                   "show-drop-content",
                   false
@@ -554,6 +578,14 @@ const callback = (mutationList, observer) => {
                   true
                 );
               } else if (mainBtnAction === "category") {
+                btnAction.parentElement.previousElementSibling.children[1].setAttribute(
+                  "style",
+                  `${
+                    btnAction.dataset.budgetDialogShow === "true"
+                      ? "transform: rotate(180deg)"
+                      : "transform: rotate(0deg)"
+                  }`
+                );
                 updateCategoryChoice(btnAction);
               }
             } else if (btnAction.dataset.action === "save-budget") {
@@ -815,6 +847,14 @@ const callback = (mutationList, observer) => {
               newDialog.close();
             } else if (btnAction.dataset.action === "tag") {
               prevThemeChoice = btnAction.children[0].children[0].dataset.theme;
+              btnAction.children[1].setAttribute(
+                "style",
+                `${
+                  btnAction.dataset.budgetDialogShow === "true"
+                    ? "transform: rotate(180deg)"
+                    : "transform: rotate(0deg)"
+                }`
+              );
               btnAction.nextElementSibling.classList.toggle(
                 "show-drop-content",
                 btnAction.dataset.budgetDialogShow === "true" ? true : false
@@ -825,6 +865,14 @@ const callback = (mutationList, observer) => {
                 btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
               );
             } else if (btnAction.dataset.action === "category") {
+              btnAction.children[1].setAttribute(
+                "style",
+                `${
+                  btnAction.dataset.budgetDialogShow === "true"
+                    ? "transform: rotate(180deg)"
+                    : "transform: rotate(0deg)"
+                }`
+              );
               btnAction.nextElementSibling.classList.toggle(
                 "show-drop-content",
                 btnAction.dataset.budgetDialogShow === "true" ? true : false
@@ -874,6 +922,14 @@ const callback = (mutationList, observer) => {
                 }
                 prevThemeChoice = newTheme;
                 // console.log("value clicked");
+                btnAction.parentElement.previousElementSibling.children[1].setAttribute(
+                  "style",
+                  `${
+                    btnAction.dataset.budgetDialogShow === "true"
+                      ? "transform: rotate(180deg)"
+                      : "transform: rotate(0deg)"
+                  }`
+                );
                 btnAction.parentElement.classList.toggle(
                   "show-drop-content",
                   false
@@ -884,6 +940,14 @@ const callback = (mutationList, observer) => {
                   true
                 );
               } else if (mainBtnAction === "category") {
+                btnAction.parentElement.previousElementSibling.children[1].setAttribute(
+                  "style",
+                  `${
+                    btnAction.dataset.budgetDialogShow === "true"
+                      ? "transform: rotate(180deg)"
+                      : "transform: rotate(0deg)"
+                  }`
+                );
                 updateCategoryChoice(btnAction);
               }
             } else if (btnAction.dataset.action === "max-spending") {
@@ -985,6 +1049,14 @@ const callback = (mutationList, observer) => {
               budgetCard = null;
             } else if (btnAction.dataset.action === "tag") {
               // possibly set prevThemeChoice here
+              btnAction.children[1].setAttribute(
+                "style",
+                `${
+                  btnAction.dataset.budgetDialogShow === "true"
+                    ? "transform: rotate(180deg)"
+                    : "transform: rotate(0deg)"
+                }`
+              );
               btnAction.nextElementSibling.classList.toggle(
                 "show-drop-content",
                 btnAction.dataset.budgetDialogShow === "true" ? true : false
@@ -995,6 +1067,14 @@ const callback = (mutationList, observer) => {
                 btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
               );
             } else if (btnAction.dataset.action === "category") {
+              btnAction.children[1].setAttribute(
+                "style",
+                `${
+                  btnAction.dataset.budgetDialogShow === "true"
+                    ? "transform: rotate(180deg)"
+                    : "transform: rotate(0deg)"
+                }`
+              );
               btnAction.nextElementSibling.classList.toggle(
                 "show-drop-content",
                 btnAction.dataset.budgetDialogShow === "true" ? true : false
@@ -1045,7 +1125,14 @@ const callback = (mutationList, observer) => {
                   menuValue.children[0].setAttribute("tabindex", -1);
                   theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
                 }
-
+                btnAction.parentElement.previousElementSibling.children[1].setAttribute(
+                  "style",
+                  `${
+                    btnAction.dataset.budgetDialogShow === "true"
+                      ? "transform: rotate(180deg)"
+                      : "transform: rotate(0deg)"
+                  }`
+                );
                 btnAction.parentElement.classList.toggle(
                   "show-drop-content",
                   false
@@ -1056,6 +1143,14 @@ const callback = (mutationList, observer) => {
                   true
                 );
               } else if (mainBtnAction === "category") {
+                btnAction.parentElement.previousElementSibling.children[1].setAttribute(
+                  "style",
+                  `${
+                    btnAction.dataset.budgetDialogShow === "true"
+                      ? "transform: rotate(180deg)"
+                      : "transform: rotate(0deg)"
+                  }`
+                );
                 updateCategoryChoice(btnAction);
               }
             } else if (btnAction.dataset.action === "save-pot") {
