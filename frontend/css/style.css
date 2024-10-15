@@ -1028,6 +1028,7 @@ main {
   }
   & .overview-budgets-summary {
     /* flex: 1; */
+    overflow: auto;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -1131,6 +1132,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    overflow: auto;
 
     & > div {
       display: flex;

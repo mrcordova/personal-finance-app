@@ -250,8 +250,18 @@ const callback = (mutationList, observer) => {
               }
               newDialog.close();
             } else if (btnAction.dataset.action === "tag") {
-              // console.log(btnAction.children[0].children[0]);
               prevThemeChoice = btnAction.children[0].children[0].dataset.theme;
+
+              // console.log(btnAction);
+              btnAction.children[1].setAttribute(
+                "style",
+                `${
+                  btnAction.dataset.budgetDialogShow === "true"
+                    ? "transform: rotate(180deg)"
+                    : "transform: rotate(0deg)"
+                }`
+              );
+
               btnAction.nextElementSibling.classList.toggle(
                 "show-drop-content",
                 btnAction.dataset.budgetDialogShow === "true" ? true : false
@@ -261,21 +271,15 @@ const callback = (mutationList, observer) => {
                 "data-budget-dialog-show",
                 btnAction.dataset.budgetDialogShow === "true" ? "false" : "true"
               );
-
-              // budgetDialogEditBtn.nextElementSibling.classList.toggle(
-              //   "show-drop-content",
-              //   budgetDialogEditBtn.dataset.budgetDialogShow === "true"
-              //     ? true
-              //     : false
-              // );
-
-              // budgetDialogEditBtn.setAttribute(
-              //   "data-budget-dialog-show",
-              //   budgetDialogEditBtn.dataset.budgetDialogShow === "true"
-              //     ? "false"
-              //     : "true"
-              // );
             } else if (btnAction.dataset.action === "category") {
+              btnAction.children[1].setAttribute(
+                "style",
+                `${
+                  btnAction.dataset.budgetDialogShow === "true"
+                    ? "transform: rotate(180deg)"
+                    : "transform: rotate(0deg)"
+                }`
+              );
               btnAction.nextElementSibling.classList.toggle(
                 "show-drop-content",
                 btnAction.dataset.budgetDialogShow === "true" ? true : false
@@ -325,7 +329,15 @@ const callback = (mutationList, observer) => {
                   theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
                 }
                 prevThemeChoice = newTheme;
-                console.log("value clicked");
+                // console.log("value clicked");
+                btnAction.parentElement.previousElementSibling.children[1].setAttribute(
+                  "style",
+                  `${
+                    btnAction.dataset.budgetDialogShow === "true"
+                      ? "transform: rotate(180deg)"
+                      : "transform: rotate(0deg)"
+                  }`
+                );
                 btnAction.parentElement.classList.toggle(
                   "show-drop-content",
                   false
@@ -337,6 +349,14 @@ const callback = (mutationList, observer) => {
                 );
               } else if (mainBtnAction === "category") {
                 updateCategoryChoice(btnAction);
+                btnAction.parentElement.previousElementSibling.children[1].setAttribute(
+                  "style",
+                  `${
+                    btnAction.dataset.budgetDialogShow === "true"
+                      ? "transform: rotate(180deg)"
+                      : "transform: rotate(0deg)"
+                  }`
+                );
               }
             } else if (btnAction.dataset.action === "max-spending") {
               // console.log("here");
@@ -2242,7 +2262,7 @@ main.addEventListener("click", async (e) => {
   const withdrawBtn = e.target.closest('button[data-action="withdraw"]');
 
   const seeAllBtn = e.target.closest("button[data-action='see-all'");
-  // console.log(e.target);
+  // console.log(budgetDialogEditBtn);
 
   if (pageButton) {
     currentTransactionsPage =
@@ -2451,8 +2471,17 @@ main.addEventListener("click", async (e) => {
     // console.log("here");
   } else if (budgetEditBtn) {
     budgetCard = budgetEditBtn.closest("[data-category]");
-    // console.log(budgetCard);
+    console.log(budgetCard);
 
+    // console.log(budgetEditBtn.children);
+    budgetEditBtn.children[0].setAttribute(
+      "style",
+      `${
+        budgetEditBtn.dataset.budgetShow === "true"
+          ? "transform: rotate(180deg)"
+          : "transform: rotate(0deg)"
+      }`
+    );
     budgetEditBtn.nextElementSibling.classList.toggle(
       "show-drop-content",
       budgetEditBtn.dataset.budgetShow === "true" ? true : false
