@@ -136,6 +136,10 @@ button[popovertarget] {
     align-items: center;
     & img {
       width: 1rem;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
     & .theme-title {
       display: flex;
@@ -302,6 +306,13 @@ button[popovertarget] {
       flex: 1;
       text-align: center;
       justify-content: center;
+      border: 1px solid transparent;
+      &:hover {
+        cursor: pointer;
+        background-color: var(--white);
+        /* color: var(--grey-900); */
+        border: 1px solid var(--beige-500);
+      }
     }
   }
   & .latest-spending-container {
@@ -528,10 +539,19 @@ dialog.budget-dialogs[open] {
     color: var(--white);
     border-radius: 0.75rem;
     padding-block: 1rem;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 80%;
+    }
   }
 
   & .no-btn {
     color: var(--grey-500);
+    &:hover {
+      cursor: pointer;
+      color: var(--grey-900);
+    }
   }
   & > button {
     text-align: center;
@@ -646,6 +666,10 @@ dialog.budget-dialogs[open] {
 
         padding-block: 0.75rem;
         padding-inline: 1.25rem 0.90625rem;
+        &:hover {
+          cursor: pointer;
+          border: 1px solid var(--grey-900);
+        }
       }
       & span {
         display: flex;
@@ -656,6 +680,10 @@ dialog.budget-dialogs[open] {
         border: 1px solid transparent;
         &.input-container {
           position: relative;
+
+          &:hover {
+            cursor: pointer;
+          }
 
           &::before {
             position: absolute;
@@ -694,6 +722,11 @@ dialog.budget-dialogs[open] {
           border: 2px solid var(--red);
         }
 
+        &:hover {
+          cursor: pointer;
+          border: 1px solid var(--grey-900);
+        }
+
         /* &:focus {
           border: 2px solid blue;
         } */
@@ -716,6 +749,10 @@ dialog.budget-dialogs[open] {
     background-color: var(--grey-900);
     padding-block: 1rem;
     border-radius: 0.5rem;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
   & .theme-circle {
     border-radius: 50%;
@@ -767,6 +804,11 @@ dialog.budget-dialogs[open] {
       height: max-content;
       border: 1px solid var(--beige-500);
       border-radius: 0.5rem;
+
+      &:hover {
+        cursor: pointer;
+        border-color: var(--grey-900);
+      }
 
       &#sort-by-btn {
         min-width: 4.9511rem;
@@ -891,6 +933,11 @@ main {
       padding-block: 1rem;
       border-radius: 0.5rem;
       font-size: 0.875rem;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 50%;
+      }
     }
   }
 }
@@ -927,6 +974,10 @@ main {
 
   & svg {
     min-height: 1.5rem;
+  }
+  &:hover {
+    cursor: pointer;
+    color: var(--white);
   }
 }
 
@@ -1183,6 +1234,11 @@ main {
     color: var(--grey-500);
     align-items: center;
     justify-content: center;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--grey-900);
+    }
   }
 }
 .balance-current {
@@ -1230,6 +1286,10 @@ main {
 
   inline-size: clamp(10.0625rem, 16.6579rem + -13.7405vw, 13.4375rem);
 
+  &:hover {
+    cursor: pointer;
+    border-color: var(--grey-900);
+  }
   & input {
     min-width: 0;
     border-radius: 0.5rem;
@@ -1284,6 +1344,10 @@ main {
 
     & span {
       display: none;
+    }
+    &:hover {
+      cursor: pointer;
+      color: var(--white);
     }
   }
 
@@ -1538,6 +1602,12 @@ thead {
   padding-inline: 1rem;
   border-radius: 0.5rem;
 
+  &:hover {
+    cursor: pointer;
+    background-color: var(--grey-900);
+    color: var(--white);
+  }
+
   & img {
     padding-block: 0.9375rem;
   }
@@ -1561,6 +1631,13 @@ thead {
     border-radius: 0.5rem;
     font-size: 0.875rem;
     line-height: 1.5;
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--grey-900);
+      color: var(--white);
+      opacity: 50%;
+    }
 
     &.active {
       background-color: var(--grey-900);

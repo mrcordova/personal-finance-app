@@ -1553,6 +1553,7 @@ const currentActiveLiEle = document.querySelector("li.checked");
 
 const clone =
   templates[`${currentActiveLiEle.dataset.menu}`].content.cloneNode(true);
+// console.log();
 main.replaceChildren(clone);
 localStorage.setItem("hasCodeRunBefore", true);
 // }
