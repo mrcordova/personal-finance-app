@@ -135,31 +135,70 @@
           <img src="./assets/images/icon-caret-right.svg" alt="right caret" />
         </button>
       </div>
-      <div
-        class="budget-chart"
-        style="
-          background: conic-gradient(
-            at 50% 50%,
-            var(--green) 0%,
-            var(--green) 4.437869822485207%,
-            var(--cyan) 4.437869822485207%,
-            var(--cyan) 48.81656804733728%,
-            var(--yellow) 48.81656804733728%,
-            var(--yellow) 88.16568047337279%,
-            var(--navy) 88.16568047337279%,
-            var(--navy) 100%
-          );
-        ">
-        <div>
-          <p class="public-sans-regular">
-            <span
-              data-total-spend="338"
-              data-total-limit="975"
-              class="public-sans-bold">
-              $338
-            </span>
-            of $975 limit
-          </p>
+
+      <div class="overview-budgets-info">
+        <div class="overview-budgets-chart">
+          <div
+            class="budget-chart"
+            style="
+              background: conic-gradient(
+                at 50% 50%,
+                var(--green) 0%,
+                var(--green) 4.437869822485207%,
+                var(--cyan) 4.437869822485207%,
+                var(--cyan) 48.81656804733728%,
+                var(--yellow) 48.81656804733728%,
+                var(--yellow) 88.16568047337279%,
+                var(--navy) 88.16568047337279%,
+                var(--navy) 100%
+              );
+            ">
+            <div>
+              <p class="public-sans-regular">
+                <span
+                  data-total-spend="338"
+                  data-total-limit="975"
+                  class="public-sans-bold">
+                  $338
+                </span>
+                of $975 limit
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="overview-budgets-summary">
+          <div>
+            <div class="pots-layout">
+              <div data-theme="green"></div>
+              <div class="summary-member">
+                <p class="public-sans-regular">Entertainment</p>
+                <p>$50.00</p>
+              </div>
+            </div>
+            <div class="pots-layout">
+              <div data-theme="cyan"></div>
+              <div class="summary-member">
+                <p class="public-sans-regular">Bills</p>
+                <p>$750.00</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="pots-layout">
+              <div data-theme="yellow"></div>
+              <div class="summary-member">
+                <p class="public-sans-regular">Dining Out</p>
+                <p>$75.00</p>
+              </div>
+            </div>
+            <div class="pots-layout">
+              <div data-theme="navy"></div>
+              <div class="summary-member">
+                <p class="public-sans-regular">Personal Care</p>
+                <p>$100.00</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
