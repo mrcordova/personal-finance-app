@@ -99,6 +99,7 @@ const callback = (mutationList, observer) => {
       const mainBudgets = document.querySelector(".main-budgets");
       const mainPots = document.querySelector(".main-pots");
       const mainRecurring = document.querySelector(".main-recurring");
+      const mainOverview = document.querySelector(".main-overview");
       // console.log(mainPots);
       if (mainTransaction) {
         observer.disconnect();
@@ -1387,6 +1388,14 @@ const callback = (mutationList, observer) => {
                 data["balance"].current
               );
               addToDialog.close();
+              pots.forEach((pot) => {
+                if (
+                  pot.theme ===
+                  getKeyByValue(themes, budgetCard.dataset.colorTag)
+                ) {
+                  pot.total = parseFloat(potTotal);
+                }
+              });
             }
           }
         });
@@ -1487,6 +1496,14 @@ const callback = (mutationList, observer) => {
                 data["balance"].current
               );
               withdrawDialog.close();
+              pots.forEach((pot) => {
+                if (
+                  pot.theme ===
+                  getKeyByValue(themes, budgetCard.dataset.colorTag)
+                ) {
+                  pot.total = parseFloat(potTotal);
+                }
+              });
             }
           }
         });
@@ -1653,6 +1670,28 @@ const callback = (mutationList, observer) => {
             );
           });
         });
+      } else if (mainOverview) {
+        observer.disconnect();
+        console.log(mainOverview);
+        const options = { style: "currency", currency: "USD" };
+        const [balance, income, expenses] =
+          mainOverview.querySelectorAll("[data-total-bill]");
+        let balanceText = data["balance"].current.toFixed(2);
+        balance.setAttribute("data-total-bill", data["balance"].current);
+        balance.textContent = `${parseFloat(
+          data["balance"].current
+        ).toLocaleString("en", options)}`;
+        income.setAttribute("data-total-bill", data["balance"].income);
+        income.textContent = `${parseFloat(
+          data["balance"].income
+        ).toLocaleString("en", options)}`;
+        expenses.setAttribute("data-total-bill", data["balance"].expenses);
+        expenses.textContent = `${parseFloat(
+          data["balance"].expenses
+        ).toLocaleString("en", options)}`;
+        // console.log(balance);
+        // const [one, teo, dfs] = balance.children;
+        // console.log(balance);
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
