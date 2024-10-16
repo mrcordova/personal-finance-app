@@ -404,6 +404,7 @@ const callback = (mutationList, observer) => {
               const categorySummartObj = {};
 
               budgets.push(budgetCardObj);
+              localStorage.setItem("budgets", JSON.stringify(budgets));
 
               categorySummartObj[`${themes[budgetCardObj.theme]}`] = {
                 theme: themes[budgetCardObj.theme],
@@ -687,6 +688,8 @@ const callback = (mutationList, observer) => {
                 }
               });
 
+              localStorage.setItem("budgets", JSON.stringify(budgets));
+
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
               budgetCard.setAttribute("data-color-tag", theme);
@@ -754,6 +757,8 @@ const callback = (mutationList, observer) => {
                 .indexOf(`${oldTheme}`);
 
               budgets.splice(idxOfBudgetCard, 1);
+
+              localStorage.setItem("budgets", JSON.stringify(budgets));
 
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
@@ -967,7 +972,7 @@ const callback = (mutationList, observer) => {
 
               const category = actions[0].children[0].value;
 
-              console.log(category);
+              // console.log(category);
 
               const potCardObj = {
                 name: category,
@@ -980,6 +985,8 @@ const callback = (mutationList, observer) => {
               };
 
               pots.push(potCardObj);
+
+              localStorage.setItem("pots", JSON.stringify(pots));
 
               createPotCard(mainPots, potCardObj);
 
@@ -1197,6 +1204,8 @@ const callback = (mutationList, observer) => {
                 }
               });
 
+              localStorage.setItem("pots", JSON.stringify(pots));
+
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
               budgetCard.setAttribute("data-color-tag", theme);
@@ -1237,6 +1246,7 @@ const callback = (mutationList, observer) => {
                 .indexOf(`${oldTheme}`);
 
               pots.splice(idxOfPotCard, 1);
+              localStorage.setItem("pots", JSON.stringify(pots));
 
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
@@ -1251,6 +1261,8 @@ const callback = (mutationList, observer) => {
               }
 
               balance.current += parseFloat(budgetCard.dataset.spend);
+
+              localStorage.setItem("balance", JSON.stringify(balance));
 
               budgetCard.remove();
             }
@@ -1363,6 +1375,9 @@ const callback = (mutationList, observer) => {
                   pot.total = parseFloat(potTotal);
                 }
               });
+
+              localStorage.setItem("pots", JSON.stringify(pots));
+              localStorage.setItem("balance", JSON.stringify(balance));
             }
           }
         });
@@ -1468,6 +1483,9 @@ const callback = (mutationList, observer) => {
                   pot.total = parseFloat(potTotal);
                 }
               });
+
+              localStorage.setItem("pots", JSON.stringify(pots));
+              localStorage.setItem("balance", JSON.stringify(balance));
             }
           }
         });
