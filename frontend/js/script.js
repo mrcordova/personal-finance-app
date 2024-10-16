@@ -54,10 +54,24 @@ const sortByFuncs = {
   highest: sortByHighestAmount,
   lowest: sortByLowestAmount,
 };
-const transactions = data["transactions"];
-const budgets = data["budgets"];
-const pots = data["pots"];
-
+if (!("transactions" in localStorage)) {
+  localStorage.setItem("transactions", JSON.stringify(data["transactions"]));
+}
+if (!("budgets" in localStorage)) {
+  localStorage.setItem("budgets", JSON.stringify(data["budgets"]));
+}
+if (!("pots" in localStorage)) {
+  localStorage.setItem("pots", JSON.stringify(data["pots"]));
+}
+if (!("balance" in localStorage)) {
+  localStorage.setItem("balance", JSON.stringify(data["balance"]));
+}
+console.log(localStorage);
+const transactions =
+  JSON.parse(localStorage.getItem("transactions")) || data["transactions"];
+const budgets = JSON.parse(localStorage.getItem("budgets")) || data["budgets"];
+const pots = JSON.parse(localStorage.getItem("pots")) || data["pots"];
+const balance = JSON.parse(localStorage.getItem("balance")) || data["balance"];
 const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
 let budgetCard;
 // Initialize the DOM parser
@@ -1236,7 +1250,7 @@ const callback = (mutationList, observer) => {
                 theme.style = ``;
               }
 
-              data["balance"].current += parseFloat(budgetCard.dataset.spend);
+              balance.current += parseFloat(budgetCard.dataset.spend);
 
               budgetCard.remove();
             }
@@ -1336,9 +1350,9 @@ const callback = (mutationList, observer) => {
                 ".pot-total"
               ).textContent = `$${parseFloat(potTotal).toFixed(2)}`;
 
-              data["balance"].current -= Math.min(
+              balance.current -= Math.min(
                 parseFloat(potTotal),
-                data["balance"].current
+                balance.current
               );
               addToDialog.close();
               pots.forEach((pot) => {
@@ -1441,9 +1455,9 @@ const callback = (mutationList, observer) => {
                 ".pot-total"
               ).textContent = `$${parseFloat(potTotal).toFixed(2)}`;
 
-              data["balance"].current += Math.min(
+              balance.current += Math.min(
                 parseFloat(potTotal),
-                data["balance"].current
+                balance.current
               );
               withdrawDialog.close();
               pots.forEach((pot) => {
@@ -1623,21 +1637,25 @@ const callback = (mutationList, observer) => {
         const options = { style: "currency", currency: "USD" };
 
         // balance section
-        const [balance, income, expenses] =
+        const [balanceText, income, expenses] =
           mainOverview.querySelectorAll("[data-total-bill]");
-        let balanceText = data["balance"].current.toFixed(2);
-        balance.setAttribute("data-total-bill", data["balance"].current);
-        balance.textContent = `${parseFloat(
-          data["balance"].current
-        ).toLocaleString("en", options)}`;
-        income.setAttribute("data-total-bill", data["balance"].income);
-        income.textContent = `${parseFloat(
-          data["balance"].income
-        ).toLocaleString("en", options)}`;
-        expenses.setAttribute("data-total-bill", data["balance"].expenses);
-        expenses.textContent = `${parseFloat(
-          data["balance"].expenses
-        ).toLocaleString("en", options)}`;
+        // let balanceText = balance.current.toFixed(2);
+        // console.log(balance);
+        balanceText.setAttribute("data-total-bill", balance.current);
+        balanceText.textContent = `${parseFloat(balance.current).toLocaleString(
+          "en",
+          options
+        )}`;
+        income.setAttribute("data-total-bill", balance.income);
+        income.textContent = `${parseFloat(balance.income).toLocaleString(
+          "en",
+          options
+        )}`;
+        expenses.setAttribute("data-total-bill", balance.expenses);
+        expenses.textContent = `${parseFloat(balance.expenses).toLocaleString(
+          "en",
+          options
+        )}`;
 
         // Pots section
 
