@@ -1687,7 +1687,10 @@ const callback = (mutationList, observer) => {
       } else if (mainOverview) {
         observer.disconnect();
         console.log(mainOverview);
+
         const options = { style: "currency", currency: "USD" };
+
+        // balance section
         const [balance, income, expenses] =
           mainOverview.querySelectorAll("[data-total-bill]");
         let balanceText = data["balance"].current.toFixed(2);
@@ -1703,9 +1706,45 @@ const callback = (mutationList, observer) => {
         expenses.textContent = `${parseFloat(
           data["balance"].expenses
         ).toLocaleString("en", options)}`;
-        // console.log(balance);
-        // const [one, teo, dfs] = balance.children;
-        // console.log(balance);
+
+        // Pots section
+
+        const totalPotSaved = mainOverview.querySelector("[data-pot-total]");
+        const total = pots.reduce((accumator, currVal) => {
+          return accumator + currVal.total;
+        }, 0);
+        totalPotSaved.setAttribute("data-pot-total", total);
+        totalPotSaved.textContent = `${total.toLocaleString("en", options)}`;
+        const length = Math.min(pots.length, 4);
+        const overviewPotsSummary = mainOverview.querySelector(
+          ".overview-pots-summary"
+        );
+
+        for (let index = 0; index < length; index += 2) {
+          overviewPotsSummary.insertAdjacentHTML(
+            "beforeend",
+            `  <div>
+            <div class="pots-layout">
+              <div data-theme="${themes[pots[index].theme]}"></div>
+              <div class="summary-member">
+                <p class="public-sans-regular">${pots[index].name}</p>
+                <p>$${pots[index].total}</p>
+              </div>
+            </div>
+            <div class="pots-layout">
+              <div data-theme="${themes[pots[index + 1].theme]}"></div>
+              <div class="summary-member">
+                <p class="public-sans-regular">${pots[index + 1].name}</p>
+                <p>$${pots[index + 1].total}</p>
+              </div>
+            </div>
+          </div>
+            `
+          );
+        }
+
+        // Transactions
+        // console.log(length);
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
@@ -2411,7 +2450,9 @@ main.addEventListener("click", async (e) => {
   const withdrawBtn = e.target.closest('button[data-action="withdraw"]');
 
   const seeAllBtn = e.target.closest("button[data-action='see-all'");
+  const goToBtn = e.target.closest("button[data-go-to]");
   // console.log(budgetDialogEditBtn);
+  // console.log(seeAllBtn);
 
   if (pageButton) {
     currentTransactionsPage =
@@ -2641,7 +2682,6 @@ main.addEventListener("click", async (e) => {
       budgetEditBtn.dataset.budgetShow === "true" ? "false" : "true"
     );
   } else if (budgetDialogEditBtn) {
-    // console.log(budgetDialogEditBtn);
     budgetDialogEditBtn.nextElementSibling.classList.toggle(
       "show-drop-content",
       budgetDialogEditBtn.dataset.budgetDialogShow === "true" ? true : false
@@ -2661,10 +2701,17 @@ main.addEventListener("click", async (e) => {
     observer.observe(main, config);
     const clone = templates[`${liEle.dataset.menu}`].content.cloneNode(true);
     main.replaceChildren(clone);
+  } else if (goToBtn) {
+    const liEle = document.querySelector(
+      `[data-menu='${goToBtn.dataset.goTo}']`
+    );
+    const currentActiveLiEle = document.querySelector("li[data-menu].checked");
+    currentActiveLiEle.classList.remove("checked");
+    liEle.classList.add("checked");
 
-    // updateDisplay();
-    console.log(searchOption.category);
-    // console.log(category);
+    observer.observe(main, config);
+    const clone = templates[`${liEle.dataset.menu}`].content.cloneNode(true);
+    main.replaceChildren(clone);
   } else if (addToBtn) {
     e.preventDefault();
 
