@@ -1782,6 +1782,14 @@ const callback = (mutationList, observer) => {
           ".overview-budgets-summary"
         );
         const budgetsLength = budgets.length;
+        const budgetTotal = budgets.reduce((accumator, currVal) => {
+          return accumator + currVal.maximum;
+        }, 0);
+        const budgetNums = mainOverview.querySelector("[data-total-spend]");
+        let budgetSpendtotal = 0;
+        // console.log(budgetNums.nextSibling);
+        budgetNums.nextSibling.textContent = `of $${budgetTotal} limit`;
+        // console.log(budgetTotal);
         for (let index = 0; index < budgetsLength; index += 2) {
           overviewBudgetSummary.insertAdjacentHTML(
             "beforeend",
@@ -1816,6 +1824,15 @@ const callback = (mutationList, observer) => {
             `
           );
         }
+
+        for (const budget of budgets) {
+          const latestSpending = getSpendingAmountForMonth(budget.category);
+
+          // console.log(latestSpending);
+          budgetSpendtotal += latestSpending;
+        }
+        // console.log(budgetSpendtotal);
+        budgetNums.textContent = `$${Math.abs(budgetSpendtotal)}`;
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
