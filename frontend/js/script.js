@@ -26,9 +26,7 @@ const searchOption = {
   previousCategory: "all transactions",
   search: "",
 };
-// const isnum = (val) => /^\d+$/.test(val);
 const isNum = (val) => /^\d+[.]*\d*$/.test(val);
-// console.log(parseFloat("5"));
 
 const themes = {
   "#82C9D7": "cyan",
@@ -59,10 +57,9 @@ const sortByFuncs = {
 const transactions = data["transactions"];
 const budgets = data["budgets"];
 const pots = data["pots"];
+
 const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
-// console.log(currentMonth);
 let budgetCard;
-// console.log(main);
 // Initialize the DOM parser
 const parser = new DOMParser();
 
@@ -77,7 +74,6 @@ function createDate(date) {
 }
 
 function checkMaxInput(e) {
-  // console.log(isNum(e.target.value) && e.target.value != "");
   e.target.classList.toggle("input-error", !isNum(e.target.value));
 }
 // Parse the text
@@ -100,11 +96,9 @@ const callback = (mutationList, observer) => {
       const mainPots = document.querySelector(".main-pots");
       const mainRecurring = document.querySelector(".main-recurring");
       const mainOverview = document.querySelector(".main-overview");
-      // console.log(mainPots);
       if (mainTransaction) {
         observer.disconnect();
         transactionsUpdate();
-        // console.log(transactionItems);
         updateDisplay();
         const searchInput = main.querySelector("#search-transaction");
         searchInput.addEventListener("input", (e) => {
@@ -125,8 +119,6 @@ const callback = (mutationList, observer) => {
             currentTransactionsPage
           );
 
-          // console.log(paginatedData);
-
           const dataSet = new Set(paginatedData);
           const totalPages = Math.ceil(filteredNames.length / itemsPerPage);
 
@@ -135,7 +127,6 @@ const callback = (mutationList, observer) => {
           pageNumberContainer.replaceChildren();
 
           for (let index = 0; index < totalPages; index++) {
-            // console.log(index);
             pageNumberContainer.insertAdjacentHTML(
               "beforeend",
               `<button  data-nav="" data-page="${index}" >${index + 1}</button>`
@@ -151,7 +142,6 @@ const callback = (mutationList, observer) => {
       } else if (mainBudgets) {
         observer.disconnect();
 
-        // console.log(mainBudgets);
         const chartCard = mainBudgets.querySelector(".chart-card");
         const spendingObjs = {};
         const budgetCards = mainBudgets.querySelector(".budget-cards");
@@ -168,9 +158,6 @@ const callback = (mutationList, observer) => {
             theme: themes[budget.theme],
           };
         }
-        // budgetCardItems = budgetCards;
-
-        // console.log(budgetCardItems);
 
         const totalSpend = accumalateAmount`${spendingObjs}`;
         const totalLimit = accumalateAmount`limit${spendingObjs}`;
@@ -223,7 +210,6 @@ const callback = (mutationList, observer) => {
         for (const maxAmountInput of maxAmountInputs) {
           maxAmountInput.addEventListener("input", checkMaxInput);
         }
-        // console.log(prevThemeChoice);
         newDialog.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
@@ -231,18 +217,15 @@ const callback = (mutationList, observer) => {
           const btnAction = e.target.closest("[data-action]");
 
           if (btnAction) {
-            // console.log("============end===============");
             if (btnAction.dataset.action === "close") {
               const maxInput = newDialog.querySelector(
                 '[data-action="max-spending"]'
               );
               maxInput.classList.toggle("input-error", false);
               maxInput.value = "";
-              // console.log(e.target);
               const menuValues = main.querySelectorAll(
                 `li:has([data-theme="${prevThemeChoice}"])`
               );
-              // console.log(prevThemeChoice);
 
               for (const menuValue of menuValues) {
                 const theme = menuValue.querySelector("[data-theme]");
@@ -255,7 +238,6 @@ const callback = (mutationList, observer) => {
             } else if (btnAction.dataset.action === "tag") {
               prevThemeChoice = btnAction.children[0].children[0].dataset.theme;
 
-              // console.log(btnAction);
               btnAction.children[1].setAttribute(
                 "style",
                 `${
@@ -324,7 +306,6 @@ const callback = (mutationList, observer) => {
                 mainSpan.replaceWith(btnSpanClone);
 
                 for (const menuValue of menuValues) {
-                  // console.log(menuValue);
                   const theme = menuValue.querySelector("[data-theme]");
 
                   menuValue.setAttribute("data-used", "true");
@@ -332,7 +313,6 @@ const callback = (mutationList, observer) => {
                   theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
                 }
                 prevThemeChoice = newTheme;
-                // console.log("value clicked");
                 btnAction.parentElement.previousElementSibling.children[1].setAttribute(
                   "style",
                   `${
@@ -362,7 +342,6 @@ const callback = (mutationList, observer) => {
                 );
               }
             } else if (btnAction.dataset.action === "max-spending") {
-              // console.log("here");
             } else if (btnAction.dataset.action === "add-budget") {
               const budgetCards = main.querySelector(".budget-cards");
               const totalSpend = main.querySelector(
@@ -425,7 +404,6 @@ const callback = (mutationList, observer) => {
                 createCategoryElements("", categorySummartObj)
               );
 
-              // console.log(budgetChart);
               createBudgetChart(
                 budgetChart.parentElement.nextElementSibling,
                 budgetChart
@@ -463,7 +441,6 @@ const callback = (mutationList, observer) => {
                 `li:has([data-theme="${tagBtn.children[0].children[0].dataset.theme}"])`
               );
 
-              // console.log(menuValues);
               for (const menuValue of menuValues) {
                 const theme = menuValue.querySelector("[data-theme]");
 
@@ -475,7 +452,6 @@ const callback = (mutationList, observer) => {
                 oldChoices[0].children[0].children[0].cloneNode(true);
               const mainSpan = tagBtn.children[0];
 
-              // console.log(btnSpanClone);
               mainSpan.replaceWith(btnSpanClone);
 
               for (const menuValue of oldChoices) {
@@ -489,7 +465,6 @@ const callback = (mutationList, observer) => {
               editDialog.close();
               budgetCard = null;
             } else if (btnAction.dataset.action === "tag") {
-              // possibly set prevThemeChoice here
               btnAction.children[1].setAttribute(
                 "style",
                 `${
@@ -529,7 +504,6 @@ const callback = (mutationList, observer) => {
               const mainBtnAction =
                 btnAction.parentElement.previousElementSibling.dataset.action;
               if (mainBtnAction === "tag") {
-                // updateThemeChoice(btnAction);
                 const newTheme =
                   btnAction.children[0].children[0].children[0].dataset.theme;
 
@@ -559,7 +533,6 @@ const callback = (mutationList, observer) => {
                 mainSpan.replaceWith(btnSpanClone);
 
                 for (const menuValue of menuValues) {
-                  // console.log(menuValue);
                   const theme = menuValue.querySelector("[data-theme]");
 
                   menuValue.setAttribute("data-used", "true");
@@ -682,7 +655,6 @@ const callback = (mutationList, observer) => {
                 parseFloat(max) - parseFloat(spendForMonth)
               )}`;
 
-              // console.log(budgetChart);
               createBudgetChart(
                 budgetChart.nextElementSibling,
                 budgetChart.children[0]
@@ -700,7 +672,6 @@ const callback = (mutationList, observer) => {
                   budget.theme = getKeyByValue(themes, theme);
                 }
               });
-              // console.log(budgets);
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
@@ -732,7 +703,6 @@ const callback = (mutationList, observer) => {
           );
           if (btn) {
             const choice = btn.dataset.action;
-            // console.log(btn);
             if (choice && choice === "delete") {
               const chartSummary =
                 budgetChart.parentElement.nextElementSibling.querySelector(
@@ -771,8 +741,6 @@ const callback = (mutationList, observer) => {
 
               budgets.splice(idxOfBudgetCard, 1);
 
-              // console.log(budgets);
-
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
               );
@@ -795,7 +763,6 @@ const callback = (mutationList, observer) => {
           optionDropdown?.setAttribute("data-budget-show", "true");
         });
       } else if (mainPots) {
-        // console.log(mainPots);
         observer.disconnect();
         const potsObjs = {};
         for (const pot of pots) {
@@ -827,7 +794,6 @@ const callback = (mutationList, observer) => {
               "input-error",
               e.target.value.length > 30 || e.target.value.length === 0
             );
-            // console.log(charactersEle.textContent);
             charactersEle.textContent = `${
               30 - parseInt(e.target.value.length)
             } of 30 characters left`;
@@ -936,7 +902,6 @@ const callback = (mutationList, observer) => {
                   theme.style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
                 }
                 prevThemeChoice = newTheme;
-                // console.log("value clicked");
                 btnAction.parentElement.previousElementSibling.children[1].setAttribute(
                   "style",
                   `${
@@ -967,13 +932,10 @@ const callback = (mutationList, observer) => {
               }
             } else if (btnAction.dataset.action === "max-spending") {
             } else if (btnAction.dataset.action === "add-budget") {
-              // const potCards = main.querySelector(".main-pots");
-
               const actions = newDialog.querySelectorAll(
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
 
-              // console.log(actions[0].children[0].value.length);
               const validatePotName =
                 actions[0].children[0].value.length <= 0 ||
                 actions[0].children[0].value.length > 30;
@@ -1037,7 +999,6 @@ const callback = (mutationList, observer) => {
                 `li:has([data-theme="${tagBtn.children[0].children[0].dataset.theme}"])`
               );
 
-              // console.log(menuValues);
               for (const menuValue of menuValues) {
                 const theme = menuValue.querySelector("[data-theme]");
 
@@ -1049,7 +1010,6 @@ const callback = (mutationList, observer) => {
                 oldChoices[0].children[0].children[0].cloneNode(true);
               const mainSpan = tagBtn.children[0];
 
-              // console.log(btnSpanClone);
               mainSpan.replaceWith(btnSpanClone);
 
               for (const menuValue of oldChoices) {
@@ -1063,7 +1023,6 @@ const callback = (mutationList, observer) => {
               editDialog.close();
               budgetCard = null;
             } else if (btnAction.dataset.action === "tag") {
-              // possibly set prevThemeChoice here
               btnAction.children[1].setAttribute(
                 "style",
                 `${
@@ -1103,7 +1062,6 @@ const callback = (mutationList, observer) => {
               const mainBtnAction =
                 btnAction.parentElement.previousElementSibling.dataset.action;
               if (mainBtnAction === "tag") {
-                // updateThemeChoice(btnAction);
                 const newTheme =
                   btnAction.children[0].children[0].children[0].dataset.theme;
 
@@ -1133,7 +1091,6 @@ const callback = (mutationList, observer) => {
                 mainSpan.replaceWith(btnSpanClone);
 
                 for (const menuValue of menuValues) {
-                  // console.log(menuValue);
                   const theme = menuValue.querySelector("[data-theme]");
 
                   menuValue.setAttribute("data-used", "true");
@@ -1173,19 +1130,12 @@ const callback = (mutationList, observer) => {
                 '[data-action="category"], [data-action="tag"], [data-action="max-spending"]'
               );
 
-              // console.log(actions);
               const themesEle = budgetCard.querySelectorAll(`[data-theme]`);
               const theme = actions[2].children[0].children[0].dataset.theme;
               const category = actions[0].children[0].value;
               const max = parseFloat(actions[1].value).toFixed(2);
               const percentage =
                 (parseFloat(budgetCard.dataset.spend) / max) * 100;
-
-              // console.log(actions[0].children[0]);
-              // if (!isNum(actions[1].value)) {
-              //   actions[1].classList.toggle("input-error", true);
-              //   return;
-              // }
 
               const validatePotName =
                 actions[0].children[0].value.length <= 0 ||
@@ -1200,7 +1150,6 @@ const callback = (mutationList, observer) => {
                 return;
               }
 
-              // console.log(category);
               themesEle[0].setAttribute("data-theme", theme);
               themesEle[0].nextSibling.nodeValue = category;
 
@@ -1226,7 +1175,6 @@ const callback = (mutationList, observer) => {
                 budgetCard.dataset.colorTag
               );
 
-              // console.log(pots);
               pots.forEach((pot) => {
                 if (pot.theme === oldTheme) {
                   pot.name = category;
@@ -1234,12 +1182,10 @@ const callback = (mutationList, observer) => {
                   pot.theme = getKeyByValue(themes, theme);
                 }
               });
-              // console.log(pots);
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
               budgetCard.setAttribute("data-color-tag", theme);
-              // budgetCard.setAttribute("data-spend", spendForMonth * -1);
 
               const themeBtn = editDialog.querySelector('[data-action="tag"]');
               const menu = themeBtn.nextElementSibling;
@@ -1266,7 +1212,6 @@ const callback = (mutationList, observer) => {
           );
           if (btn) {
             const choice = btn.dataset.action;
-            // console.log(btn);
             if (choice && choice === "delete") {
               const oldTheme = getKeyByValue(
                 themes,
@@ -1278,8 +1223,6 @@ const callback = (mutationList, observer) => {
                 .indexOf(`${oldTheme}`);
 
               pots.splice(idxOfPotCard, 1);
-
-              // console.log(pots);
 
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
@@ -1317,14 +1260,12 @@ const callback = (mutationList, observer) => {
           ".pot-progress-container"
         );
         amountToAddInput.addEventListener("input", (e) => {
-          // console.log(potProgressCont);
           const inputVal = e.target.value || 0;
           if (isNum(inputVal)) {
             const newVal = Math.min(
               parseFloat(budgetCard.dataset.spend) + parseFloat(inputVal),
               budgetCard.dataset.maxAmount
             );
-            // console.log(newVal);
             const currentPercentage = (
               (budgetCard.dataset.spend / budgetCard.dataset.maxAmount) *
               100
@@ -1371,7 +1312,6 @@ const callback = (mutationList, observer) => {
               addToDialog.querySelector(".pot-numbers").style = "";
               amountToAddInput.classList.toggle("input-error", false);
             } else if (btnAction.dataset.action === "confirm-addition") {
-              // console.log("here");
               if (
                 amountToAddInput.value.length == 0 ||
                 !isNum(amountToAddInput.value)
@@ -1395,8 +1335,7 @@ const callback = (mutationList, observer) => {
               budgetCard.querySelector(
                 ".pot-total"
               ).textContent = `$${parseFloat(potTotal).toFixed(2)}`;
-              // console.log(potTotal);
-              // console.log(value);
+
               data["balance"].current -= Math.min(
                 parseFloat(potTotal),
                 data["balance"].current
@@ -1429,7 +1368,6 @@ const callback = (mutationList, observer) => {
               parseFloat(budgetCard.dataset.spend) - parseFloat(inputVal),
               0
             );
-            // console.log(newVal);
             const currentPercentage = (
               (budgetCard.dataset.spend / budgetCard.dataset.maxAmount) *
               100
@@ -1478,7 +1416,6 @@ const callback = (mutationList, observer) => {
               withdrawDialog.querySelector(".pot-numbers").style = "";
               amountToWithdrawInput.classList.toggle("input-error", false);
             } else if (btnAction.dataset.action === "confirm-addition") {
-              // console.log("here");
               if (
                 amountToWithdrawInput.value.length == 0 ||
                 !isNum(amountToWithdrawInput.value)
@@ -1503,8 +1440,7 @@ const callback = (mutationList, observer) => {
               budgetCard.querySelector(
                 ".pot-total"
               ).textContent = `$${parseFloat(potTotal).toFixed(2)}`;
-              // console.log(potTotal);
-              // console.log(value);
+
               data["balance"].current += Math.min(
                 parseFloat(potTotal),
                 data["balance"].current
@@ -1523,7 +1459,6 @@ const callback = (mutationList, observer) => {
         });
       } else if (mainRecurring) {
         observer.disconnect();
-        // const vendorSet = new Set();
         let objMap = new Map();
         let summaryMap = new Map();
         const tbody = mainRecurring.querySelector("tbody[data-vendors]");
@@ -1547,7 +1482,6 @@ const callback = (mutationList, observer) => {
             return a[1].day - b[1].day;
           })
         );
-        // console.log(objMap.entries());
         const currentDay = new Date(
           data["transactions"][0].date
         ).toLocaleDateString("en-Au", {
@@ -1674,7 +1608,6 @@ const callback = (mutationList, observer) => {
         recurringBillItems = Array.from(tbody.getElementsByTagName("tr"));
 
         searchBills.addEventListener("input", (e) => {
-          // console.log(e.target.value);
           recurringBillItems.forEach((item, index) => {
             item.classList.toggle(
               "hidden",
@@ -1686,7 +1619,6 @@ const callback = (mutationList, observer) => {
         });
       } else if (mainOverview) {
         observer.disconnect();
-        // console.log(mainOverview);
 
         const options = { style: "currency", currency: "USD" };
 
@@ -1776,7 +1708,6 @@ const callback = (mutationList, observer) => {
           </tr>`
           );
         }
-        // console.log(length);
         // Budgets
         const overviewBudgetSummary = mainOverview.querySelector(
           ".overview-budgets-summary"
@@ -1787,9 +1718,7 @@ const callback = (mutationList, observer) => {
         }, 0);
         const budgetNums = mainOverview.querySelector("[data-total-spend]");
         let budgetSpendtotal = 0;
-        // console.log(budgetNums.nextSibling);
         budgetNums.nextSibling.textContent = `of $${budgetTotal} limit`;
-        // console.log(budgetTotal);
         for (let index = 0; index < budgetsLength; index += 2) {
           overviewBudgetSummary.insertAdjacentHTML(
             "beforeend",
@@ -1871,7 +1800,6 @@ const callback = (mutationList, observer) => {
             return a[1].day - b[1].day;
           })
         );
-        // console.log(objMap.entries());
         const currentDay = new Date(
           data["transactions"][0].date
         ).toLocaleDateString("en-Au", {
@@ -1913,7 +1841,6 @@ const callback = (mutationList, observer) => {
             });
           }
         }
-        // console.log(summaryMap);
 
         overviewRecurringSummary.insertAdjacentHTML(
           "beforeend",
@@ -1948,15 +1875,12 @@ const callback = (mutationList, observer) => {
 const observer = new MutationObserver(callback);
 observer.observe(main, config);
 
-// if (!("hasCodeRunBefore" in localStorage)) {
 const currentActiveLiEle = document.querySelector("li.checked");
 
 const clone =
   templates[`${currentActiveLiEle.dataset.menu}`].content.cloneNode(true);
-// console.log();
 main.replaceChildren(clone);
 localStorage.setItem("hasCodeRunBefore", true);
-// }
 
 // helper function for retrieving templates from html
 async function extractTemplate(id) {
@@ -2174,7 +2098,6 @@ function createCategoryElements(strings, obj) {
 
   for (const [key, value] of Object.entries(obj)) {
     const title = value.category;
-    // console.log(title);
     const { theme, max, spending } = value;
     finalStr += `
           <div class="chart-category">
@@ -2224,7 +2147,6 @@ function transactionsUpdate() {
       amountTemp.substring(0, pos) +
       "$" +
       amountTemp.substring(pos);
-    // console.log(temp);
     transactionsTable.insertAdjacentHTML(
       "beforeend",
       `  <tr data-category="${transaction.category}" data-name="${
@@ -2261,18 +2183,15 @@ function transactionsUpdate() {
   // recieve transaction rows
   transactionItems = Array.from(transactionsTable.getElementsByTagName("tr"));
 
-  // console.log(mutation);
   createPageButtons();
   updateActiveButtonState();
   showPage(currentTransactionsPage);
 }
-// console.log(templates);
 function showPage(page) {
   const startIdx = page * itemsPerPage;
 
   const endIdx = startIdx + itemsPerPage;
 
-  // console.log(arr);
   transactionItems.forEach((item, index) => {
     item.classList.toggle("hidden", index < startIdx || index >= endIdx);
   });
@@ -2282,11 +2201,8 @@ function createPageButtons() {
   const totalPages = Math.ceil(transactionItems.length / itemsPerPage);
 
   const pageNumberContainer = document.querySelector(".page-number-btns");
-  // console.log(pageNumberContainer);
 
-  // const paginationContainer = document.cre
   for (let index = 0; index < totalPages; index++) {
-    // console.log(index);
     pageNumberContainer.insertAdjacentHTML(
       "beforeend",
       `<button  data-nav="" data-page="${index}" >${index + 1}</button>`
@@ -2311,7 +2227,6 @@ function paginateData(data, currentPage) {
   const endIdx = startIdx + itemsPerPage;
   return data.slice(startIdx, endIdx);
 }
-// TODO: budgets
 function getSpendingAmountForMonth(category) {
   let amountSpent = 0;
   for (const transaction of transactions) {
@@ -2351,7 +2266,6 @@ function getLatestSpending(category) {
       });
     }
   }
-  // console.log(lastThreeTransactions);
   return lastThreeTransactions.slice(0, 3);
 }
 function setUpMenuValues(spendingObjs) {
@@ -2372,7 +2286,6 @@ function setUpMenuValues(spendingObjs) {
     menuItemOne.setAttribute("data-used", "true");
     menuItemOne.children[0].setAttribute("tabindex", -1);
 
-    // console.log(themeOne);
     themeOne.setAttribute(
       "style",
       `background-color: color-mix( in srgb, var(--${themeOne.dataset.theme}) 100%, var(--white) 100%)`
@@ -2387,12 +2300,8 @@ function setUpMenuValues(spendingObjs) {
   }
 }
 function updateDisplay() {
-  // console.log(transactionItems);
   const filteredData = filterData(transactionItems);
-  // console.log(
-  //   searchOption.category.toLowerCase() ===
-  //     searchOption.previousCategory.toLowerCase()
-  // );
+
   currentTransactionsPage = checkRange(
     searchOption.category.toLowerCase() ===
       searchOption.previousCategory.toLowerCase()
@@ -2403,8 +2312,6 @@ function updateDisplay() {
   searchOption["previousCategory"] = searchOption["category"];
   const paginatedData = paginateData(filteredData, currentTransactionsPage);
 
-  // console.log(paginatedData);
-
   const dataSet = new Set(paginatedData);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
@@ -2412,7 +2319,6 @@ function updateDisplay() {
   pageNumberContainer.replaceChildren();
 
   for (let index = 0; index < totalPages; index++) {
-    // console.log(index);
     pageNumberContainer.insertAdjacentHTML(
       "beforeend",
       `<button  data-nav="" data-page="${index}" >${index + 1}</button>`
@@ -2456,7 +2362,6 @@ function sortByHighestAmount(a, b) {
   return b.dataset.amount - a.dataset.amount;
 }
 function sortByLatest(a, b) {
-  // console.log(a.parentElement.dataset.vendors);
   if (a.parentElement.getAttribute("data-vendors") != undefined) {
     return a.dataset.date - b.dataset.date;
   }
@@ -2492,13 +2397,11 @@ function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);
 }
 function updateThemeChoice(btnAction) {
-  // console.log(btnAction.parentElement.previousElementSibling);
   const dropdownBtns = main.querySelectorAll(
     `[data-action="${btnAction.parentElement.previousElementSibling.dataset.action}"]`
   );
 
   for (const dropdownBtn of dropdownBtns) {
-    // console.log(btnAction);
     const menu = dropdownBtn.nextElementSibling;
     const btnSpanClone = btnAction.children[0].children[0].cloneNode(true);
     const mainSpan = dropdownBtn.children[0];
@@ -2511,7 +2414,6 @@ function updateThemeChoice(btnAction) {
       `li:has([data-theme="${oldTheme}"])`
     );
 
-    // console.log(btnSpanClone);
     btnSpanClone.children[0].style = "";
 
     mainSpan.replaceWith(btnSpanClone);
@@ -2524,8 +2426,6 @@ function updateThemeChoice(btnAction) {
     newLiChoice.setAttribute("data-used", "true");
     newLiChoice.children[0].setAttribute("tabindex", -1);
     newLiChoice.children[0].children[0].children[0].style = `background-color: color-mix( in srgb, var(--${newTheme}) 100%, var(--white) 100%)`;
-
-    // console.log(newLiChoice);
   }
   btnAction.parentElement.classList.toggle("show-drop-content", false);
 
@@ -2535,20 +2435,11 @@ function updateThemeChoice(btnAction) {
   );
 }
 function createThemeChoice(btnAction) {
-  // const menu = btnAction.parentElement;
-
   const btnSpanClone = btnAction.children[0].children[0].cloneNode(true);
   const mainSpan = btnAction.parentElement.previousElementSibling.children[0];
-  // const oldTheme = mainSpan.children[0].dataset.theme;
   const newTheme = btnSpanClone.children[0].dataset.theme;
 
   mainSpan.replaceWith(btnSpanClone);
-
-  // const oldLiChoice = menu.querySelector(`li:has([data-theme="${oldTheme}"])`);
-  // oldLiChoice.setAttribute("data-used", "false");
-  // oldLiChoice.children[0].setAttribute("tabindex", 0);
-
-  // oldLiChoice.children[0].children[0].children[0].style = "";
 
   btnAction.setAttribute("data-used", "true");
   btnAction.children[0].setAttribute("tabindex", -1);
@@ -2576,11 +2467,8 @@ function updateCategoryChoice(btnAction) {
 }
 
 function createBudgetChart(chart, budgetChart) {
-  // console.log(chart.children);
   const spendingCategoryEles = chart.children[1].children;
-  // console.log(spendingCategoryEles);
   const spendingObjs = {};
-  // console.log(spendingCategoryEles);
   for (const spendingEle of spendingCategoryEles) {
     spendingObjs[spendingEle.children[0].dataset.theme] = {
       category: spendingEle.children[1].textContent,
@@ -2644,8 +2532,6 @@ main.addEventListener("click", async (e) => {
 
   const seeAllBtn = e.target.closest("button[data-action='see-all'");
   const goToBtn = e.target.closest("button[data-go-to]");
-  // console.log(budgetDialogEditBtn);
-  // console.log(seeAllBtn);
 
   if (pageButton) {
     currentTransactionsPage =
@@ -2699,7 +2585,6 @@ main.addEventListener("click", async (e) => {
       );
       const sortByBtn = main.querySelector("button#sort-by-btn");
       recurringBillItems.sort(sortByFuncs[btn.textContent.toLowerCase()]);
-      // console.log(recurringBillItems);
       recurringBillsTable.replaceChildren(...recurringBillItems);
 
       sortByBtn.childNodes[0].textContent = btn.textContent;
@@ -2709,7 +2594,6 @@ main.addEventListener("click", async (e) => {
         const dialogCateTitle = deleteDialog.querySelector("[data-category]");
 
         dialogCateTitle.textContent = budgetCard.dataset.category.trim();
-        // console.log("here");
         deleteDialog.showModal();
       } else if (btn && btn.dataset.action === "edit") {
         e.preventDefault();
@@ -2729,7 +2613,6 @@ main.addEventListener("click", async (e) => {
 
         const dropdownBtn = actions[2];
 
-        // console.log(actions[2]);
         const newTheme = budgetCard.dataset.colorTag;
         const menuValues = main.querySelectorAll(
           `li:has([data-theme="${newTheme}"])`
@@ -2740,7 +2623,6 @@ main.addEventListener("click", async (e) => {
         menuValues[0].children[0].children[0].children[0].style = ``;
         const btnSpanClone =
           menuValues[0].children[0].children[0].cloneNode(true);
-        // console.log(btnSpanClone);
         const mainSpan = dropdownBtn.children[0];
         mainSpan.replaceWith(btnSpanClone);
 
@@ -2788,7 +2670,6 @@ main.addEventListener("click", async (e) => {
 
         const dropdownBtn = actions[2];
 
-        // console.log(actions[2]);
         const newTheme = budgetCard.dataset.colorTag;
         const menuValues = main.querySelectorAll(
           `li:has([data-theme="${newTheme}"])`
@@ -2799,7 +2680,6 @@ main.addEventListener("click", async (e) => {
         menuValues[0].children[0].children[0].children[0].style = ``;
         const btnSpanClone =
           menuValues[0].children[0].children[0].cloneNode(true);
-        // console.log(btnSpanClone);
         const mainSpan = dropdownBtn.children[0];
         mainSpan.replaceWith(btnSpanClone);
 
@@ -2850,13 +2730,9 @@ main.addEventListener("click", async (e) => {
       );
     }
     themeBtn.children[0].replaceWith(replaceTagValue);
-
-    // console.log("here");
   } else if (budgetEditBtn) {
     budgetCard = budgetEditBtn.closest("[data-category]");
-    // console.log(budgetCard);
 
-    // console.log(budgetEditBtn.children);
     budgetEditBtn.children[0].setAttribute(
       "style",
       `${
