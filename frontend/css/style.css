@@ -70,10 +70,11 @@ body {
 }
 
 .budget-chart {
-  margin-block: 1.25rem;
-  margin-inline: 1.96875rem;
-  min-width: 15.7rem;
-  min-height: 15rem;
+  /* margin-block: 1.25rem; */
+  /* margin-inline: 1.96875rem; */
+  min-width: 15rem;
+  /* min-height: 15rem; */
+  aspect-ratio: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,6 +92,8 @@ body {
     var(--navy) 100%
   );
   & > div {
+    display: flex;
+    width: 85%;
     border-radius: 50%;
     border: 0.79rem solid hsl(from var(--white) h s l / 0.25);
 
@@ -103,8 +106,10 @@ body {
       align-items: center;
       color: var(--grey-500);
       gap: 0.5rem;
-      padding-block: 3.0625rem;
-      padding-inline: 2.5rem 2.4375rem;
+      flex: 1;
+      aspect-ratio: 1;
+      /* padding-block: 3.0625rem; */
+      /* padding-inline: 2.5rem 2.4375rem; */
       & > span {
         color: var(--grey-900);
         font-size: 2rem;
@@ -396,6 +401,22 @@ button[popovertarget] {
   /* max-height: 37.4375rem; */
   max-height: 39rem;
   flex: 0.6;
+  & .overview-budgets-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    /* border-radius: 50%; */
+    margin: auto;
+    /* & .overview-budgets-chart {
+      flex: 5;
+      display: flex;
+
+      & .budget-chart {
+        margin-inline: auto;
+      }
+    } */
+  }
 
   & .chart-summary {
     display: flex;

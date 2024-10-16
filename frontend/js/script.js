@@ -177,12 +177,14 @@ const callback = (mutationList, observer) => {
         chartCard.insertAdjacentHTML(
           "afterbegin",
           `
+             <div class="overview-budgets-info">
         <div class="budget-chart">
         <div>
           <p class="public-sans-regular">
             <span data-total-spend="${totalSpend}" data-total-limit="${totalLimit}" class="public-sans-bold">$${totalSpend}</span>
             of $${totalLimit} limit
           </p>
+        </div>
         </div>
         </div>
         <div class="chart-summary">
@@ -423,7 +425,11 @@ const callback = (mutationList, observer) => {
                 createCategoryElements("", categorySummartObj)
               );
 
-              createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+              // console.log(budgetChart);
+              createBudgetChart(
+                budgetChart.parentElement.nextElementSibling,
+                budgetChart
+              );
 
               const themeBtn = newDialog.querySelector('[data-action="tag"]');
               const menu = themeBtn.nextElementSibling;
@@ -676,7 +682,11 @@ const callback = (mutationList, observer) => {
                 parseFloat(max) - parseFloat(spendForMonth)
               )}`;
 
-              createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+              // console.log(budgetChart);
+              createBudgetChart(
+                budgetChart.nextElementSibling,
+                budgetChart.children[0]
+              );
 
               const oldTheme = getKeyByValue(
                 themes,
@@ -724,9 +734,10 @@ const callback = (mutationList, observer) => {
             const choice = btn.dataset.action;
             // console.log(btn);
             if (choice && choice === "delete") {
-              const chartSummary = budgetChart.nextElementSibling.querySelector(
-                `div.chart-category:has(> div[data-theme="${budgetCard.dataset.colorTag}"] )`
-              );
+              const chartSummary =
+                budgetChart.parentElement.nextElementSibling.querySelector(
+                  `div.chart-category:has(> div[data-theme="${budgetCard.dataset.colorTag}"] )`
+                );
               const totalSpend =
                 budgetChart.querySelector("[data-total-spend]");
 
@@ -748,7 +759,10 @@ const callback = (mutationList, observer) => {
               totalSpend.nextSibling.textContent = `of $${newLimit} limit`;
               chartSummary.remove();
               budgetCard.remove();
-              createBudgetChart(budgetChart.nextElementSibling, budgetChart);
+              createBudgetChart(
+                budgetChart.parentElement.nextElementSibling,
+                budgetChart
+              );
               // release theme choices
 
               const idxOfBudgetCard = budgets
@@ -2332,6 +2346,7 @@ function updateCategoryChoice(btnAction) {
 function createBudgetChart(chart, budgetChart) {
   // console.log(chart.children);
   const spendingCategoryEles = chart.children[1].children;
+  // console.log(spendingCategoryEles);
   const spendingObjs = {};
   // console.log(spendingCategoryEles);
   for (const spendingEle of spendingCategoryEles) {
@@ -2605,7 +2620,7 @@ main.addEventListener("click", async (e) => {
     // console.log("here");
   } else if (budgetEditBtn) {
     budgetCard = budgetEditBtn.closest("[data-category]");
-    console.log(budgetCard);
+    // console.log(budgetCard);
 
     // console.log(budgetEditBtn.children);
     budgetEditBtn.children[0].setAttribute(
