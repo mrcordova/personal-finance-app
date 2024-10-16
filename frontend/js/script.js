@@ -1686,7 +1686,7 @@ const callback = (mutationList, observer) => {
         });
       } else if (mainOverview) {
         observer.disconnect();
-        console.log(mainOverview);
+        // console.log(mainOverview);
 
         const options = { style: "currency", currency: "USD" };
 
@@ -1835,19 +1835,109 @@ const callback = (mutationList, observer) => {
             spending: Math.abs(latestSpending),
             max: budget.maximum,
           };
-          // budgetSpendingArry.push(latestSpending);
-          // console.log(latestSpending);
+
           budgetSpendtotal += latestSpending;
         }
         const percentage = createChartPercentageObject(budgetSpendingArry);
 
-        // console.log(percentage);
         const budgetChart = mainOverview.querySelector(".budget-chart");
         budgetChart.setAttribute(
           "style",
           `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
         );
         budgetNums.textContent = `$${Math.abs(budgetSpendtotal)}`;
+
+        // Recurring
+        let objMap = new Map();
+        let summaryMap = new Map();
+        const overviewRecurringSummary = mainOverview.querySelector(
+          ".overview-recurring-info"
+        );
+
+        for (const transaction of transactions) {
+          if (transaction.recurring) {
+            const [day, month] = new Date(transaction.date)
+              .toLocaleDateString("en-AU", {
+                month: "short",
+                day: "numeric",
+              })
+              .split(" ");
+
+            objMap.set(transaction.name, { ...transaction, day, month });
+          }
+        }
+        objMap = new Map(
+          [...objMap.entries()].sort((a, b) => {
+            return a[1].day - b[1].day;
+          })
+        );
+        // console.log(objMap.entries());
+        const currentDay = new Date(
+          data["transactions"][0].date
+        ).toLocaleDateString("en-Au", {
+          day: "numeric",
+        });
+        for (const [name, info] of objMap) {
+          const paidSoon =
+            Math.abs(parseInt(info.day) - parseInt(currentDay)) <= 5;
+          const paid = parseInt(info.day) < parseInt(currentDay);
+
+          if (paid) {
+            if (!summaryMap.has("Paid Bills")) {
+              summaryMap.set("Paid Bills", { totalNum: 0, amount: 0 });
+            }
+            summaryMap.set("Paid Bills", {
+              totalNum: summaryMap.get("Paid Bills").totalNum + 1,
+              amount:
+                summaryMap.get("Paid Bills").amount + parseFloat(info.amount),
+            });
+          } else if (paidSoon) {
+            if (!summaryMap.has("Due Soon")) {
+              summaryMap.set("Due Soon", { totalNum: 0, amount: 0 });
+            }
+            summaryMap.set("Due Soon", {
+              totalNum: summaryMap.get("Due Soon").totalNum + 1,
+              amount:
+                summaryMap.get("Due Soon").amount + parseFloat(info.amount),
+            });
+          }
+          if (!paid) {
+            if (!summaryMap.has("Total Upcomming")) {
+              summaryMap.set("Total Upcomming", { totalNum: 0, amount: 0 });
+            }
+            summaryMap.set("Total Upcomming", {
+              totalNum: summaryMap.get("Total Upcomming").totalNum + 1,
+              amount:
+                summaryMap.get("Total Upcomming").amount +
+                parseFloat(info.amount),
+            });
+          }
+        }
+        // console.log(summaryMap);
+
+        overviewRecurringSummary.insertAdjacentHTML(
+          "beforeend",
+          `<div>
+          <p class="public-sans-regular">Paid Bills</p>
+          <span>${Math.abs(summaryMap.get("Paid Bills").amount).toLocaleString(
+            "en",
+            options
+          )}</span>
+        </div>
+         <div>
+          <p class="public-sans-regular">Total Upcomming</p>
+          <span>${Math.abs(
+            summaryMap.get("Total Upcomming").amount
+          ).toLocaleString("en", options)}</span>
+        </div>
+         <div>
+          <p class="public-sans-regular">Due Soon</p>
+          <span>${Math.abs(summaryMap.get("Due Soon").amount).toLocaleString(
+            "en",
+            options
+          )}</span>
+        </div>`
+        );
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);

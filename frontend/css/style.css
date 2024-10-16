@@ -1738,6 +1738,7 @@ thead {
     & .overview-budgets-summary {
       /* flex: 1; */
       /* width: auto; */
+      max-height: 13.75rem;
       & > div {
         flex-direction: column;
         gap: 1rem;
