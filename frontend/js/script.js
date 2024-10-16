@@ -1777,6 +1777,45 @@ const callback = (mutationList, observer) => {
           );
         }
         // console.log(length);
+        // Budgets
+        const overviewBudgetSummary = mainOverview.querySelector(
+          ".overview-budgets-summary"
+        );
+        const budgetsLength = budgets.length;
+        for (let index = 0; index < budgetsLength; index += 2) {
+          overviewBudgetSummary.insertAdjacentHTML(
+            "beforeend",
+            `
+              <div>
+            <div class="pots-layout">
+              <div data-theme="${themes[budgets[index].theme]}"></div>
+              <div class="summary-member">
+                <p class="public-sans-regular">${budgets[index].category}</p>
+                <p>${budgets[index].maximum.toLocaleString("en", options)}</p>
+              </div>
+            </div>
+            ${
+              budgets[index + 1] != undefined
+                ? `<div class="pots-layout">
+                  <div data-theme="${themes[budgets[index + 1].theme]}"></div>
+                  <div class="summary-member">
+                    <p class="public-sans-regular">
+                      ${budgets[index + 1].category}
+                    </p>
+                    <p>
+                      ${budgets[index + 1].maximum.toLocaleString(
+                        "en",
+                        options
+                      )}
+                    </p>
+                  </div>
+                </div>`
+                : ""
+            }
+          </div>
+            `
+          );
+        }
       }
     } else if (mutation.type === "attribures") {
       console.log(`the ${mutation.attributeName} attribute was modified.`);
