@@ -1825,13 +1825,28 @@ const callback = (mutationList, observer) => {
           );
         }
 
+        let budgetSpendingArry = {};
         for (const budget of budgets) {
           const latestSpending = getSpendingAmountForMonth(budget.category);
 
+          budgetSpendingArry[themes[budget.theme]] = {
+            category: budget.category,
+            theme: themes[budget.theme],
+            spending: Math.abs(latestSpending),
+            max: budget.maximum,
+          };
+          // budgetSpendingArry.push(latestSpending);
           // console.log(latestSpending);
           budgetSpendtotal += latestSpending;
         }
-        // console.log(budgetSpendtotal);
+        const percentage = createChartPercentageObject(budgetSpendingArry);
+
+        // console.log(percentage);
+        const budgetChart = mainOverview.querySelector(".budget-chart");
+        budgetChart.setAttribute(
+          "style",
+          `background: conic-gradient(at 50% 50% ${returnChartStr`${percentage}`})`
+        );
         budgetNums.textContent = `$${Math.abs(budgetSpendtotal)}`;
       }
     } else if (mutation.type === "attribures") {
