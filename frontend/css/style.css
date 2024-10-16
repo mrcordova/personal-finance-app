@@ -1909,7 +1909,12 @@ thead {
     padding-inline: 2rem;
     padding-block: 2.5rem 4rem;
   }
-
+  .recurring-summary {
+    flex: 0;
+  }
+  .total-bills-container {
+    flex: 0;
+  }
   #sidebar-menu {
     flex-direction: column;
 
