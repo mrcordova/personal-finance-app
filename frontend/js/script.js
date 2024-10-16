@@ -1744,6 +1744,38 @@ const callback = (mutationList, observer) => {
         }
 
         // Transactions
+        const transactionTbody = mainOverview.querySelector(
+          "[data-transactions-table]"
+        );
+        const transactionLength = Math.min(transactions.length, 5);
+        for (let index = 0; index < transactionLength; index++) {
+          const transaction = transactions[index];
+          transactionTbody.insertAdjacentHTML(
+            "beforeend",
+            `  <tr
+            data-category="${transaction.category}"
+            data-name="${transaction.name}"
+            data-max-spending="${transaction.amount}"
+            data-date="${transaction.date}">
+            <th colspan="1" role="row">
+              <img
+                class="profile-pic"
+                src="${transaction.avatar}"
+                alt="${transaction.name}" />
+              <p class="public-sans-bold title">${transaction.name}</p>
+            </th>
+
+            <td colspan="1">
+              <p class="public-sans-bold title ${
+                Math.sign(transaction.amount) === 1 ? "positive" : ""
+              }">${
+              Math.sign(transaction.amount) === 1 ? "+" : ""
+            }${transaction.amount.toLocaleString("en", options)}</p>
+              <p>${createDate(transaction.date)}</p>
+            </td>
+          </tr>`
+          );
+        }
         // console.log(length);
       }
     } else if (mutation.type === "attribures") {
