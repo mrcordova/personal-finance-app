@@ -76,9 +76,11 @@ app.get("/api/data", cors(corsOptions), (req, res) => {
 
 app.post("/api/budget", cors(corsOptions), (req, res) => {
   console.log(req.body);
-  // console.log(JSON.stringify(req.body));
-  // res.send("hero");
-  res.json({ requestBody: req.body });
+  // console.log(connection);
+  // const sql = "INSERT INTO `users`(`name`, `age`) VALUES (?, ?), (?,?)";
+  // const values = ["Josh", 19, "Page", 45];
+  // const [result, fields] = connection.execute({ sql, values });
+  res.send("good");
 });
 // app.listen(PORT, () => {
 //   console.log(`Server is running of http://localhost:${PORT}`);

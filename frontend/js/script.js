@@ -87,6 +87,7 @@ await fetch(`${URL}/api/budget`, {
   body: JSON.stringify(budgets),
   mode: "no-cors",
 });
+
 const options = {
   year: "numeric",
   month: "short",

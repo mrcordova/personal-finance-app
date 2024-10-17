@@ -123,6 +123,11 @@ https://stackoverflow.com/questions/7176908/how-can-i-get-the-index-of-an-object
 
 https://stackoverflow.com/questions/5657219/set-of-objects-in-javascript
 
+https://stackoverflow.com/questions/64420399/how-to-pass-body-to-express-router-for-put-request
+https://stackoverflow.com/questions/24543847/req-body-empty-on-posts
+https://stackoverflow.com/questions/10005939/how-do-i-consume-the-json-post-data-in-an-express-application
+https://www.freecodecamp.org/news/create-crud-api-project/
+
 - [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
 - [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
 
