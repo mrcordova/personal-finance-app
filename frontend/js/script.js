@@ -54,24 +54,29 @@ const sortByFuncs = {
   highest: sortByHighestAmount,
   lowest: sortByLowestAmount,
 };
-if (!("transactions" in localStorage)) {
-  localStorage.setItem("transactions", JSON.stringify(data["transactions"]));
-}
-if (!("budgets" in localStorage)) {
-  localStorage.setItem("budgets", JSON.stringify(data["budgets"]));
-}
-if (!("pots" in localStorage)) {
-  localStorage.setItem("pots", JSON.stringify(data["pots"]));
-}
-if (!("balance" in localStorage)) {
-  localStorage.setItem("balance", JSON.stringify(data["balance"]));
-}
+// if (!("transactions" in localStorage)) {
+//   localStorage.setItem("transactions", JSON.stringify(data["transactions"]));
+// }
+// if (!("budgets" in localStorage)) {
+//   localStorage.setItem("budgets", JSON.stringify(data["budgets"]));
+// }
+// if (!("pots" in localStorage)) {
+//   localStorage.setItem("pots", JSON.stringify(data["pots"]));
+// }
+// if (!("balance" in localStorage)) {
+//   localStorage.setItem("balance", JSON.stringify(data["balance"]));
+// }
 // console.log(localStorage);
-const transactions =
-  JSON.parse(localStorage.getItem("transactions")) || data["transactions"];
-const budgets = JSON.parse(localStorage.getItem("budgets")) || data["budgets"];
-const pots = JSON.parse(localStorage.getItem("pots")) || data["pots"];
-const balance = JSON.parse(localStorage.getItem("balance")) || data["balance"];
+// const transactions =
+//   JSON.parse(localStorage.getItem("transactions")) || data["transactions"];
+// const budgets = JSON.parse(localStorage.getItem("budgets")) || data["budgets"];
+// const pots = JSON.parse(localStorage.getItem("pots")) || data["pots"];
+// const balance = JSON.parse(localStorage.getItem("balance")) || data["balance"];
+// const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
+const transactions = data["transactions"];
+const budgets = data["budgets"];
+const pots = data["pots"];
+const balance = data["balance"];
 const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
 let budgetCard;
 
@@ -405,8 +410,6 @@ const callback = (mutationList, observer) => {
               };
               const categorySummartObj = {};
 
-              budgets.push(budgetCardObj);
-              // localStorage.setItem("budgets", JSON.stringify(budgets));
               const budgetResponse = await fetch(`${URL}/api/addbudget`, {
                 method: "POST",
                 headers: {
@@ -415,7 +418,10 @@ const callback = (mutationList, observer) => {
                 body: JSON.stringify(budgetCardObj),
               });
 
-              console.log(await budgetResponse.json());
+              const budgetId = (await budgetResponse.json()).budgetId;
+              budgetCardObj.id = budgetId;
+              budgets.push(budgetCardObj);
+              localStorage.setItem("budgets", JSON.stringify(budgets));
 
               categorySummartObj[`${themes[budgetCardObj.theme]}`] = {
                 theme: themes[budgetCardObj.theme],
@@ -451,7 +457,7 @@ const callback = (mutationList, observer) => {
 
         const editDialog = document.querySelector("#edit-budget-dialog");
 
-        editDialog.addEventListener("click", (e) => {
+        editDialog.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
           const btnAction = e.target.closest("[data-action]");
@@ -690,16 +696,31 @@ const callback = (mutationList, observer) => {
                 themes,
                 budgetCard.dataset.colorTag
               );
+              let budgetObj;
 
               budgets.forEach((budget) => {
                 if (budget.theme === oldTheme) {
                   budget.category = category;
                   budget.maximum = parseFloat(max);
                   budget.theme = getKeyByValue(themes, theme);
+                  budgetObj = budget;
                 }
               });
 
-              localStorage.setItem("budgets", JSON.stringify(budgets));
+              // console.log(budgetObj);
+
+              const budgetResponse = await fetch(`${URL}/api/editbudget`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(budgetObj),
+              });
+
+              // const budgetId = (await budgetResponse.json()).budgetId;
+              // budgetCardObj.id = budgetId;
+              // budgets.push(budgetCardObj);
+              // localStorage.setItem("budgets", JSON.stringify(budgets));
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);

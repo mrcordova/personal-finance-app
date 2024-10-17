@@ -162,6 +162,22 @@ app.post("/api/addbudget", async (req, res) => {
     res.sendStatus(500).json({ error: "Database error" });
   }
 });
+
+app.post("/api/editbudget", async (req, res) => {
+  try {
+    const query =
+      "UPDATE `budgets` SET `category` = ?, `theme` = ?, `maximum` = ? WHERE `id` = ? LIMIT 1 ";
+    const { id, category, theme, maximum } = req.body;
+    const [results, fields] = await connection.promise().execute({
+      sql: query,
+      values: [category, theme, maximum, id],
+    });
+    console.log(results);
+    res.status(201).json({ success: true, id: id });
+  } catch (error) {
+    res.status(500).json({ error: "edit budget error" });
+  }
+});
 // app.listen(PORT, () => {
 //   console.log(`Server is running of http://localhost:${PORT}`);
 // });
