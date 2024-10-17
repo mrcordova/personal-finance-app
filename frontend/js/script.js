@@ -743,7 +743,7 @@ const callback = (mutationList, observer) => {
 
         const deleteDialog = document.querySelector("#delete-budget-dialog");
 
-        deleteDialog.addEventListener("click", (e) => {
+        deleteDialog.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
           const btn = e.target.closest("button");
@@ -790,7 +790,15 @@ const callback = (mutationList, observer) => {
 
               budgets.splice(idxOfBudgetCard, 1);
 
-              localStorage.setItem("budgets", JSON.stringify(budgets));
+              const budgetResponse = await fetch(`${URL}/api/deletebudget`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ id: idxOfBudgetCard }),
+              });
+              // console.log(idxOfBudgetCard);
+              // localStorage.setItem("budgets", JSON.stringify(budgets));
 
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
@@ -1815,7 +1823,7 @@ const callback = (mutationList, observer) => {
                     </p>
                   </div>
                 </div>`
-                : ""
+                : `<div class="pots-layout"><div>`
             }
           </div>
             `
