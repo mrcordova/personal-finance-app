@@ -1,14 +1,14 @@
-// const dataResponse = await fetch("/api/data");
-const dataResponse = await fetch("/backend/data.json");
-const data = await dataResponse.json();
-console.log(data);
-// const URL = "http://localhost:3000";
-// const dataResponse = await fetch(`${URL}/api/data`);
+// const test = await fetch("/api/data");
+
+// console.log(await test.json());
+// const dataResponse = await fetch("/backend/data.json");
 // const data = await dataResponse.json();
 // console.log(data);
-// const transactionsBtn = document.querySelector("#transaction-btn");
-// const budgetsBtn = document.querySelector("#budgets-btn");
-const controller = new AbortController();
+const URL = "http://localhost:3000";
+const dataResponse = await fetch(`${URL}/api/data`);
+const data = await dataResponse.json();
+// console.log(One);
+
 const sidebarMenu = document.getElementById("sidebar-menu");
 const minimizeMenu = document.getElementById("mini-menu");
 const main = document.querySelector("main");
@@ -66,7 +66,7 @@ if (!("pots" in localStorage)) {
 if (!("balance" in localStorage)) {
   localStorage.setItem("balance", JSON.stringify(data["balance"]));
 }
-console.log(localStorage);
+// console.log(localStorage);
 const transactions =
   JSON.parse(localStorage.getItem("transactions")) || data["transactions"];
 const budgets = JSON.parse(localStorage.getItem("budgets")) || data["budgets"];
@@ -77,6 +77,16 @@ let budgetCard;
 // Initialize the DOM parser
 const parser = new DOMParser();
 
+await fetch(`${URL}/api/budget`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Connection: "keep-alive",
+    Accept: "*/*",
+  },
+  body: JSON.stringify(budgets),
+  mode: "no-cors",
+});
 const options = {
   year: "numeric",
   month: "short",

@@ -27,6 +27,7 @@
   --orange: hsl(18, 47%, 52%);
 
   --white: hsl(0, 0%, 100%);
+  background-color: var(--beige-100);
 }
 
 .public-sans-regular {

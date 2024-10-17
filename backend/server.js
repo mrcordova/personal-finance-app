@@ -1,8 +1,10 @@
 const express = require("express");
+const data = require("./data.json");
 const path = require("path");
 const cors = require("cors");
 const http = require("http");
 const mysql = require("mysql2");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 // console.log(process.env);
 const fs = require("fs");
@@ -43,6 +45,16 @@ const corsOptions = {
 
 app.use(express.static(path.join(__dirname, "../frontend/")));
 // app.use(
+//   bodyParser.urlencoded({
+//     extended: true,
+//   })
+// );
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ type: "*/*" }));
+// app.use(bodyParser.json());
+// app.use(express.urlencoded());
+// app.use(express.urlencoded());
+// app.use(
 //   "/frontend/index.html",
 //   express.static(path.join(__dirname, "../frontend/index.html"))
 // );
@@ -59,9 +71,15 @@ app.use(express.static(path.join(__dirname, "../frontend/")));
 // });
 // Example API endpoint
 app.get("/api/data", cors(corsOptions), (req, res) => {
-  res.json({ message: "Hello from the backend!" });
+  res.json({ ...data });
 });
 
+app.post("/api/budget", cors(corsOptions), (req, res) => {
+  console.log(req.body);
+  // console.log(JSON.stringify(req.body));
+  // res.send("hero");
+  res.json({ requestBody: req.body });
+});
 // app.listen(PORT, () => {
 //   console.log(`Server is running of http://localhost:${PORT}`);
 // });
