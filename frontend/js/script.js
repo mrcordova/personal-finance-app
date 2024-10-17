@@ -862,7 +862,7 @@ const callback = (mutationList, observer) => {
         const availableTheme = menu.querySelector('li[data-used="false"]');
         let prevThemeChoice =
           availableTheme.children[0].children[0].children[0].dataset.theme;
-        newDialog.addEventListener("click", (e) => {
+        newDialog.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
           const btnAction = e.target.closest("[data-action]");
@@ -1024,9 +1024,17 @@ const callback = (mutationList, observer) => {
                 total: 0,
               };
 
-              pots.push(potCardObj);
+              const potResponse = await fetch(`${URL}/api/addpot`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(potCardObj),
+              });
 
-              localStorage.setItem("pots", JSON.stringify(pots));
+              // pots.push(potCardObj);
+
+              // localStorage.setItem("pots", JSON.stringify(pots));
 
               createPotCard(mainPots, potCardObj);
 
