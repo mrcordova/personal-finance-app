@@ -74,19 +74,10 @@ const pots = JSON.parse(localStorage.getItem("pots")) || data["pots"];
 const balance = JSON.parse(localStorage.getItem("balance")) || data["balance"];
 const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
 let budgetCard;
+
+console.log(budgets);
 // Initialize the DOM parser
 const parser = new DOMParser();
-
-await fetch(`${URL}/api/budget`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Connection: "keep-alive",
-    Accept: "*/*",
-  },
-  body: JSON.stringify(budgets),
-  mode: "no-cors",
-});
 
 const options = {
   year: "numeric",
@@ -235,7 +226,7 @@ const callback = (mutationList, observer) => {
         for (const maxAmountInput of maxAmountInputs) {
           maxAmountInput.addEventListener("input", checkMaxInput);
         }
-        newDialog.addEventListener("click", (e) => {
+        newDialog.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
 
@@ -415,7 +406,16 @@ const callback = (mutationList, observer) => {
               const categorySummartObj = {};
 
               budgets.push(budgetCardObj);
-              localStorage.setItem("budgets", JSON.stringify(budgets));
+              // localStorage.setItem("budgets", JSON.stringify(budgets));
+              const budgetResponse = await fetch(`${URL}/api/addbudget`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(budgetCardObj),
+              });
+
+              console.log(await budgetResponse.json());
 
               categorySummartObj[`${themes[budgetCardObj.theme]}`] = {
                 theme: themes[budgetCardObj.theme],

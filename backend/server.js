@@ -21,6 +21,12 @@ let connection = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  typeCast: function (field, next) {
+    if (field.type === "NEWDECIMAL") {
+      return parseFloat(field.string());
+    }
+    return next();
+  },
 });
 
 connection.connect(function (err) {
@@ -28,9 +34,13 @@ connection.connect(function (err) {
   console.log("Connected!");
 });
 
+// Allow requests from this origin
 const corsOptions = {
   origin: "http://127.0.0.1:5500",
+  methods: ["GET", "POST", "PUT", "DELETE"],
 };
+
+app.use(cors(corsOptions));
 
 // const requestListner = function (req, res) {
 //   res.writeHead(200);
@@ -132,13 +142,25 @@ app.get("/api/data", cors(corsOptions), async (req, res) => {
   // console.log(transactions[0]);
 });
 
-app.post("/api/budget", cors(corsOptions), (req, res) => {
+app.post("/api/addbudget", async (req, res) => {
   // console.log(req.body);
   // console.log(connection);
-  // const sql = "INSERT INTO `users`(`name`, `age`) VALUES (?, ?), (?,?)";
-  // const values = ["Josh", 19, "Page", 45];
-  // const [result, fields] = connection.execute({ sql, values });
-  res.send("good");
+  try {
+    const budgetQuery =
+      "INSERT INTO `budgets`(`category`, `theme`, `maximum`) VALUES (?, ?, ?)";
+    const { category, theme, maximum } = req.body;
+    // console.log(category);
+    // const values = [[category, theme, maximum]];
+    const [results, fields] = await connection.promise().execute({
+      sql: budgetQuery,
+      values: [category, theme, maximum],
+    });
+    // console.log(results.insertId);
+    res.status(201).json({ success: true, budgetId: results.insertId });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500).json({ error: "Database error" });
+  }
 });
 // app.listen(PORT, () => {
 //   console.log(`Server is running of http://localhost:${PORT}`);
