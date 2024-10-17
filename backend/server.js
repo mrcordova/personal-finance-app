@@ -97,12 +97,43 @@ app.use(express.json({ type: "*/*" }));
 // });
 
 // Example API endpoint
-app.get("/api/data", cors(corsOptions), (req, res) => {
-  res.json({ ...data });
+app.get("/api/data", cors(corsOptions), async (req, res) => {
+  const balanceQuery = `SELECT * FROM balance`;
+  const transactionsQuery = `SELECT * FROM transactions`;
+  const budgetsQuery = `SELECT * FROM budgets`;
+  const potsQuery = `SELECT * FROM pots`;
+
+  try {
+    const [balanceRows] = await connection.promise().execute(balanceQuery);
+    const [transactionRows] = await connection
+      .promise()
+      .execute(transactionsQuery);
+    const [budgetRows] = await connection.promise().execute(budgetsQuery);
+    const [potsRows] = await connection.promise().execute(potsQuery);
+    // transactions = await connection.promise().query(transactionsQuery);
+    // console.log(balanceRows[0]);
+    // console.log(transactionRows);
+    // console.log(budgetRows);
+    // console.log(potsRows);
+
+    // console.log({
+    //   balance: balanceRows[0],
+    //   transactions: transactionRows,
+    //   budgets: budgetRows,
+    //   pots: potsRows,
+    // });
+    res.json({
+      balance: balanceRows[0],
+      transactions: transactionRows,
+      budgets: budgetRows,
+      pots: potsRows,
+    });
+  } catch {}
+  // console.log(transactions[0]);
 });
 
 app.post("/api/budget", cors(corsOptions), (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   // console.log(connection);
   // const sql = "INSERT INTO `users`(`name`, `age`) VALUES (?, ?), (?,?)";
   // const values = ["Josh", 19, "Page", 45];
