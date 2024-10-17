@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 // console.log(process.env);
 const fs = require("fs");
+const { error } = require("console");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -51,24 +52,50 @@ app.use(express.static(path.join(__dirname, "../frontend/")));
 // );
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ type: "*/*" }));
-// app.use(bodyParser.json());
-// app.use(express.urlencoded());
-// app.use(express.urlencoded());
-// app.use(
-//   "/frontend/index.html",
-//   express.static(path.join(__dirname, "../frontend/index.html"))
-// );
 
-// app.get("/", (req, res) => {
-//   res.send("Hello World!");
+// Assume you have a MySQL connection called `connection`
+// const transactions = data["transactions"];
+// transactions.forEach((transaction) => {
+//   const { avatar, name, category, date, amount, recurring } = transaction;
+//   // Create a Date object
+//   const dateObj = new Date(date);
+
+//   // Format the date to 'YYYY-MM-DD HH:MM:SS'
+//   const mysqlDate = dateObj.toISOString().slice(0, 19).replace("T", " ");
+//   const query = `
+//     INSERT INTO transactions (avatar, name, category, date, amount, recurring)
+//     VALUES (?, ?, ?, ?, ?, ?)
+//   `;
+//   connection.query(
+//     query,
+//     [avatar, name, category, mysqlDate, amount, recurring],
+//     (error, results) => {
+//       if (error) throw error;
+//       console.log("Inserted transaction", results.insertId);
+//     }
+//   );
 // });
-// console.log(path.join(__dirname, "../frontend"));
-// app.get("/frontend/index.html", (req, res) => {
-//   //   return res.end(
-//   //     fs.readFileSync(path.join(__dirname, "../frontend") + "/index.html")
-//   //   );
-//   return res.end(fs.readFileSync("/index.html"));
+// const budgets = data["budgets"];
+// budgets.forEach((budget) => {
+//   const { category, maximum, theme } = budget;
+//   const query = `INSERT INTO budgets (category, maximum, theme) VALUES (?, ?, ?)`;
+
+//   connection.query(query, [category, maximum, theme], (error, results) => {
+//     if (error) throw error;
+//     console.log("Inserted budget", results.insertId);
+//   });
 // });
+// const pots = data["pots"];
+// pots.forEach((pot) => {
+//   const { name, target, total, theme } = pot;
+//   const query = `INSERT INTO pots (name, target, total, theme) VALUES (?, ?, ?, ?)`;
+
+//   connection.query(query, [name, target, total, theme], (error, results) => {
+//     if (error) throw error;
+//     console.log("Inserted pot", results.insertId);
+//   });
+// });
+
 // Example API endpoint
 app.get("/api/data", cors(corsOptions), (req, res) => {
   res.json({ ...data });
