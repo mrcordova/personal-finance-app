@@ -1325,6 +1325,12 @@ const callback = (mutationList, observer) => {
 
               balance.current += parseFloat(budgetCard.dataset.spend);
 
+              const balanceResponse = await fetch(`${URL}/api/updatebalance`, {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ current: balance.current }),
+              });
+
               // localStorage.setItem("balance", JSON.stringify(balance));
 
               budgetCard.remove();
