@@ -217,11 +217,11 @@ app.post("/api/addpot", async (req, res) => {
 app.post("/api/editpot", async (req, res) => {
   try {
     const query =
-      "UPDATE `pots` SET `name` = ?, `theme` = ?, `target` = ? WHERE `id` = ? LIMIT 1 ";
-    const { id, name, theme, target } = req.body;
+      "UPDATE `pots` SET `name` = ?, `theme` = ?, `target` = ? , `total` = ? WHERE `id` = ? LIMIT 1 ";
+    const { id, name, theme, target, total } = req.body;
     const [results, fields] = await connection.promise().execute({
       sql: query,
-      values: [name, theme, target, id],
+      values: [name, theme, target, total, id],
     });
     // console.log(results);
     res.status(201).json({ success: true, id: id });
