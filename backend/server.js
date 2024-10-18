@@ -186,7 +186,7 @@ app.post("/api/deletebudget", async (req, res) => {
       sql: query,
       values: [id],
     });
-    console.log(results);
+    // console.log(results);
     res.status(201).json({ success: true, id: id });
   } catch (error) {
     res.status(500).json({ error: "edit budget error" });
@@ -211,6 +211,22 @@ app.post("/api/addpot", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.sendStatus(500).json({ error: "Database error" });
+  }
+});
+
+app.post("/api/editpot", async (req, res) => {
+  try {
+    const query =
+      "UPDATE `pots` SET `name` = ?, `theme` = ?, `target` = ? WHERE `id` = ? LIMIT 1 ";
+    const { id, name, theme, target } = req.body;
+    const [results, fields] = await connection.promise().execute({
+      sql: query,
+      values: [name, theme, target, id],
+    });
+    // console.log(results);
+    res.status(201).json({ success: true, id: id });
+  } catch (error) {
+    res.status(500).json({ error: "edit budget error" });
   }
 });
 // app.listen(PORT, () => {

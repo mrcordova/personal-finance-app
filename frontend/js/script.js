@@ -1052,7 +1052,7 @@ const callback = (mutationList, observer) => {
           }
         });
         const editDialog = document.querySelector("#edit-pot-dialog");
-        editDialog.addEventListener("click", (e) => {
+        editDialog.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
           const btnAction = e.target.closest("[data-action]");
@@ -1244,15 +1244,24 @@ const callback = (mutationList, observer) => {
                 budgetCard.dataset.colorTag
               );
 
+              let potsObj;
               pots.forEach((pot) => {
                 if (pot.theme === oldTheme) {
                   pot.name = category;
                   pot.target = parseFloat(max);
                   pot.theme = getKeyByValue(themes, theme);
+                  potsObj = pot;
                 }
               });
 
-              localStorage.setItem("pots", JSON.stringify(pots));
+              const potResponse = await fetch(`${URL}/api/editpot`, {
+                method: "post",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(potsObj),
+              });
+              // localStorage.setItem("pots", JSON.stringify(pots));
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
