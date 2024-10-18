@@ -1395,7 +1395,7 @@ const callback = (mutationList, observer) => {
             );
           }
         });
-        addToDialog.addEventListener("click", (e) => {
+        addToDialog.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
           const btnAction = e.target.closest("[data-action]");
@@ -1415,12 +1415,17 @@ const callback = (mutationList, observer) => {
                 return;
               }
 
+              const ammountToAdd = parseFloat(amountToAddInput.value);
               amountToAddInput.value = "";
               const potTotal = addToDialog
                 .querySelector("progress")
                 .getAttribute("value");
               const percentageValue = addToDialog.querySelector(".pot-numbers");
               percentageValue.style = "";
+              // balance.current += parseFloat(
+              //   budgetCard.getAttribute("data-spend")
+              // );
+              console.log(ammountToAdd);
               budgetCard.setAttribute("data-spend", potTotal);
               budgetCard
                 .querySelector("progress")
@@ -1432,21 +1437,34 @@ const callback = (mutationList, observer) => {
               ).textContent = `$${parseFloat(potTotal).toFixed(2)}`;
 
               balance.current -= Math.min(
-                parseFloat(potTotal),
+                parseFloat(ammountToAdd),
                 balance.current
               );
               addToDialog.close();
+              let potObj;
               pots.forEach((pot) => {
                 if (
                   pot.theme ===
                   getKeyByValue(themes, budgetCard.dataset.colorTag)
                 ) {
                   pot.total = parseFloat(potTotal);
+                  potObj = pot;
                 }
               });
+              const potResponse = await fetch(`${URL}/api/editpot`, {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(potObj),
+              });
 
-              localStorage.setItem("pots", JSON.stringify(pots));
-              localStorage.setItem("balance", JSON.stringify(balance));
+              const balanceResponse = await fetch(`${URL}/api/updatebalance`, {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ current: balance.current }),
+              });
+
+              // localStorage.setItem("pots", JSON.stringify(pots));
+              // localStorage.setItem("balance", JSON.stringify(balance));
             }
           }
         });
@@ -1502,7 +1520,7 @@ const callback = (mutationList, observer) => {
           }
         });
 
-        withdrawDialog.addEventListener("click", (e) => {
+        withdrawDialog.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
           const btnAction = e.target.closest("[data-action]");
@@ -1522,6 +1540,7 @@ const callback = (mutationList, observer) => {
                 return;
               }
 
+              const amountToWithdraw = parseFloat(amountToWithdrawInput.value);
               amountToWithdrawInput.value = "";
               const potTotal = withdrawDialog
                 .querySelector(".pot-total")
@@ -1529,6 +1548,9 @@ const callback = (mutationList, observer) => {
               const percentageValue =
                 withdrawDialog.querySelector(".pot-numbers");
               percentageValue.style = "";
+              //  balance.current += parseFloat(
+              //    budgetCard.getAttribute("data-spend")
+              //  );
               budgetCard.setAttribute("data-spend", potTotal);
               budgetCard
                 .querySelector("progress")
@@ -1540,21 +1562,34 @@ const callback = (mutationList, observer) => {
               ).textContent = `$${parseFloat(potTotal).toFixed(2)}`;
 
               balance.current += Math.min(
-                parseFloat(potTotal),
+                parseFloat(amountToWithdraw),
                 balance.current
               );
               withdrawDialog.close();
+              let potObj;
               pots.forEach((pot) => {
                 if (
                   pot.theme ===
                   getKeyByValue(themes, budgetCard.dataset.colorTag)
                 ) {
                   pot.total = parseFloat(potTotal);
+                  potObj = pot;
                 }
               });
+              const potResponse = await fetch(`${URL}/api/editpot`, {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(potObj),
+              });
 
-              localStorage.setItem("pots", JSON.stringify(pots));
-              localStorage.setItem("balance", JSON.stringify(balance));
+              const balanceResponse = await fetch(`${URL}/api/updatebalance`, {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ current: balance.current }),
+              });
+
+              // localStorage.setItem("pots", JSON.stringify(pots));
+              // localStorage.setItem("balance", JSON.stringify(balance));
             }
           }
         });

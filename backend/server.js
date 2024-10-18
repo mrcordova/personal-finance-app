@@ -189,7 +189,7 @@ app.post("/api/deletebudget", async (req, res) => {
     // console.log(results);
     res.status(201).json({ success: true, id: id });
   } catch (error) {
-    res.status(500).json({ error: "edit budget error" });
+    res.status(500).json({ error: "delete budget error" });
   }
 });
 
@@ -226,7 +226,7 @@ app.post("/api/editpot", async (req, res) => {
     // console.log(results);
     res.status(201).json({ success: true, id: id });
   } catch (error) {
-    res.status(500).json({ error: "edit budget error" });
+    res.status(500).json({ error: "edit pot error" });
   }
 });
 app.post("/api/deletepot", async (req, res) => {
@@ -240,7 +240,7 @@ app.post("/api/deletepot", async (req, res) => {
     // console.log(results);
     res.status(201).json({ success: true, id: id });
   } catch (error) {
-    res.status(500).json({ error: "edit budget error" });
+    res.status(500).json({ error: "delete pot error" });
   }
 });
 app.post("/api/updatebalance", async (req, res) => {
@@ -251,7 +251,7 @@ app.post("/api/updatebalance", async (req, res) => {
       sql: query,
       values: [current],
     });
-    console.log(results);
+    // console.log(results);
     res.status(201).json({ success: true, id: results.insertId });
   } catch (error) {
     console.error(error);
