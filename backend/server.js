@@ -1,20 +1,18 @@
 const express = require("express");
-const data = require("./data.json");
+// const data = require("./data.json");
 const path = require("path");
 const cors = require("cors");
-const http = require("http");
+// const http = require("http");
 const mysql = require("mysql2");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 require("dotenv").config();
-// console.log(process.env);
-const fs = require("fs");
-const { error } = require("console");
+// const fs = require("fs");
+// const { error } = require("console");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const host = "127.0.0.1";
 
-// console.log(process.env.DB_PASSWORD);
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -42,24 +40,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// const requestListner = function (req, res) {
-//   res.writeHead(200);
-//   res.end("My first server");
-// };
-
-// const server = http.createServer(requestListner);
-
-// server.listen(PORT, host, () => {
-//   console.log(`Server is running on http://${host}:${port}}`);
-// });
 // // Serve static files from the frontend directory
 
 app.use(express.static(path.join(__dirname, "../frontend/")));
-// app.use(
-//   bodyParser.urlencoded({
-//     extended: true,
-//   })
-// );
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ type: "*/*" }));
 
@@ -120,18 +104,7 @@ app.get("/api/data", cors(corsOptions), async (req, res) => {
       .execute(transactionsQuery);
     const [budgetRows] = await connection.promise().execute(budgetsQuery);
     const [potsRows] = await connection.promise().execute(potsQuery);
-    // transactions = await connection.promise().query(transactionsQuery);
-    // console.log(balanceRows[0]);
-    // console.log(transactionRows);
-    // console.log(budgetRows);
-    // console.log(potsRows);
 
-    // console.log({
-    //   balance: balanceRows[0],
-    //   transactions: transactionRows,
-    //   budgets: budgetRows,
-    //   pots: potsRows,
-    // });
     res.json({
       balance: balanceRows[0],
       transactions: transactionRows,
@@ -139,23 +112,18 @@ app.get("/api/data", cors(corsOptions), async (req, res) => {
       pots: potsRows,
     });
   } catch {}
-  // console.log(transactions[0]);
 });
 
 app.post("/api/addbudget", async (req, res) => {
-  // console.log(req.body);
-  // console.log(connection);
   try {
     const budgetQuery =
       "INSERT INTO `budgets`(`category`, `theme`, `maximum`) VALUES (?, ?, ?)";
     const { category, theme, maximum } = req.body;
-    // console.log(category);
-    // const values = [[category, theme, maximum]];
+
     const [results, fields] = await connection.promise().execute({
       sql: budgetQuery,
       values: [category, theme, maximum],
     });
-    // console.log(results.insertId);
     res.status(201).json({ success: true, budgetId: results.insertId });
   } catch (error) {
     console.error(error);
@@ -172,7 +140,6 @@ app.post("/api/editbudget", async (req, res) => {
       sql: query,
       values: [category, theme, maximum, id],
     });
-    // console.log(results);
     res.status(201).json({ success: true, id: id });
   } catch (error) {
     res.status(500).json({ error: "edit budget error" });
@@ -186,7 +153,6 @@ app.post("/api/deletebudget", async (req, res) => {
       sql: query,
       values: [id],
     });
-    // console.log(results);
     res.status(201).json({ success: true, id: id });
   } catch (error) {
     res.status(500).json({ error: "delete budget error" });
@@ -194,19 +160,15 @@ app.post("/api/deletebudget", async (req, res) => {
 });
 
 app.post("/api/addpot", async (req, res) => {
-  // console.log(req.body);
-  // console.log(connection);
   try {
     const potQuery =
       "INSERT INTO `pots`(`name`, `target`, `total`, `theme`) VALUES (?, ?, ?, ?)";
     const { name, target, total, theme } = req.body;
-    // console.log(category);
-    // const values = [[category, theme, maximum]];
+
     const [results, fields] = await connection.promise().execute({
       sql: potQuery,
       values: [name, target, total, theme],
     });
-    // console.log(results.insertId);
     res.status(201).json({ success: true, id: results.insertId });
   } catch (error) {
     console.error(error);
@@ -223,7 +185,6 @@ app.post("/api/editpot", async (req, res) => {
       sql: query,
       values: [name, theme, target, total, id],
     });
-    // console.log(results);
     res.status(201).json({ success: true, id: id });
   } catch (error) {
     res.status(500).json({ error: "edit pot error" });
@@ -237,7 +198,6 @@ app.post("/api/deletepot", async (req, res) => {
       sql: query,
       values: [id],
     });
-    // console.log(results);
     res.status(201).json({ success: true, id: id });
   } catch (error) {
     res.status(500).json({ error: "delete pot error" });
@@ -251,15 +211,12 @@ app.post("/api/updatebalance", async (req, res) => {
       sql: query,
       values: [current],
     });
-    // console.log(results);
     res.status(201).json({ success: true, id: results.insertId });
   } catch (error) {
     console.error(error);
   }
 });
-// app.listen(PORT, () => {
-//   console.log(`Server is running of http://localhost:${PORT}`);
-// });
+
 app.listen(PORT, host, () => {
   console.log(`Server is running of ${PORT}`);
 });

@@ -128,6 +128,8 @@ https://stackoverflow.com/questions/24543847/req-body-empty-on-posts
 https://stackoverflow.com/questions/10005939/how-do-i-consume-the-json-post-data-in-an-express-application
 https://www.freecodecamp.org/news/create-crud-api-project/
 
+https://sidorares.github.io/node-mysql2/docs/examples/queries/prepared-statements/delete
+
 - [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
 - [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
 
