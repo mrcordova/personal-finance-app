@@ -229,6 +229,20 @@ app.post("/api/editpot", async (req, res) => {
     res.status(500).json({ error: "edit budget error" });
   }
 });
+app.post("/api/deletepot", async (req, res) => {
+  try {
+    const query = "DELETE FROM `pots` WHERE `id` = ? LIMIT 1 ";
+    const { id } = req.body;
+    const [results, fields] = await connection.promise().execute({
+      sql: query,
+      values: [id],
+    });
+    // console.log(results);
+    res.status(201).json({ success: true, id: id });
+  } catch (error) {
+    res.status(500).json({ error: "edit budget error" });
+  }
+});
 // app.listen(PORT, () => {
 //   console.log(`Server is running of http://localhost:${PORT}`);
 // });

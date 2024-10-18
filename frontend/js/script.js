@@ -1283,7 +1283,7 @@ const callback = (mutationList, observer) => {
 
         const deleteDialog = document.querySelector("#delete-budget-dialog");
 
-        deleteDialog.addEventListener("click", (e) => {
+        deleteDialog.addEventListener("click", async (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
           const btn = e.target.closest("button");
@@ -1303,7 +1303,7 @@ const callback = (mutationList, observer) => {
                 .indexOf(`${oldTheme}`);
 
               pots.splice(idxOfPotCard, 1);
-              localStorage.setItem("pots", JSON.stringify(pots));
+              // localStorage.setItem("pots", JSON.stringify(pots));
 
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
@@ -1317,9 +1317,15 @@ const callback = (mutationList, observer) => {
                 theme.style = ``;
               }
 
+              const potResponse = await fetch(`${URL}/api/deletepot`, {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: idxOfPotCard }),
+              });
+
               balance.current += parseFloat(budgetCard.dataset.spend);
 
-              localStorage.setItem("balance", JSON.stringify(balance));
+              // localStorage.setItem("balance", JSON.stringify(balance));
 
               budgetCard.remove();
             }
