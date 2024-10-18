@@ -1425,7 +1425,7 @@ const callback = (mutationList, observer) => {
               // balance.current += parseFloat(
               //   budgetCard.getAttribute("data-spend")
               // );
-              console.log(ammountToAdd);
+              // console.log(ammountToAdd);
               budgetCard.setAttribute("data-spend", potTotal);
               budgetCard
                 .querySelector("progress")
