@@ -2026,7 +2026,7 @@ const currentActiveLiEle = document.querySelector("li.checked");
 const clone =
   templates[`${currentActiveLiEle.dataset.menu}`].content.cloneNode(true);
 main.replaceChildren(clone);
-localStorage.setItem("hasCodeRunBefore", true);
+// localStorage.setItem("hasCodeRunBefore", true);
 
 // helper function for retrieving templates from html
 async function extractTemplate(id) {
