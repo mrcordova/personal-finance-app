@@ -1008,13 +1008,16 @@ const callback = (mutationList, observer) => {
                 validatePotName
               );
               actions[1].classList.toggle("input-error", validateTarget);
-              if (validateTarget || validateTarget) {
+              if (validateTarget || validatePotName) {
                 return;
               }
 
               const max = parseFloat(actions[1].value);
 
               const category = actions[0].children[0].value;
+
+              actions[1].value = "";
+              actions[0].children[0].value = "";
 
               // console.log(category);
 
@@ -1309,6 +1312,7 @@ const callback = (mutationList, observer) => {
                 .map((pot) => pot.theme)
                 .indexOf(`${oldTheme}`);
 
+              const potToDeleteId = pots[idxOfPotCard].id;
               pots.splice(idxOfPotCard, 1);
               // localStorage.setItem("pots", JSON.stringify(pots));
 
@@ -1327,7 +1331,7 @@ const callback = (mutationList, observer) => {
               const potResponse = await fetch(`${URL}/api/deletepot`, {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: idxOfPotCard }),
+                body: JSON.stringify({ id: potToDeleteId }),
               });
 
               balance.current += parseFloat(budgetCard.dataset.spend);
