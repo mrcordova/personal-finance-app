@@ -404,6 +404,11 @@ const callback = (mutationList, observer) => {
               };
               const categorySummartObj = {};
 
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentHTML(
+                "afterbegin",
+                `<span class="progress-circle"></span>`
+              );
               const budgetResponse = await fetch(`${URL}/api/addbudget`, {
                 method: "POST",
                 headers: {
@@ -415,7 +420,7 @@ const callback = (mutationList, observer) => {
               const budgetId = (await budgetResponse.json()).budgetId;
               budgetCardObj.id = budgetId;
               budgets.push(budgetCardObj);
-              localStorage.setItem("budgets", JSON.stringify(budgets));
+              // localStorage.setItem("budgets", JSON.stringify(budgets));
 
               categorySummartObj[`${themes[budgetCardObj.theme]}`] = {
                 theme: themes[budgetCardObj.theme],
@@ -1026,7 +1031,10 @@ const callback = (mutationList, observer) => {
                 body: JSON.stringify(potCardObj),
               });
 
-              // pots.push(potCardObj);
+              const potId = (await potResponse.json()).budgetId;
+
+              potCardObj.id = potId;
+              pots.push(potCardObj);
 
               // localStorage.setItem("pots", JSON.stringify(pots));
 

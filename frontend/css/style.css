@@ -29,6 +29,25 @@
   --white: hsl(0, 0%, 100%);
   background-color: var(--beige-100);
 }
+/* Base styling for the circle */
+.progress-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 8px solid transparent;
+  border-top: 8px solid blue;
+  animation: spin 1s linear infinite;
+}
+
+/* Keyframes for the spinning animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 .public-sans-regular {
   font-family: "Public Sans", sans-serif;
