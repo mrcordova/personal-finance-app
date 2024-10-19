@@ -712,6 +712,7 @@ const callback = (mutationList, observer) => {
               });
 
               // console.log(budgetObj);
+              btn.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Loading...");
 
               const budgetResponse = await fetch(`${URL}/api/editbudget`, {
@@ -721,7 +722,7 @@ const callback = (mutationList, observer) => {
                 },
                 body: JSON.stringify(budgetObj),
               });
-
+              btn.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Save Changes");
               // const budgetId = (await budgetResponse.json()).budgetId;
               // budgetCardObj.id = budgetId;
@@ -797,6 +798,7 @@ const callback = (mutationList, observer) => {
 
               budgets.splice(idxOfBudgetCard, 1);
 
+              btn.replaceChildren();
               btn.insertAdjacentText("afterbegin", "Loading...");
 
               const budgetResponse = await fetch(`${URL}/api/deletebudget`, {
@@ -806,6 +808,7 @@ const callback = (mutationList, observer) => {
                 },
                 body: JSON.stringify({ id: budgetToDeleteId }),
               });
+              btn.replaceChildren();
               btn.insertAdjacentText("afterbegin", "Yes, Confirm Deletion");
               // console.log(idxOfBudgetCard);
               // localStorage.setItem("budgets", JSON.stringify(budgets));
