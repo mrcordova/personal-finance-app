@@ -376,6 +376,7 @@ const callback = (mutationList, observer) => {
                 return;
               }
               const max = parseFloat(actions[1].value);
+              actions[1].value = "";
 
               const category = actions[0].children[0].textContent;
               const spendForMonth = Math.abs(
@@ -418,6 +419,9 @@ const callback = (mutationList, observer) => {
               });
 
               const budgetId = (await budgetResponse.json()).budgetId;
+
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("beforebegin", "Add Budget");
               budgetCardObj.id = budgetId;
               budgets.push(budgetCardObj);
               // localStorage.setItem("budgets", JSON.stringify(budgets));
