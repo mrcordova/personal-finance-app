@@ -31,13 +31,14 @@
 }
 /* Base styling for the circle */
 .progress-circle {
-  width: 100px;
-  height: 100px;
+  width: 1.7rem;
+  height: 1.7rem;
   border-radius: 50%;
   border: 8px solid transparent;
   border-top: 8px solid var(--blue);
   animation: spin 1s linear infinite;
   margin: auto;
+  display: block;
 }
 
 /* Keyframes for the spinning animation */

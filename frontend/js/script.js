@@ -429,8 +429,8 @@ const callback = (mutationList, observer) => {
 
               const budgetId = (await budgetResponse.json()).budgetId;
 
-              // btnAction.replaceChildren();
-              // btnAction.insertAdjacentText("afterbegin", "Add Budget");
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("afterbegin", "Add Budget");
 
               budgetCardObj.id = budgetId;
               budgets.push(budgetCardObj);
@@ -463,7 +463,7 @@ const callback = (mutationList, observer) => {
               prevThemeChoice =
                 availableTheme.children[0].children[0].children[0].dataset
                   .theme;
-              // newDialog.close();
+              newDialog.close();
             }
           }
         });
