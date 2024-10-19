@@ -11,7 +11,7 @@ require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const host = "127.0.0.1";
+// const host = "127.0.0.1";
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -33,8 +33,12 @@ connection.connect(function (err) {
 });
 
 // Allow requests from this origin
+// const corsOptions = {
+//   origin: "http://127.0.0.1:5500",
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+// };
 const corsOptions = {
-  origin: "http://127.0.0.1:5500",
+  origin: "https://personal-finance-app-1.onrender.com",
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
 
@@ -217,6 +221,6 @@ app.post("/api/updatebalance", async (req, res) => {
   }
 });
 
-app.listen(PORT, host, () => {
+app.listen(PORT, () => {
   console.log(`Server is running of ${PORT}`);
 });
