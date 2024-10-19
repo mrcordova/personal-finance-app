@@ -406,10 +406,11 @@ const callback = (mutationList, observer) => {
               const categorySummartObj = {};
 
               btnAction.replaceChildren();
-              btnAction.insertAdjacentHTML(
-                "afterbegin",
-                `<span class="progress-circle"></span>`
-              );
+              // btnAction.insertAdjacentHTML(
+              //   "afterbegin",
+              //   `<span class="progress-circle"></span>`
+              // );
+              btnAction.insertAdjacentText("afterbegin", "Loading...");
               const budgetResponse = await fetch(`${URL}/api/addbudget`, {
                 method: "POST",
                 headers: {
