@@ -6,7 +6,7 @@ const URL = "https://personal-finance-app-gw5b.onrender.com";
 const dataResponse = await fetch(`${URL}/api/data`);
 const data = await dataResponse.json();
 // console.log("here");
-main.replaceChildren();
+// main.replaceChildren();
 
 const sidebarMenu = document.getElementById("sidebar-menu");
 const minimizeMenu = document.getElementById("mini-menu");
