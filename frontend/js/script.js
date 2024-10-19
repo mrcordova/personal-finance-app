@@ -712,7 +712,7 @@ const callback = (mutationList, observer) => {
               });
 
               // console.log(budgetObj);
-              btn.replaceChildren();
+              btnAction.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Loading...");
 
               const budgetResponse = await fetch(`${URL}/api/editbudget`, {
@@ -722,7 +722,7 @@ const callback = (mutationList, observer) => {
                 },
                 body: JSON.stringify(budgetObj),
               });
-              btn.replaceChildren();
+              btnAction.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Save Changes");
               // const budgetId = (await budgetResponse.json()).budgetId;
               // budgetCardObj.id = budgetId;
@@ -1040,6 +1040,8 @@ const callback = (mutationList, observer) => {
                 total: 0,
               };
 
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("afterbegin", "Loading...");
               const potResponse = await fetch(`${URL}/api/addpot`, {
                 method: "POST",
                 headers: {
@@ -1052,6 +1054,8 @@ const callback = (mutationList, observer) => {
 
               potCardObj.id = potId;
               pots.push(potCardObj);
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("afterbegin", "Add Pot");
 
               // localStorage.setItem("pots", JSON.stringify(pots));
 
@@ -1273,6 +1277,8 @@ const callback = (mutationList, observer) => {
                 }
               });
 
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("afterbegin", "Loading...");
               const potResponse = await fetch(`${URL}/api/editpot`, {
                 method: "post",
                 headers: {
@@ -1280,6 +1286,9 @@ const callback = (mutationList, observer) => {
                 },
                 body: JSON.stringify(potsObj),
               });
+
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("afterbegin", "Save Changes");
               // localStorage.setItem("pots", JSON.stringify(pots));
 
               budgetCard.setAttribute("data-category", category);
@@ -1337,6 +1346,8 @@ const callback = (mutationList, observer) => {
                 theme.style = ``;
               }
 
+              btn.replaceChildren();
+              btn.insertAdjacentText("afterbegin", "Loading...");
               const potResponse = await fetch(`${URL}/api/deletepot`, {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
@@ -1351,6 +1362,8 @@ const callback = (mutationList, observer) => {
                 body: JSON.stringify({ current: balance.current }),
               });
 
+              btn.replaceChildren();
+              btn.insertAdjacentText("afterbegin", "Yes, Confirm Deletion");
               // localStorage.setItem("balance", JSON.stringify(balance));
 
               budgetCard.remove();
@@ -1471,6 +1484,9 @@ const callback = (mutationList, observer) => {
                   potObj = pot;
                 }
               });
+
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("afterbegin", "Loading...");
               const potResponse = await fetch(`${URL}/api/editpot`, {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
@@ -1482,6 +1498,9 @@ const callback = (mutationList, observer) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ current: balance.current }),
               });
+
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("afterbegin", "Confirm Addition");
 
               // localStorage.setItem("pots", JSON.stringify(pots));
               // localStorage.setItem("balance", JSON.stringify(balance));
@@ -1596,6 +1615,8 @@ const callback = (mutationList, observer) => {
                   potObj = pot;
                 }
               });
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("afterbegin", "Loading...");
               const potResponse = await fetch(`${URL}/api/editpot`, {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
@@ -1607,6 +1628,9 @@ const callback = (mutationList, observer) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ current: balance.current }),
               });
+
+              btnAction.replaceChildren();
+              btnAction.insertAdjacentText("afterbegin", "Confirm Withdraw");
 
               // localStorage.setItem("pots", JSON.stringify(pots));
               // localStorage.setItem("balance", JSON.stringify(balance));
