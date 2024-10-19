@@ -414,7 +414,11 @@ const callback = (mutationList, observer) => {
               //   "afterbegin",
               //   `<span class="progress-circle"></span>`
               // );
-              btnAction.insertAdjacentText("afterbegin", "Loading...");
+              // btnAction.insertAdjacentText("afterbegin", "Loading...");
+              btnAction.insertAdjacentHTML(
+                "afterbegin",
+                '<span class="progress-circle"></span>'
+              );
               const budgetResponse = await fetch(`${URL}/api/addbudget`, {
                 method: "POST",
                 headers: {
@@ -425,8 +429,9 @@ const callback = (mutationList, observer) => {
 
               const budgetId = (await budgetResponse.json()).budgetId;
 
-              btnAction.replaceChildren();
-              btnAction.insertAdjacentText("afterbegin", "Add Budget");
+              // btnAction.replaceChildren();
+              // btnAction.insertAdjacentText("afterbegin", "Add Budget");
+
               budgetCardObj.id = budgetId;
               budgets.push(budgetCardObj);
               // localStorage.setItem("budgets", JSON.stringify(budgets));
@@ -458,7 +463,7 @@ const callback = (mutationList, observer) => {
               prevThemeChoice =
                 availableTheme.children[0].children[0].children[0].dataset
                   .theme;
-              newDialog.close();
+              // newDialog.close();
             }
           }
         });

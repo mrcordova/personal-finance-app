@@ -129,8 +129,7 @@ body {
       gap: 0.5rem;
       flex: 1;
       aspect-ratio: 1;
-      /* padding-block: 3.0625rem; */
-      /* padding-inline: 2.5rem 2.4375rem; */
+
       & > span {
         color: var(--grey-900);
         font-size: 2rem;
