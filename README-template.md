@@ -129,6 +129,7 @@ https://stackoverflow.com/questions/10005939/how-do-i-consume-the-json-post-data
 https://www.freecodecamp.org/news/create-crud-api-project/
 
 https://sidorares.github.io/node-mysql2/docs/examples/queries/prepared-statements/delete
+https://stackoverflow.com/questions/74063029/deploying-a-mern-app-to-render-com-with-one-main-folder-structure-not-separate
 
 - [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
 - [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.

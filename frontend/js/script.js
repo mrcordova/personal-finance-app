@@ -1,4 +1,5 @@
-const URL = "http://localhost:3000";
+// const URL = "http://localhost:3000";
+const URL = "https://personal-finance-app-gw5b.onrender.com";
 const dataResponse = await fetch(`${URL}/api/data`);
 const data = await dataResponse.json();
 
