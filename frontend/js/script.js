@@ -410,10 +410,7 @@ const callback = (mutationList, observer) => {
               const categorySummartObj = {};
 
               btnAction.replaceChildren();
-              // btnAction.insertAdjacentHTML(
-              //   "afterbegin",
-              //   `<span class="progress-circle"></span>`
-              // );
+
               // btnAction.insertAdjacentText("afterbegin", "Loading...");
               btnAction.insertAdjacentHTML(
                 "afterbegin",
@@ -722,7 +719,11 @@ const callback = (mutationList, observer) => {
 
               // console.log(budgetObj);
               btnAction.replaceChildren();
-              btnAction.insertAdjacentText("afterbegin", "Loading...");
+              // btnAction.insertAdjacentText("afterbegin", "Loading...");
+              btnAction.insertAdjacentHTML(
+                "afterbegin",
+                '<span class="progress-circle"></span>'
+              );
 
               const budgetResponse = await fetch(`${URL}/api/editbudget`, {
                 method: "POST",
@@ -808,7 +809,11 @@ const callback = (mutationList, observer) => {
               budgets.splice(idxOfBudgetCard, 1);
 
               btn.replaceChildren();
-              btn.insertAdjacentText("afterbegin", "Loading...");
+              // btn.insertAdjacentText("afterbegin", "Loading...");
+              btn.insertAdjacentHTML(
+                "afterbegin",
+                '<span class="progress-circle"></span>'
+              );
 
               const budgetResponse = await fetch(`${URL}/api/deletebudget`, {
                 method: "POST",
@@ -1050,7 +1055,11 @@ const callback = (mutationList, observer) => {
               };
 
               btnAction.replaceChildren();
-              btnAction.insertAdjacentText("afterbegin", "Loading...");
+              // btnAction.insertAdjacentText("afterbegin", "Loading...");
+              btnAction.insertAdjacentHTML(
+                "afterbegin",
+                '<span class="progress-circle"></span>'
+              );
               const potResponse = await fetch(`${URL}/api/addpot`, {
                 method: "POST",
                 headers: {
@@ -1287,7 +1296,11 @@ const callback = (mutationList, observer) => {
               });
 
               btnAction.replaceChildren();
-              btnAction.insertAdjacentText("afterbegin", "Loading...");
+              // btnAction.insertAdjacentText("afterbegin", "Loading...");
+              btnAction.insertAdjacentHTML(
+                "afterbegin",
+                '<span class="progress-circle"></span>'
+              );
               const potResponse = await fetch(`${URL}/api/editpot`, {
                 method: "post",
                 headers: {
@@ -1356,7 +1369,11 @@ const callback = (mutationList, observer) => {
               }
 
               btn.replaceChildren();
-              btn.insertAdjacentText("afterbegin", "Loading...");
+              // btn.insertAdjacentText("afterbegin", "Loading...");
+              btn.insertAdjacentHTML(
+                "afterbegin",
+                '<span class="progress-circle"></span>'
+              );
               const potResponse = await fetch(`${URL}/api/deletepot`, {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
@@ -1495,7 +1512,11 @@ const callback = (mutationList, observer) => {
               });
 
               btnAction.replaceChildren();
-              btnAction.insertAdjacentText("afterbegin", "Loading...");
+              // btnAction.insertAdjacentText("afterbegin", "Loading...");
+              btnAction.insertAdjacentHTML(
+                "afterbegin",
+                '<span class="progress-circle"></span>'
+              );
               const potResponse = await fetch(`${URL}/api/editpot`, {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
@@ -1625,7 +1646,11 @@ const callback = (mutationList, observer) => {
                 }
               });
               btnAction.replaceChildren();
-              btnAction.insertAdjacentText("afterbegin", "Loading...");
+              // btnAction.insertAdjacentText("afterbegin", "Loading...");
+              btnAction.insertAdjacentHTML(
+                "afterbegin",
+                '<span class="progress-circle"></span>'
+              );
               const potResponse = await fetch(`${URL}/api/editpot`, {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
