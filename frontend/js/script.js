@@ -1,13 +1,6 @@
-// const test = await fetch("/api/data");
-
-// console.log(await test.json());
-// const dataResponse = await fetch("/backend/data.json");
-// const data = await dataResponse.json();
-// console.log(data);
 const URL = "http://localhost:3000";
 const dataResponse = await fetch(`${URL}/api/data`);
 const data = await dataResponse.json();
-// console.log(One);
 
 const sidebarMenu = document.getElementById("sidebar-menu");
 const minimizeMenu = document.getElementById("mini-menu");
