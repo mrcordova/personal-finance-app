@@ -1,11 +1,15 @@
 // const URL = "http://localhost:3000";
+
+const main = document.querySelector("main");
+
 const URL = "https://personal-finance-app-gw5b.onrender.com";
 const dataResponse = await fetch(`${URL}/api/data`);
 const data = await dataResponse.json();
+console.log("here");
+main.replaceChildren();
 
 const sidebarMenu = document.getElementById("sidebar-menu");
 const minimizeMenu = document.getElementById("mini-menu");
-const main = document.querySelector("main");
 
 const config = { attributes: true, childList: true, subtree: true };
 
