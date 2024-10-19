@@ -421,7 +421,7 @@ const callback = (mutationList, observer) => {
               const budgetId = (await budgetResponse.json()).budgetId;
 
               btnAction.replaceChildren();
-              btnAction.insertAdjacentText("beforebegin", "Add Budget");
+              btnAction.insertAdjacentText("afterbegin", "Add Budget");
               budgetCardObj.id = budgetId;
               budgets.push(budgetCardObj);
               // localStorage.setItem("budgets", JSON.stringify(budgets));
