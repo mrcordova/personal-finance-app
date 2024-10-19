@@ -790,6 +790,7 @@ const callback = (mutationList, observer) => {
               const idxOfBudgetCard = budgets
                 .map((budget) => budget.theme)
                 .indexOf(`${oldTheme}`);
+              const budgetToDeleteId = budgets[idxOfBudgetCard].id;
 
               budgets.splice(idxOfBudgetCard, 1);
 
@@ -798,7 +799,7 @@ const callback = (mutationList, observer) => {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ id: idxOfBudgetCard }),
+                body: JSON.stringify({ id: budgetToDeleteId }),
               });
               // console.log(idxOfBudgetCard);
               // localStorage.setItem("budgets", JSON.stringify(budgets));
