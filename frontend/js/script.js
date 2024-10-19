@@ -1,12 +1,8 @@
-// const URL = "http://localhost:3000";
-
 const main = document.querySelector("main");
 
 const URL = "https://personal-finance-app-gw5b.onrender.com";
 const dataResponse = await fetch(`${URL}/api/data`);
 const data = await dataResponse.json();
-// console.log("here");
-// main.replaceChildren();
 
 const sidebarMenu = document.getElementById("sidebar-menu");
 const minimizeMenu = document.getElementById("mini-menu");
@@ -64,7 +60,7 @@ const sortByFuncs = {
 // if (!("balance" in localStorage)) {
 //   localStorage.setItem("balance", JSON.stringify(data["balance"]));
 // }
-// console.log(localStorage);
+
 // const transactions =
 //   JSON.parse(localStorage.getItem("transactions")) || data["transactions"];
 // const budgets = JSON.parse(localStorage.getItem("budgets")) || data["budgets"];
@@ -78,7 +74,6 @@ const balance = data["balance"];
 const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
 let budgetCard;
 
-// console.log(budgets);
 // Initialize the DOM parser
 const parser = new DOMParser();
 
@@ -717,7 +712,6 @@ const callback = (mutationList, observer) => {
                 }
               });
 
-              // console.log(budgetObj);
               btnAction.replaceChildren();
               // btnAction.insertAdjacentText("afterbegin", "Loading...");
               btnAction.insertAdjacentHTML(
@@ -734,9 +728,7 @@ const callback = (mutationList, observer) => {
               });
               btnAction.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Save Changes");
-              // const budgetId = (await budgetResponse.json()).budgetId;
-              // budgetCardObj.id = budgetId;
-              // budgets.push(budgetCardObj);
+
               // localStorage.setItem("budgets", JSON.stringify(budgets));
 
               budgetCard.setAttribute("data-category", category);
@@ -824,7 +816,7 @@ const callback = (mutationList, observer) => {
               });
               btn.replaceChildren();
               btn.insertAdjacentText("afterbegin", "Yes, Confirm Deletion");
-              // console.log(idxOfBudgetCard);
+
               // localStorage.setItem("budgets", JSON.stringify(budgets));
 
               const oldChoices = main.querySelectorAll(
@@ -1041,8 +1033,6 @@ const callback = (mutationList, observer) => {
 
               actions[1].value = "";
               actions[0].children[0].value = "";
-
-              // console.log(category);
 
               const potCardObj = {
                 name: category,
@@ -1481,10 +1471,7 @@ const callback = (mutationList, observer) => {
                 .getAttribute("value");
               const percentageValue = addToDialog.querySelector(".pot-numbers");
               percentageValue.style = "";
-              // balance.current += parseFloat(
-              //   budgetCard.getAttribute("data-spend")
-              // );
-              // console.log(ammountToAdd);
+
               budgetCard.setAttribute("data-spend", potTotal);
               budgetCard
                 .querySelector("progress")
@@ -1617,9 +1604,7 @@ const callback = (mutationList, observer) => {
               const percentageValue =
                 withdrawDialog.querySelector(".pot-numbers");
               percentageValue.style = "";
-              //  balance.current += parseFloat(
-              //    budgetCard.getAttribute("data-spend")
-              //  );
+
               budgetCard.setAttribute("data-spend", potTotal);
               budgetCard
                 .querySelector("progress")
@@ -1839,8 +1824,7 @@ const callback = (mutationList, observer) => {
         // balance section
         const [balanceText, income, expenses] =
           mainOverview.querySelectorAll("[data-total-bill]");
-        // let balanceText = balance.current.toFixed(2);
-        // console.log(balance);
+
         balanceText.setAttribute("data-total-bill", balance.current);
         balanceText.textContent = `${parseFloat(balance.current).toLocaleString(
           "en",
