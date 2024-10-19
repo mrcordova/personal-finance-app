@@ -74,7 +74,7 @@ const balance = data["balance"];
 const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
 let budgetCard;
 
-console.log(budgets);
+// console.log(budgets);
 // Initialize the DOM parser
 const parser = new DOMParser();
 
