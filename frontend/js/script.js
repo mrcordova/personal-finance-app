@@ -1891,7 +1891,7 @@ const callback = (mutationList, observer) => {
             data-name="${transaction.name}"
             data-max-spending="${transaction.amount}"
             data-date="${transaction.date}">
-            <th colspan="1" role="row">
+            <th colspan="1">
               <img
                 class="profile-pic"
                 src="${transaction.avatar}"
