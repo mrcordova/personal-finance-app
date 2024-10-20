@@ -48,6 +48,11 @@ app.use(express.static(path.join(__dirname, "../frontend/")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ type: "*/*" }));
 
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate");
+  next();
+});
+
 // const balance = data["balance"];
 // const { current, income, expenses } = balance;
 // const query = `INSERT INTO balance(current, income, expenses) VALUES (?,?,?)`;
