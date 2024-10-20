@@ -102,6 +102,13 @@ const templates = {
   recurring: await extractTemplate("recurring"),
 };
 
+window.addEventListener("pageshow", function (event) {
+  if (event.persisted) {
+    // Reload the page if it's restored from bfcache
+    window.location.reload();
+  }
+});
+
 const callback = (mutationList, observer) => {
   for (const mutation of mutationList) {
     if (mutation.type === "childList") {
