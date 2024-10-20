@@ -1,13 +1,10 @@
 const express = require("express");
-const data = require("./data.json");
 const path = require("path");
 const cors = require("cors");
-// const http = require("http");
+
 const mysql = require("mysql2");
-// const bodyParser = require("body-parser");
+
 require("dotenv").config();
-// const fs = require("fs");
-// const { error } = require("console");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
