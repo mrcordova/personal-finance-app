@@ -1895,7 +1895,7 @@ const callback = (mutationList, observer) => {
               <img
                 class="profile-pic"
                 src="${transaction.avatar}"
-                alt="${transaction.name}" />
+                alt="${transaction.name} profile picture" />
               <p class="public-sans-bold title">${transaction.name}</p>
             </th>
 
