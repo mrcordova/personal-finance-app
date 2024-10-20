@@ -106,38 +106,29 @@ Use this section to outline areas that you want to continue focusing on in futur
 
 ### Useful resources
 
-https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
-https://www.sitepoint.com/simple-pagination-html-css-javascript/
-https://stackoverflow.com/questions/9789723/css-text-overflow-in-a-table-cell
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options
+- [Mutation Observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) - How to detect changes to an element and its children that are being observed.
+- [Pagination](https://www.sitepoint.com/simple-pagination-html-css-javascript/) - How to split elements into pages.
+- [Table cell overflow](https://stackoverflow.com/questions/9789723/css-text-overflow-in-a-table-cell) - How to deal with text overflow in table cell.
+- [Date format options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options) - Documentation on the display options for the Date object.
+- [Sort object by date](https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date-property) - How to sort object by a property.
+- [Ellipis placeholder](https://stackoverflow.com/questions/10556365/is-it-possible-to-ellipsize-placeholders-watermarks-in-html5) - how to use ellipis in input placeholder text.
+- [Gradient Conic](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient) - I used this to create budget chart.
+- [Swap dom child nodes](https://stackoverflow.com/questions/9732624/how-to-swap-dom-child-nodes-in-javascript) - Use this for theme menu values.
+- [Add input icon in input element](https://stackoverflow.com/questions/24369197/how-to-add-static-text-inside-an-input-form) - How to add an icon to an input element and how to position it.
+- [How to insert an element in an array](https://stackoverflow.com/questions/72393049/how-to-add-a-element-in-between-array-using-const-array-in-javascript) - How to add/remove an element, I used this to remove an element when deleting from budget/pot array objects.
+- [Function to check if num](https://stackoverflow.com/questions/1779013/check-if-string-contains-only-digits) - How to check if an input element only has numbers using regex.
+- [Getting index of in object by property](https://stackoverflow.com/questions/7176908/how-can-i-get-the-index-of-an-object-by-its-property-in-javascript) - I used this along with the theme property to find object to modify.
+- [Set of objects](https://stackoverflow.com/questions/5657219/set-of-objects-in-javascript) - How to create a set of objects.
+- [How to create put request using Express](https://stackoverflow.com/questions/64420399/how-to-pass-body-to-express-router-for-put-request) - Basic setup for express put request.
+- [Req body empty](https://stackoverflow.com/questions/24543847/req-body-empty-on-posts) - Express setup if req body is empty when called.
+- [How to send and return json](https://stackoverflow.com/questions/10005939/how-do-i-consume-the-json-post-data-in-an-express-application) - Middleware to send json back from request.
+- [Basics for CRUD project](https://www.freecodecamp.org/news/create-crud-api-project/) - Used this as the basic setup for a CRUD project.
+- [MySql queries for node](https://sidorares.github.io/node-mysql2/docs/examples/queries/prepared-statements/delete) - The basics for how to make queries to use in node.
+- [How to deploy frontend and backend on render.com](https://stackoverflow.com/questions/74063029/deploying-a-mern-app-to-render-com-with-one-main-folder-structure-not-separate) - How to deploy a project with a frontend and backend.
+- [Responsive table](https://github.com/yesnoio/responsive-table?tab=readme-ov-file) - Used this for the transaction/recurring bills tables.
+- [How to connect mySql in node](https://www.mysqltutorial.org/mysql-nodejs/connect/) - Tutorial for how to use mySql in node
 
-https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date-property
-https://stackoverflow.com/questions/10556365/is-it-possible-to-ellipsize-placeholders-watermarks-in-html5
-https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient
-https://stackoverflow.com/questions/9732624/how-to-swap-dom-child-nodes-in-javascript
-https://stackoverflow.com/questions/24369197/how-to-add-static-text-inside-an-input-form
-
-https://stackoverflow.com/questions/72393049/how-to-add-a-element-in-between-array-using-const-array-in-javascript
-https://stackoverflow.com/questions/1779013/check-if-string-contains-only-digits
-https://stackoverflow.com/questions/7176908/how-can-i-get-the-index-of-an-object-by-its-property-in-javascript
-
-https://stackoverflow.com/questions/5657219/set-of-objects-in-javascript
-
-https://stackoverflow.com/questions/64420399/how-to-pass-body-to-express-router-for-put-request
-https://stackoverflow.com/questions/24543847/req-body-empty-on-posts
-https://stackoverflow.com/questions/10005939/how-do-i-consume-the-json-post-data-in-an-express-application
-https://www.freecodecamp.org/news/create-crud-api-project/
-
-https://sidorares.github.io/node-mysql2/docs/examples/queries/prepared-statements/delete
-https://stackoverflow.com/questions/74063029/deploying-a-mern-app-to-render-com-with-one-main-folder-structure-not-separate
-
-https://github.com/yesnoio/responsive-table?tab=readme-ov-file
-https://www.mysqltutorial.org/mysql-nodejs/connect/
-
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [Service to create mySql database](https://console.aiven.io/account/a4ea447f93ed/home) - The service I used to host mySql database.
 
 ## Author
 
