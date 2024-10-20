@@ -1737,6 +1737,8 @@ const callback = (mutationList, observer) => {
             <td colspan="2">
               <span class="vendor-name">
                 <img
+                width=32
+                height=32
                   src="${info.avatar}"
                   alt="${name}" />
                 <p>${name}</p>
@@ -1751,10 +1753,14 @@ const callback = (mutationList, observer) => {
                   ${
                     paid
                       ? `<img
+                      width=14
+                      height=18
                     src="./assets/images/icon-bill-paid.svg"
                     alt="bill paid" />`
                       : paidSoon
                       ? `<img
+                      width=14
+                      height=18
                     src="./assets/images/icon-bill-due.svg"
                     alt="bill due" />`
                       : ""
@@ -2151,7 +2157,7 @@ function createBudgetCard(budgetCards, budget) {
           </div>
           <div class="dropdown"  >
             <button data-budget-show="true">
-              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+              <img width=16 height=4.6 src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
             </button>
 
             <menu data-parameter="editBudget" class="dropdown-content">
@@ -2197,6 +2203,8 @@ function createBudgetCard(budgetCards, budget) {
             <button data-action="see-all">
               <span>See All</span>
               <img
+              width=6
+              height=11
                 src="./assets/images/icon-caret-right.svg"
                 alt="caret right" />
             </button>
@@ -2228,7 +2236,7 @@ function createPotCard(mainPots, pot) {
           </div>
           <div class="dropdown">
             <button data-budget-show="true">
-              <img src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
+              <img width=16 height=4.57  src="./assets/images/icon-ellipsis.svg" alt="ellipsis" />
             </button>
 
             <menu data-parameter="editPot" class="dropdown-content">
@@ -2287,6 +2295,8 @@ function createLatestSpending(strings, latestSpendingArray) {
                 <td>
                   <div class="table-name">
                     <img
+                    width=32
+                    height=32
                       loading="lazy"
                       src="${latestSpending.avatar}"
                       alt="${latestSpending.name}" />
@@ -2367,6 +2377,8 @@ function transactionsUpdate() {
       }">
           <th colspan="1" role="row">
             <img
+            width=40
+            height=40
               class="profile-pic"
               src="${transaction.avatar}"
               alt="${transaction.name}" />
