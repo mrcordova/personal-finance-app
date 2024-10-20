@@ -1,24 +1,27 @@
-# Frontend Mentor - Personal finance app
+# Frontend Mentor - Personal finance app solution
 
-![Design preview for the Personal finance app coding challenge](./preview.jpg)
+This is a solution to the [Personal finance app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/personal-finance-app-JfjtZgyMt1). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-## Welcome! 👋
+## Table of contents
 
-Thanks for purchasing this premium Frontend Mentor coding challenge.
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects. These premium challenges are perfect portfolio pieces, so please feel free to use what you create in your portfolio to show others.
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
 
-**To do this challenge, you need a very strong understanding of HTML, CSS, and JavaScript.**
+  - [Useful resources](#useful-resources)
 
-## The challenge
+- [Author](#author)
 
-Your challenge is to build out this personal finance app and get it looking as close to the design as possible.
+## Overview
 
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+### The challenge
 
-We provide the data in a local `data.json` file, so use that to populate the content on first load. If you want to take it up a notch, feel free to build this as a full-stack application!
-
-Your users should be able to:
+Users should be able to:
 
 - See all of the personal finance app data at-a-glance on the overview page
 - View all transactions on the transactions page with pagination for every ten transactions
@@ -36,102 +39,55 @@ Your users should be able to:
 - **Bonus**: Save details to a database (build the project as a full-stack app)
 - **Bonus**: Create an account and log in (add user authentication to the full-stack app)
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+### Screenshot
 
-### Expected behaviour
+![](./frontend/assets/images/screenshot.png)
 
-**⚠️ IMPORTANT ⚠️: The data in some designs will differ from what's in the `data.json` file. We recommend using the desktop designs to reference how the data should look, as these all include the correct data and copy. The tablet and mobile layouts are there for layout reference.**
+### Links
 
-- Overview
-  - This page should display all the information at-a-glance and allow for easy navigation.
-  - We recommend building this page last, as it will require logic from the other pages (e.g., recurring bills) in order to display the data correctly.
-- Transactions
-  - Output the transactions from the `data.json` file, paginating results for every ten transactions.
-  - The search should allow for name search, but feel free to add other functionality like searching for transaction amounts if you want to test yourself.
-  - The sorting options include: Latest (most recent), Oldest, A to Z, Z to A, Highest (transaction amount), Lowest.
-  - The filter is by transaction category, which are: Entertainment, Bills, Groceries, Dining Out, Transportation, Personal Care, Education, Lifestyle, Shopping, General. Filtering by category should only show transactions from the selected category.
-- Budgets
-  - Don't worry if you can't create a donut pie chart exactly like in the design. Do your best to get close, but feel free to go in your own direction.
-  - The "Spent" amount should calculate the money spent within the category for the current month (August 2024 in the app).
-  - The "Latest Spending" component should display the three last transactions for that category regardless of the month.
-  - Clicking "See All" on a budget should navigate to the Transactions page with the filter set to the relevant category. For example, clicking "See All" on Entertainment should only show transactions with the Entertainment category.
-  - Adding a new budget should automatically pull in the three latest transactions from the created budget category and calculate the amount spent so far for August 2024.
-  - Deleting a budget should remove it from the Budgets page and the Overview.
-- Pots
-  - Adding money to a pot should deduct the given amount from the current balance (seen on the Overview page).
-  - Withdrawing money from a pot should add that amount to the current balance.
-  - Deleting a pot should return all the money from the pot to the current balance.
-- Recurring Bills
-  - List out all the recurring transactions and ensure only one item is shown per vendor.
-  - Show the recurring transactions that have already been paid for August 2024.
-  - Show the payments due to be paid soon based on their monthly payment date. Calculate this from recurring transactions yet to be paid for August 2024, but due within five days of the latest overall transaction in the app (Emma Richardson - 19 August 2024).
-  - The search should search based on name.
-  - The sorting options include: Latest (earliest in the month), Oldest, A to Z, Z to A, Highest (transaction amount), Lowest.
+- Solution URL: [Github repo](https://github.com/mrcordova/personal-finance-app)
+- Live Site URL: [personal-finance-app](https://personal-finance-app-1.onrender.com)
 
-## Where to find everything
+## My process
 
-Your task is to build out the project to the design file provided. We provide both Sketch and Figma versions of the design, so you can choose which tool you prefer to use. You can download the design file on the platform. **Please be sure not to share them with anyone else.** The design download comes with a `README.md` file as well to help you get set up.
+### Built with
 
-All the required assets for this project are in the `/assets` folder. The images are already exported for the correct screen size and optimized. Some are reusable at multiple screen sizes. So if you don't see an image in a specific folder, it will typically be in another folder for that page.
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
 
-We also include variable and static font files for the required fonts for this project. You can choose to either link to Google Fonts or use the local font files to host the fonts yourself. Note that we've removed the static font files for the font weights that aren't needed for this project.
+### What I learned
 
-The design system in the design file will give you more information about the various colors, fonts, and styles used in this project. Our fonts always come from [Google Fonts](https://fonts.google.com/).
+I learned how to create a full stack app and how to deploy it. I also learned about how keep track of elements, how to sort elements and how to display them.
 
-## Building your project
+### Useful resources
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+- [Mutation Observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) - How to detect changes to an element and its children that are being observed.
+- [Pagination](https://www.sitepoint.com/simple-pagination-html-css-javascript/) - How to split elements into pages.
+- [Table cell overflow](https://stackoverflow.com/questions/9789723/css-text-overflow-in-a-table-cell) - How to deal with text overflow in table cell.
+- [Date format options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options) - Documentation on the display options for the Date object.
+- [Sort object by date](https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date-property) - How to sort object by a property.
+- [Ellipis placeholder](https://stackoverflow.com/questions/10556365/is-it-possible-to-ellipsize-placeholders-watermarks-in-html5) - how to use ellipis in input placeholder text.
+- [Gradient Conic](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient) - I used this to create budget chart.
+- [Swap dom child nodes](https://stackoverflow.com/questions/9732624/how-to-swap-dom-child-nodes-in-javascript) - Use this for theme menu values.
+- [Add input icon in input element](https://stackoverflow.com/questions/24369197/how-to-add-static-text-inside-an-input-form) - How to add an icon to an input element and how to position it.
+- [How to insert an element in an array](https://stackoverflow.com/questions/72393049/how-to-add-a-element-in-between-array-using-const-array-in-javascript) - How to add/remove an element, I used this to remove an element when deleting from budget/pot array objects.
+- [Function to check if num](https://stackoverflow.com/questions/1779013/check-if-string-contains-only-digits) - How to check if an input element only has numbers using regex.
+- [Getting index of in object by property](https://stackoverflow.com/questions/7176908/how-can-i-get-the-index-of-an-object-by-its-property-in-javascript) - I used this along with the theme property to find object to modify.
+- [Set of objects](https://stackoverflow.com/questions/5657219/set-of-objects-in-javascript) - How to create a set of objects.
+- [How to create put request using Express](https://stackoverflow.com/questions/64420399/how-to-pass-body-to-express-router-for-put-request) - Basic setup for express put request.
+- [Req body empty](https://stackoverflow.com/questions/24543847/req-body-empty-on-posts) - Express setup if req body is empty when called.
+- [How to send and return json](https://stackoverflow.com/questions/10005939/how-do-i-consume-the-json-post-data-in-an-express-application) - Middleware to send json back from request.
+- [Basics for CRUD project](https://www.freecodecamp.org/news/create-crud-api-project/) - Used this as the basic setup for a CRUD project.
+- [MySql queries for node](https://sidorares.github.io/node-mysql2/docs/examples/queries/prepared-statements/delete) - The basics for how to make queries to use in node.
+- [How to deploy frontend and backend on render.com](https://stackoverflow.com/questions/74063029/deploying-a-mern-app-to-render-com-with-one-main-folder-structure-not-separate) - How to deploy a project with a frontend and backend.
+- [Responsive table](https://github.com/yesnoio/responsive-table?tab=readme-ov-file) - Used this for the transaction/recurring bills tables.
+- [How to connect mySql in node](https://www.mysqltutorial.org/mysql-nodejs/connect/) - Tutorial for how to use mySql in node
 
-1. Separate the `starter-code` from the rest of this project and rename it to something meaningful for you. Initialize the codebase as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/). **⚠️ IMPORTANT ⚠️: There are already a couple of `.gitignore` files in this project. Please do not remove them or change the content of the files. If you create a brand new project, please use the `.gitignore` files provided in your new codebase. This is to avoid the accidental upload of the design files to GitHub. With these premium challenges, please be sure not to share the design files in your GitHub repo. Thanks!**
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+- [Service to create mySql database](https://console.aiven.io/account/a4ea447f93ed/home) - The service I used to host mySql database.
 
-## Deploying your project
+## Author
 
-As mentioned above, there are many ways to host your project for free. Our recommend hosts are:
-
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
-
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
-
-## Create a custom `README.md`
-
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
-
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
-
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
-
-## Submitting your solution
-
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
-
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
-
-**⚠️ IMPORTANT ⚠️: With these premium challenges, please be sure not to upload the design files to GitHub when you're submitting to the platform and sharing it around. If you've created a brand new project, the easiest way to do that is to copy across the `.gitignore` provided in this starter project.**
-
-## Sharing your solution
-
-There are multiple places you can share your solution:
-
-1. Share your solution page in the **#finished-projects** channel of our [community](https://www.frontendmentor.io/community).
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
-
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback.
-
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
-
-## Got feedback for us?
-
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
-
-**Have fun building!** 🚀
-
-# personal-finance-app
+- Website - [Noah C.](https://noahs.software)
+- Frontend Mentor - [@mrcordova](https://www.frontendmentor.io/profile/mrcordova)
