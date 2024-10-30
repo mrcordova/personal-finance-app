@@ -34,12 +34,28 @@ connection.connect(function (err) {
 //   origin: "http://127.0.0.1:5500",
 //   methods: ["GET", "POST", "PUT", "DELETE"],
 // };
+// const corsOptions = {
+//   origin: "https://personal-finance-app-1.onrender.com",
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+// };
+
+// app.use(cors(corsOptions));
+
+const allowedOrigins = [
+  "https://personal-finance-app-1.onrender.com",
+  "http://127.0.0.1:5500",
+];
+
 const corsOptions = {
-  origin: "https://personal-finance-app-1.onrender.com",
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
-
-app.use(cors(corsOptions));
 
 // // Serve static files from the frontend directory
 
