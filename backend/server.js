@@ -246,6 +246,11 @@ app.post("/api/updatebalance", async (req, res) => {
   }
 });
 
+// Express example
+app.get("/health-check", (req, res) => {
+  res.status(200).json({ message: "Backend is active" });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running of ${PORT}`);
 });
