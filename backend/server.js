@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-
+const data = require('./data.json')
 const mysql = require("mysql2");
 
 require("dotenv").config();
@@ -14,7 +14,7 @@ const pool = mysql.createPool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+  password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   typeCast: function (field, next) {
     if (field.type === "NEWDECIMAL") {
@@ -79,59 +79,62 @@ app.use(express.json({ type: "*/*" }));
 //   res.set("Cache-Control", "no-store, no-cache, must-revalidate");
 //   next();
 // });
+async function populateDB() {
+  
 
-// const balance = data["balance"];
-// const { current, income, expenses } = balance;
-// const query = `INSERT INTO balance(current, income, expenses) VALUES (?,?,?)`;
-// connection.query(query, [current, income, expenses], (error, results) => {
-//   if (error) throw error;
-//   console.log("INserted balance", results.insertId);
-// });
-// // Assume you have a MySQL connection called `connection`
-// const transactions = data["transactions"];
-// transactions.forEach((transaction) => {
-//   const { avatar, name, category, date, amount, recurring } = transaction;
-//   // Create a Date object3
-//   const dateObj = new Date(date);
+const balance = data["balance"];
+const { current, income, expenses } = balance;
+const query = `INSERT INTO balance(current, income, expenses) VALUES (?,?,?)`;
+await poolPromise.query(query, [current, income, expenses], (error, results) => {
+  if (error) throw error;
+  console.log("INserted balance", results.insertId);
+});
+// Assume you have a MySQL connection called `connection`
+const transactions = data["transactions"];
+transactions.forEach(async (transaction) => {
+  const { avatar, name, category, date, amount, recurring } = transaction;
+  // Create a Date object3
+  const dateObj = new Date(date);
 
-//   // Format the date to 'YYYY-MM-DD HH:MM:SS'
-//   const mysqlDate = dateObj.toISOString().slice(0, 19).replace("T", " ");
-//   const query = `
-//     INSERT INTO transactions (avatar, name, category, date, amount, recurring)
-//     VALUES (?, ?, ?, ?, ?, ?)
-//   `;
-//   connection.query(
-//     query,
-//     [avatar, name, category, mysqlDate, amount, recurring],
-//     (error, results) => {
-//       if (error) throw error;
-//       console.log("Inserted transaction", results.insertId);
-//     }
-//   );
-// });
-// const budgets = data["budgets"];
-// budgets.forEach((budget) => {
-//   const { category, maximum, theme } = budget;
-//   const query = `INSERT INTO budgets (category, maximum, theme) VALUES (?, ?, ?)`;
+  // Format the date to 'YYYY-MM-DD HH:MM:SS'
+  const mysqlDate = dateObj.toISOString().slice(0, 19).replace("T", " ");
+  const query = `
+    INSERT INTO transactions (avatar, name, category, date, amount, recurring)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
+  await poolPromise.query(
+    query,
+    [avatar, name, category, mysqlDate, amount, recurring],
+    (error, results) => {
+      if (error) throw error;
+      console.log("Inserted transaction", results.insertId);
+    }
+  );
+});
+const budgets = data["budgets"];
+budgets.forEach(async (budget) => {
+  const { category, maximum, theme } = budget;
+  const query = `INSERT INTO budgets (category, maximum, theme) VALUES (?, ?, ?)`;
 
-//   connection.query(query, [category, maximum, theme], (error, results) => {
-//     if (error) throw error;
-//     console.log("Inserted budget", results.insertId);
-//   });
-// });
-// const pots = data["pots"];
-// pots.forEach((pot) => {
-//   const { name, target, total, theme } = pot;
-//   const query = `INSERT INTO pots (name, target, total, theme) VALUES (?, ?, ?, ?)`;
+  await poolPromise.query(query, [category, maximum, theme], (error, results) => {
+    if (error) throw error;
+    console.log("Inserted budget", results.insertId);
+  });
+});
+const pots = data["pots"];
+pots.forEach(async (pot) => {
+  const { name, target, total, theme } = pot;
+  const query = `INSERT INTO pots (name, target, total, theme) VALUES (?, ?, ?, ?)`;
 
-//   connection.query(query, [name, target, total, theme], (error, results) => {
-//     if (error) throw error;
-//     console.log("Inserted pot", results.insertId);
-//   });
-// });
-
+  await poolPromise.query(query, [name, target, total, theme], (error, results) => {
+    if (error) throw error;
+    console.log("Inserted pot", results.insertId);
+  });
+});
+}
+// populateDB();
 // Example API endpoint
-app.get("/api/data", cors(corsOptions), async (req, res) => {
+app.get("/api/data", async (req, res) => {
   const balanceQuery = `SELECT * FROM balance`;
   const transactionsQuery = `SELECT * FROM transactions`;
   const budgetsQuery = `SELECT * FROM budgets`;
