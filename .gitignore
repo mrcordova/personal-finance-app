@@ -15,3 +15,4 @@
 .DS_Store
 .prettierignore
 backend/.env
+backend/node_modules/

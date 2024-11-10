@@ -7,10 +7,10 @@ const mysql = require("mysql2");
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3003;
 // const host = "127.0.0.1";
 
-let connection = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
@@ -23,11 +23,11 @@ let connection = mysql.createConnection({
     return next();
   },
 });
-
-connection.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
+const poolPromise = pool.promise();
+// connection.connect(function (err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+// });
 
 // Allow requests from this origin
 // const corsOptions = {
@@ -46,17 +46,28 @@ const allowedOrigins = [
   "http://127.0.0.1:5500",
 ];
 
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (allowedOrigins.includes(origin) || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+// };
+
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: 'https://product-feedback-app-ikpg.onrender.com', // allow only this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization', 'bypass-tunnel-reminder', "localtunnel-agent-ips"], // allowed headers
+  credentials: true // allow cookies to be sent
 };
 
+app.use(cors(corsOptions));
+
+// For preflight requests (OPTIONS)
+app.options('*', cors(corsOptions));
 // // Serve static files from the frontend directory
 
 app.use(express.static(path.join(__dirname, "../frontend/")));
@@ -64,10 +75,10 @@ app.use(express.static(path.join(__dirname, "../frontend/")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ type: "*/*" }));
 
-app.use((req, res, next) => {
-  res.set("Cache-Control", "no-store, no-cache, must-revalidate");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.set("Cache-Control", "no-store, no-cache, must-revalidate");
+//   next();
+// });
 
 // const balance = data["balance"];
 // const { current, income, expenses } = balance;
@@ -127,12 +138,10 @@ app.get("/api/data", cors(corsOptions), async (req, res) => {
   const potsQuery = `SELECT * FROM pots`;
 
   try {
-    const [balanceRows] = await connection.promise().execute(balanceQuery);
-    const [transactionRows] = await connection
-      .promise()
-      .execute(transactionsQuery);
-    const [budgetRows] = await connection.promise().execute(budgetsQuery);
-    const [potsRows] = await connection.promise().execute(potsQuery);
+    const [balanceRows] = await poolPromise.query(balanceQuery);
+    const [transactionRows] = await poolPromise.query(transactionsQuery);
+    const [budgetRows] = await poolPromise.query(budgetsQuery);
+    const [potsRows] = await poolPromise.query(potsQuery);
 
     res.json({
       balance: balanceRows[0],
@@ -149,7 +158,7 @@ app.post("/api/addbudget", async (req, res) => {
       "INSERT INTO `budgets`(`category`, `theme`, `maximum`) VALUES (?, ?, ?)";
     const { category, theme, maximum } = req.body;
 
-    const [results, fields] = await connection.promise().execute({
+    const [results, fields] = await poolPromise.query({
       sql: budgetQuery,
       values: [category, theme, maximum],
     });
@@ -165,7 +174,7 @@ app.post("/api/editbudget", async (req, res) => {
     const query =
       "UPDATE `budgets` SET `category` = ?, `theme` = ?, `maximum` = ? WHERE `id` = ? LIMIT 1 ";
     const { id, category, theme, maximum } = req.body;
-    const [results, fields] = await connection.promise().execute({
+    const [results, fields] = await poolPromise.query({
       sql: query,
       values: [category, theme, maximum, id],
     });
@@ -178,7 +187,7 @@ app.post("/api/deletebudget", async (req, res) => {
   try {
     const query = "DELETE FROM `budgets` WHERE `id` = ? LIMIT 1 ";
     const { id } = req.body;
-    const [results, fields] = await connection.promise().execute({
+    const [results, fields] = await poolPromise.query({
       sql: query,
       values: [id],
     });
@@ -194,7 +203,7 @@ app.post("/api/addpot", async (req, res) => {
       "INSERT INTO `pots`(`name`, `target`, `total`, `theme`) VALUES (?, ?, ?, ?)";
     const { name, target, total, theme } = req.body;
 
-    const [results, fields] = await connection.promise().execute({
+    const [results, fields] = await poolPromise.query({
       sql: potQuery,
       values: [name, target, total, theme],
     });
@@ -210,7 +219,7 @@ app.post("/api/editpot", async (req, res) => {
     const query =
       "UPDATE `pots` SET `name` = ?, `theme` = ?, `target` = ? , `total` = ? WHERE `id` = ? LIMIT 1 ";
     const { id, name, theme, target, total } = req.body;
-    const [results, fields] = await connection.promise().execute({
+    const [results, fields] = await poolPromise.query({
       sql: query,
       values: [name, theme, target, total, id],
     });
@@ -223,7 +232,7 @@ app.post("/api/deletepot", async (req, res) => {
   try {
     const query = "DELETE FROM `pots` WHERE `id` = ? LIMIT 1 ";
     const { id } = req.body;
-    const [results, fields] = await connection.promise().execute({
+    const [results, fields] = await poolPromise.query({
       sql: query,
       values: [id],
     });
@@ -236,7 +245,7 @@ app.post("/api/updatebalance", async (req, res) => {
   try {
     const query = "UPDATE `balance` SET `current` = ? WHERE `id` = 1 LIMIT 1";
     const { current } = req.body;
-    const [results, fields] = await connection.promise().execute({
+    const [results, fields] = await poolPromise.query({
       sql: query,
       values: [current],
     });
@@ -247,8 +256,19 @@ app.post("/api/updatebalance", async (req, res) => {
 });
 
 // Express example
-app.get("/health-check", (req, res) => {
-  res.status(200).json({ message: "Backend is active" });
+app.get("/health-check", async (req, res) => {
+
+  try {
+   
+    const potsQuery = "Select 1 from pots LIMIT 1";
+   
+    const [pots] = await poolPromise.query(potsQuery);
+  
+    res.json({ success: true });
+    
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.listen(PORT, () => {
