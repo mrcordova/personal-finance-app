@@ -1,6 +1,7 @@
 const main = document.querySelector("main");
 
-const URL = "https://personal-finance-app-gw5b.onrender.com";
+// const URL = "https://personal-finance-app-gw5b.onrender.com";
+const URL = "https://personal-finance-app-backend.loca.lt";
 const dataResponse = await fetch(`${URL}/api/data`);
 const data = await dataResponse.json();
 

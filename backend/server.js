@@ -58,7 +58,7 @@ const allowedOrigins = [
 // };
 
 const corsOptions = {
-  origin: 'https://product-feedback-app-ikpg.onrender.com', // allow only this origin
+  origin: 'https://personal-finance-app-1.onrender.com', // allow only this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // allowed methods
   allowedHeaders: ['Content-Type', 'Authorization', 'bypass-tunnel-reminder', "localtunnel-agent-ips"], // allowed headers
   credentials: true // allow cookies to be sent
