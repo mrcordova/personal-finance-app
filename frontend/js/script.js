@@ -1,7 +1,8 @@
 const main = document.querySelector("main");
 
 // const URL = "https://personal-finance-app-gw5b.onrender.com";
-const URL = "https://personal-finance-app-backend.loca.lt";
+// const URL = "https://personal-finance-app-backend.loca.lt";
+const URL = "https://personal-finance-app.noahprojects.work";
 const dataResponse = await fetch(`${URL}/api/data`, {
     method: "GET",
     headers: {"bypass-tunnel-reminder": true }
