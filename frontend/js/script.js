@@ -1894,7 +1894,7 @@ const callback = (mutationList, observer) => {
               </div>
               </div>
               `
-                : `< div class= "pots-layout" > <div>`
+                : `< div class= "pots-layout" > </div>`
             }
             </div>
             `
