@@ -1840,14 +1840,20 @@ const callback = (mutationList, observer) => {
                 <p>$${pots[index].total}</p>
               </div>
             </div>
-            <div class="pots-layout">
+            ${
+              pots[index + 1] != undefined
+                ? `
+              <div class="pots-layout">
               <div data-theme="${themes[pots[index + 1].theme]}"></div>
               <div class="summary-member">
-                <p class="public-sans-regular">${pots[index + 1].name}</p>
-                <p>$${pots[index + 1].total}</p>
+              <p class="public-sans-regular">${pots[index + 1].name}</p>
+              <p>$${pots[index + 1].total}</p>
               </div>
+              </div>
+              `
+                : ``
+            }
             </div>
-          </div>
             `
           );
         }
