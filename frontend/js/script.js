@@ -1,12 +1,10 @@
 const main = document.querySelector("main");
 
-// const URL = "https://personal-finance-app-gw5b.onrender.com";
-// const URL = "https://personal-finance-app-backend.loca.lt";
 const URL = "https://personal-finance-app.noahprojects.work";
 const dataResponse = await fetch(`${URL}/api/data`, {
-    method: "GET",
-    headers: {"bypass-tunnel-reminder": true }
-  });
+  method: "GET",
+  headers: { "bypass-tunnel-reminder": true },
+});
 const data = await dataResponse.json();
 
 const sidebarMenu = document.getElementById("sidebar-menu");
@@ -53,25 +51,7 @@ const sortByFuncs = {
   highest: sortByHighestAmount,
   lowest: sortByLowestAmount,
 };
-// if (!("transactions" in localStorage)) {
-//   localStorage.setItem("transactions", JSON.stringify(data["transactions"]));
-// }
-// if (!("budgets" in localStorage)) {
-//   localStorage.setItem("budgets", JSON.stringify(data["budgets"]));
-// }
-// if (!("pots" in localStorage)) {
-//   localStorage.setItem("pots", JSON.stringify(data["pots"]));
-// }
-// if (!("balance" in localStorage)) {
-//   localStorage.setItem("balance", JSON.stringify(data["balance"]));
-// }
 
-// const transactions =
-//   JSON.parse(localStorage.getItem("transactions")) || data["transactions"];
-// const budgets = JSON.parse(localStorage.getItem("budgets")) || data["budgets"];
-// const pots = JSON.parse(localStorage.getItem("pots")) || data["pots"];
-// const balance = JSON.parse(localStorage.getItem("balance")) || data["balance"];
-// const currentMonth = new Date().toLocaleDateString("en-AU", { month: "short" });
 const transactions = data["transactions"];
 const budgets = data["budgets"];
 const pots = data["pots"];
@@ -418,7 +398,6 @@ const callback = (mutationList, observer) => {
 
               btnAction.replaceChildren();
 
-              // btnAction.insertAdjacentText("afterbegin", "Loading...");
               btnAction.insertAdjacentHTML(
                 "afterbegin",
                 '<span class="progress-circle"></span>'
@@ -438,7 +417,6 @@ const callback = (mutationList, observer) => {
 
               budgetCardObj.id = budgetId;
               budgets.push(budgetCardObj);
-              // localStorage.setItem("budgets", JSON.stringify(budgets));
 
               categorySummartObj[`${themes[budgetCardObj.theme]}`] = {
                 theme: themes[budgetCardObj.theme],
@@ -725,7 +703,6 @@ const callback = (mutationList, observer) => {
               });
 
               btnAction.replaceChildren();
-              // btnAction.insertAdjacentText("afterbegin", "Loading...");
               btnAction.insertAdjacentHTML(
                 "afterbegin",
                 '<span class="progress-circle"></span>'
@@ -740,8 +717,6 @@ const callback = (mutationList, observer) => {
               });
               btnAction.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Save Changes");
-
-              // localStorage.setItem("budgets", JSON.stringify(budgets));
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
@@ -813,7 +788,6 @@ const callback = (mutationList, observer) => {
               budgets.splice(idxOfBudgetCard, 1);
 
               btn.replaceChildren();
-              // btn.insertAdjacentText("afterbegin", "Loading...");
               btn.insertAdjacentHTML(
                 "afterbegin",
                 '<span class="progress-circle"></span>'
@@ -828,8 +802,6 @@ const callback = (mutationList, observer) => {
               });
               btn.replaceChildren();
               btn.insertAdjacentText("afterbegin", "Yes, Confirm Deletion");
-
-              // localStorage.setItem("budgets", JSON.stringify(budgets));
 
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
@@ -1077,8 +1049,6 @@ const callback = (mutationList, observer) => {
               btnAction.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Add Pot");
 
-              // localStorage.setItem("pots", JSON.stringify(pots));
-
               createPotCard(mainPots, potCardObj);
 
               const themeBtn = newDialog.querySelector('[data-action="tag"]');
@@ -1298,7 +1268,6 @@ const callback = (mutationList, observer) => {
               });
 
               btnAction.replaceChildren();
-              // btnAction.insertAdjacentText("afterbegin", "Loading...");
               btnAction.insertAdjacentHTML(
                 "afterbegin",
                 '<span class="progress-circle"></span>'
@@ -1313,7 +1282,6 @@ const callback = (mutationList, observer) => {
 
               btnAction.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Save Changes");
-              // localStorage.setItem("pots", JSON.stringify(pots));
 
               budgetCard.setAttribute("data-category", category);
               budgetCard.setAttribute("data-max-amount", max);
@@ -1356,7 +1324,6 @@ const callback = (mutationList, observer) => {
 
               const potToDeleteId = pots[idxOfPotCard].id;
               pots.splice(idxOfPotCard, 1);
-              // localStorage.setItem("pots", JSON.stringify(pots));
 
               const oldChoices = main.querySelectorAll(
                 `li:has([data-theme="${budgetCard.dataset.colorTag}"])`
@@ -1371,7 +1338,6 @@ const callback = (mutationList, observer) => {
               }
 
               btn.replaceChildren();
-              // btn.insertAdjacentText("afterbegin", "Loading...");
               btn.insertAdjacentHTML(
                 "afterbegin",
                 '<span class="progress-circle"></span>'
@@ -1392,7 +1358,6 @@ const callback = (mutationList, observer) => {
 
               btn.replaceChildren();
               btn.insertAdjacentText("afterbegin", "Yes, Confirm Deletion");
-              // localStorage.setItem("balance", JSON.stringify(balance));
 
               budgetCard.remove();
             }
@@ -1511,7 +1476,6 @@ const callback = (mutationList, observer) => {
               });
 
               btnAction.replaceChildren();
-              // btnAction.insertAdjacentText("afterbegin", "Loading...");
               btnAction.insertAdjacentHTML(
                 "afterbegin",
                 '<span class="progress-circle"></span>'
@@ -1530,9 +1494,6 @@ const callback = (mutationList, observer) => {
 
               btnAction.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Confirm Addition");
-
-              // localStorage.setItem("pots", JSON.stringify(pots));
-              // localStorage.setItem("balance", JSON.stringify(balance));
             }
           }
         });
@@ -1643,7 +1604,6 @@ const callback = (mutationList, observer) => {
                 }
               });
               btnAction.replaceChildren();
-              // btnAction.insertAdjacentText("afterbegin", "Loading...");
               btnAction.insertAdjacentHTML(
                 "afterbegin",
                 '<span class="progress-circle"></span>'
@@ -1662,9 +1622,6 @@ const callback = (mutationList, observer) => {
 
               btnAction.replaceChildren();
               btnAction.insertAdjacentText("afterbegin", "Confirm Withdraw");
-
-              // localStorage.setItem("pots", JSON.stringify(pots));
-              // localStorage.setItem("balance", JSON.stringify(balance));
             }
           }
         });
@@ -2102,7 +2059,6 @@ const currentActiveLiEle = document.querySelector("li.checked");
 const clone =
   templates[`${currentActiveLiEle.dataset.menu}`].content.cloneNode(true);
 main.replaceChildren(clone);
-// localStorage.setItem("hasCodeRunBefore", true);
 
 // helper function for retrieving templates from html
 async function extractTemplate(id) {
