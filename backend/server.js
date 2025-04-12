@@ -3,6 +3,7 @@ const path = require("path");
 const cors = require("cors");
 const data = require("./data.json");
 const mysql = require("mysql2");
+const cron = require("node-cron");
 
 require("dotenv").config();
 
@@ -118,6 +119,24 @@ async function populateDB() {
     );
   });
 }
+async function deleteDB() {
+  const tables = ["balance", "transactions", "budgets", "pots"];
+  try {
+    // for (const table of tables) {
+    //   const query = `DELETE FROM ${table}`;
+    //   await poolPromise.query(query);
+    //   console.log(`Cleared table: ${table}`);
+
+    // }
+    await Promise.all(
+      tables.map((table) => poolPromise.query(`DELETE FROM ${table}`))
+    );
+    console.log("All tables cleared successfully!");
+  } catch (error) {
+    console.error("Erro deleting tables:", err);
+    throw err;
+  }
+}
 // populateDB();
 // Data API endpoint
 app.get("/api/data", async (req, res) => {
@@ -176,7 +195,7 @@ app.post("/api/deletebudget", async (req, res) => {
   try {
     const query = "DELETE FROM `budgets` WHERE `id` = ? LIMIT 1 ";
     const { id } = req.body;
-    const [results, fields] = await poolPromise.query({
+    const [,] = await poolPromise.query({
       sql: query,
       values: [id],
     });
@@ -249,7 +268,7 @@ app.get("/health-check", async (req, res) => {
   try {
     const potsQuery = "Select 1 from pots LIMIT 1";
 
-    const [pots] = await poolPromise.query(potsQuery);
+    const [_] = await poolPromise.query(potsQuery);
 
     res.json({ success: true });
   } catch (error) {
@@ -259,4 +278,15 @@ app.get("/health-check", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running of ${PORT}`);
+});
+
+cron.schedule("0 0 1,31 * *", async () => {
+  console.log("Running a task every ~30 days (on 1st and 31st");
+  try {
+    await deleteDB();
+    await populateDB();
+    console.log("Successfully repopulated tables!");
+  } catch (error) {
+    console.error("Cron job failed:", error);
+  }
 });
